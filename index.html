@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101B33">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="L&B Trainer">
+<title>Law &amp; Business Trainer — CSLB C-61/D-28</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23101B33'/><rect x='14' y='22' width='72' height='12' fill='%23F5A623'/><rect x='14' y='42' width='72' height='12' fill='%23F5A623'/><rect x='14' y='62' width='72' height='12' fill='%231E4FD8'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101B33; --inkSoft:#2A3852; --cobalt:#1E4FD8; --paper:#F5F7FB;
+  --card:#FFF; --steel:#8A94A8; --line:#DDE3EE; --amber:#F5A623;
+  --green:#1F9D55; --red:#D64545;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px 96px}
+header{padding:18px 2px 12px}
+h1{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;
+  letter-spacing:.5px;line-height:1;margin:0;
+}
+h1 span{color:var(--cobalt)}
+.sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--steel);margin-top:4px}
+.stripe{height:6px;border-radius:3px;margin-top:12px;
+  background:repeating-linear-gradient(45deg,var(--amber) 0 14px,var(--ink) 14px 28px)}
+.row{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;-webkit-overflow-scrolling:touch}
+.row::-webkit-scrollbar{display:none}
+.pill{
+  padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);
+  background:var(--card);color:var(--inkSoft);
+  font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;
+  letter-spacing:.4px;cursor:pointer;white-space:nowrap;flex-shrink:0;
+}
+.pill.on{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:18px;box-shadow:0 2px 8px rgba(16,27,51,.06)}
+.meta{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--steel);
+  margin-bottom:6px;display:flex;justify-content:space-between}
+.q{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:14px}
+.opt{display:block;width:100%;text-align:left;padding:13px 14px;margin-bottom:8px;
+  border-radius:10px;border:1.5px solid var(--line);background:var(--card);
+  color:var(--ink);font-size:15px;line-height:1.45;cursor:pointer;
+  font-family:inherit}
+.opt:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+.opt .ltr{font-family:'IBM Plex Mono',monospace;font-weight:600;margin-right:8px}
+.opt.right{background:#E6F4EC;border-color:var(--green);color:#14683A;font-weight:600}
+.opt.wrong{background:#FBEAEA;border-color:var(--red);color:var(--red);font-weight:600}
+.opt .mk{float:right;font-weight:700}
+.why{border-radius:8px;padding:12px 14px;font-size:14.5px;line-height:1.6;
+  color:var(--inkSoft);margin-top:4px}
+.why.ok{background:#F0F9F3;border-left:4px solid var(--green)}
+.why.no{background:#FEF3F3;border-left:4px solid var(--red)}
+.why b{display:block;margin-bottom:5px}
+.why.ok b{color:var(--green)} .why.no b{color:var(--red)}
+.btn{width:100%;padding:16px 0;border-radius:12px;border:none;background:var(--cobalt);
+  color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;
+  letter-spacing:.6px;cursor:pointer;margin-top:12px}
+.btn.dark{background:var(--ink)}
+.btn.ghost{background:#F0F9F3;color:var(--green);border:2px solid var(--green);font-size:16px;padding:12px 0}
+.tiles{display:flex;gap:8px;margin-bottom:16px}
+.tile{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:14px 12px;text-align:center}
+.tile .n{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:700;line-height:1}
+.tile .l{font-size:12px;color:var(--steel);margin-top:4px}
+.tile .s{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--steel)}
+.nav-btn{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:15px 16px;margin-bottom:10px;cursor:pointer;font-family:inherit}
+.nav-btn .t{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;
+  letter-spacing:.3px;color:var(--ink)}
+.nav-btn .d{font-size:13.5px;color:var(--steel);margin-top:2px}
+.note-box{background:var(--ink);border-radius:14px;padding:16px 18px;color:#C8D2E6;
+  font-size:13.5px;line-height:1.6;margin-top:6px}
+.note-box .k{color:var(--amber);font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:16px;letter-spacing:1px}
+.acc{background:var(--card);border:1px solid var(--line);border-radius:14px;
+  margin-bottom:10px;overflow:hidden}
+.acc>button{width:100%;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 16px;background:none;border:none;cursor:pointer;font-family:inherit}
+.acc .h{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;
+  letter-spacing:.3px;color:var(--ink)}
+.acc .pm{color:var(--cobalt);font-size:18px}
+.acc .body{padding:0 16px 14px}
+.sr{display:flex;justify-content:space-between;gap:12px;padding:8px 0;
+  border-top:1px solid var(--line);font-size:14px}
+.sr .a{color:var(--inkSoft);line-height:1.4}
+.sr .b{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--cobalt);
+  text-align:right;white-space:nowrap}
+.tip{background:#FDF6E5;border:1px solid #EFD9A0;border-radius:12px;padding:14px;
+  font-size:13.5px;line-height:1.55;color:#6B5510}
+textarea{width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--line);
+  font-size:15px;font-family:'Inter',sans-serif;background:var(--card);color:var(--ink);
+  resize:vertical}
+textarea.mono{font-family:'IBM Plex Mono',monospace;font-size:11px;background:#F7F9FC;
+  color:var(--inkSoft)}
+.bar{height:5px;background:var(--line);border-radius:3px;margin-bottom:14px}
+.bar>div{height:5px;background:var(--cobalt);border-radius:3px;transition:width .3s}
+.score{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
+  padding:4px 10px;border-radius:8px}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom))}
+nav button{flex:1;background:none;border:none;padding:8px 0;cursor:pointer;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;
+  letter-spacing:.8px;color:var(--steel);border-top:3px solid transparent;margin-top:-9px}
+nav button.on{color:var(--cobalt);border-top-color:var(--cobalt)}
+.gt{border-bottom:2px dotted var(--cobalt);color:var(--cobalt);cursor:pointer;font-weight:600}
+.gt:active{background:#E6F1FB}
+.hide{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>LAW &amp; BUSINESS <span>TRAINER</span></h1>
+    <div class="sub">CSLB EXAM PREP · C-61 / D-28 DOORS &amp; GATES</div>
+    <div class="stripe"></div>
+  </header>
+  <main id="main"></main>
+</div>
+<nav id="nav"></nav>
+
+<script>
+/* ==== DATA (injected) ==== */
+const BANK = [
+  // ===== LICENSING =====
+  { id: "n1", cat: "Licensing", q: "A homeowner asks you to replace two garage door springs. Parts and labor total $1,150. To legally take this job you must:", opts: ["Have any active CSLB license", "Hold a license covering the work, since the total is $1,000 or more", "Only provide a written receipt", "Nothing — repairs are always exempt"], ans: 1, why: "The license line is $1,000 in COMBINED labor and materials. At or above it, you need a license in the right classification. Under $1,000 is 'minor work' — but you can't split one job into pieces to duck under it." },
+  { id: "n2", cat: "Licensing", q: "How many members sit on the Contractors State License Board?", opts: ["7", "11", "15", "21"], ans: 2, why: "15 total: 8 public members (the majority), 5 contractors, 1 local building official, and 1 labor representative. Public members outnumber contractors on purpose — the Board exists to protect consumers." },
+  { id: "n3", cat: "Licensing", q: "When protecting the public conflicts with any other interest, the CSLB must favor:", opts: ["Licensed contractors", "Protection of the public", "State revenue", "Insurance companies"], ans: 1, why: "Public protection is the Board's HIGHEST priority by law. On the exam, when two answers both seem right, pick the one that protects the consumer." },
+  { id: "n4", cat: "Licensing", q: "Day-to-day enforcement of contractor license law — issuing licenses, investigating complaints, disciplining contractors — is handled by the:", opts: ["Governor", "Registrar of Contractors", "Attorney General", "County building department"], ans: 1, why: "The Registrar is the CSLB's executive officer and runs the operation. The Board sets policy; the Registrar enforces it." },
+  { id: "n5", cat: "Licensing", q: "An applicant must pass BOTH exams (trade + Law & Business) within what time after the application is accepted?", opts: ["90 days", "12 months", "18 months", "5 years"], ans: 2, why: "18 months, unlimited attempts. Miss the window and the application is void. Don't confuse it with the 5 YEARS a passing score stays valid." },
+  { id: "n6", cat: "Licensing", q: "After receiving your pass letter, you must pay the initial license fee and file your bond within:", opts: ["30 days", "60 days", "90 days", "1 year"], ans: 2, why: "90 days or the application goes void. Your passing SCORE still counts for 5 years, but this application dies — you'd reapply." },
+  { id: "n7", cat: "Licensing", q: "A passing exam score remains valid for:", opts: ["1 year", "2 years", "5 years", "Forever"], ans: 2, why: "5 years. So if life gets in the way after passing, you can come back within 5 years without retesting." },
+  { id: "n8", cat: "Licensing", q: "The standard contractor's bond required for every active license is:", opts: ["$10,000", "$15,000", "$25,000", "$100,000"], ans: 2, why: "$25,000, filed in favor of the State of California. A lapsed bond is the #1 cause of license suspension. The $100,000 figure is the EXTRA bond LLCs carry." },
+  { id: "n9", cat: "Licensing", q: "After a license is revoked or suspended, the disciplinary bond required for reinstatement can be as high as:", opts: ["2× the standard bond", "5× the standard bond", "10× the standard bond", "There is no disciplinary bond"], ans: 2, why: "At least $25,000 and up to 10 times the standard bond amount. It stays on file for at least 2 years." },
+  { id: "n10", cat: "Licensing", q: "In addition to the $25,000 license bond, an LLC contractor must also file:", opts: ["A $50,000 tax bond", "A $100,000 surety bond protecting workers' wages and benefits", "A $1 million cash deposit", "Nothing extra"], ans: 1, why: "LLCs carry an extra $100,000 bond covering unpaid employee wages/benefits — plus liability insurance ($1M minimum). It's the price of the liability shield." },
+  { id: "n11", cat: "Licensing", q: "An ACTIVE license renews every ___ ; an INACTIVE license renews every ___ .", opts: ["1 year / 2 years", "2 years / 4 years", "2 years / 2 years", "4 years / 2 years"], ans: 1, why: "Active = 2 years. Inactive = 4 years. Inactive needs no bond, no workers' comp, no qualifier — but you cannot contract or advertise while inactive." },
+  { id: "n12", cat: "Licensing", q: "An expired license can still be renewed (with a delinquency fee) for up to:", opts: ["1 year", "3 years", "5 years", "10 years"], ans: 2, why: "5 years from expiration. After that it's void and you start over with a new application. The delinquency fee is 50% of the renewal fee." },
+  { id: "n13", cat: "Licensing", q: "California has license reciprocity agreements (possible TRADE exam waiver) with:", opts: ["Oregon, Washington, Idaho", "Arizona, Nevada, Utah", "Texas, Arizona, Oregon", "Nevada, Hawaii, Alaska"], ans: 1, why: "AZ, NV, UT — and only the trade exam can be waived. EVERYONE takes California's Law & Business exam. (That's the one you're studying for.)" },
+  { id: "n14", cat: "Licensing", q: "A Responsible Managing Employee (RME) must work for the business at least:", opts: ["20 hours per week", "32 hours/week or 80% of business hours, whichever is less", "40 hours per week", "There is no minimum"], ans: 1, why: "32 hours a week OR 80% of the total weekly operating hours — whichever is LESS. An RME who doesn't actually work there is illegal 'license renting.'" },
+  { id: "n15", cat: "Licensing", q: "One qualifying individual may act as the qualifier for at most how many firms in a one-year period?", opts: ["1", "2", "3", "Unlimited"], ans: 2, why: "3 firms max — and for any firm beyond the first, the qualifier must own at least 20% of it. This blocks people from selling their license across town." },
+  { id: "n16", cat: "Licensing", q: "Business name and license number on your work truck must be in letters at least:", opts: ["1/2 inch", "3/4 inch", "1 inch", "2 inches"], ans: 1, why: "3/4 inch minimum for most contractors. Exception: C-36 plumbing, C-45 sign, and C-57 well drilling need name, ADDRESS and number at 1-1/2 inches on BOTH sides." },
+  { id: "n17", cat: "Licensing", q: "The D-28 classification covers:", opts: ["Fencing", "Doors, gates and activating devices", "Framing", "Low-voltage electrical"], ans: 1, why: "D-28 (under the C-61 Limited Specialty class) = doors, gates, and their activating devices — your garage door lane. Working or ADVERTISING outside it is a violation." },
+  { id: "n18", cat: "Licensing", q: "A joint venture license (two or more licensed firms bidding together) is issued for:", opts: ["1 year", "2 years, renewable", "5 years", "The length of one project only"], ans: 1, why: "2 years and renewable. It needs its own bond, but no new exam — every member firm is already licensed." },
+  { id: "n19", cat: "Licensing", q: "An UNLICENSED person may legally advertise for construction work only if:", opts: ["They never collect a deposit", "The job is under $500 total AND the ad says they're not licensed", "The work is residential", "They subcontract everything"], ans: 1, why: "Both conditions: under $500 total (labor + materials) AND the ad must state they are not a licensed contractor. Everything else is misdemeanor unlicensed contracting." },
+  { id: "n20", cat: "Licensing", q: "After a permit is issued, a building inspector may enter the jobsite (with owner/occupant consent) between:", opts: ["Any hour, any day", "8 a.m. and 6 p.m.", "9 a.m. and 5 p.m.", "Sunrise and sunset"], ans: 1, why: "8:00 a.m.–6:00 p.m. with consent. Outside those hours requires consent or a court order." },
+  { id: "n21", cat: "Licensing", q: "A licensed sole owner incorporates and keeps 60% of the stock. The old license number:", opts: ["Is void forever", "May be reassigned to the corporation — permanently", "Transfers automatically", "Can return to the sole owner later"], ans: 1, why: "Reassignment is allowed at 51%+ ownership, but it's a ONE-WAY street — once the number goes corporate it can never go back to a sole-owner license." },
+  // ===== DEADLINES =====
+  { id: "n22", cat: "Contracts", q: "A 68-year-old buyer signs a home solicitation contract at her kitchen table. She may cancel within:", opts: ["24 hours", "3 business days", "5 business days", "10 business days"], ans: 2, why: "Buyers 65 and older get 5 business days; everyone else gets 3. The clock starts when they receive the required cancellation notice." },
+  { id: "n23", cat: "Contracts", q: "A buyer validly cancels a home solicitation contract. The contractor must return the down payment within:", opts: ["3 days", "5 days", "10 days", "30 days"], ans: 2, why: "10 days. And the contractor must pick up any delivered materials within 20 days of the cancellation." },
+  { id: "n24", cat: "Contracts", q: "A prime contractor receives a progress payment on the 1st. Subcontractors must be paid their share by the:", opts: ["3rd", "8th", "15th", "30th"], ans: 1, why: "Within 7 DAYS of receiving each progress payment (unless a written agreement says otherwise). Late payment risks a 2%-per-month penalty plus attorney fees." },
+  { id: "n25", cat: "Licensing", q: "You want to appeal a citation issued by the Registrar. Your deadline is:", opts: ["5 working days", "10 working days", "15 working days", "30 calendar days"], ans: 2, why: "15 WORKING days from service of the citation. Miss it and the citation becomes final — pay the fine and comply." },
+  { id: "n26", cat: "Licensing", q: "Your qualifying individual leaves the company. You must notify the Registrar and name a replacement within:", opts: ["30 days", "60 days", "90 days", "6 months"], ans: 2, why: "90 days, or the license (or that classification) is automatically suspended. 90 days is also the window for reporting name/address/personnel changes." },
+  { id: "n27", cat: "Contracts", q: "The CSLB sends you an 'Agreement to Arbitrate' form. To keep arbitration moving you return it within:", opts: ["10 days", "15 days", "30 days", "60 days"], ans: 2, why: "30 days. After the hearing closes, the arbitrator also has 30 days to issue a decision. The CSLB pays the arbitrator and one expert witness." },
+  { id: "n28", cat: "Licensing", q: "A complaint about a LATENT (hidden structural) defect may be filed with the CSLB within:", opts: ["2 years", "4 years", "10 years", "18 months"], ans: 2, why: "Latent = 10 years. PATENT (obvious, visible) defects = 4 years. Memory hook: hidden problems get more time because nobody could see them." },
+  { id: "n29", cat: "Licensing", q: "How long must a contractor keep project records after completing a job?", opts: ["2 years", "3 years", "5 years", "7 years"], ans: 2, why: "5 years after completion. (Employee WAGE records: 3 years. Injury logs: 5 years. Asbestos records: 30 years.)" },
+  { id: "n30", cat: "Ins & Liens", q: "To preserve full lien rights, a sub or supplier serves a preliminary notice within how many days of first furnishing labor/materials?", opts: ["10", "15", "20", "30"], ans: 2, why: "20 days — served on the owner, prime, and construction lender. Serve it late and it still works, but only covers work going back 20 days before service." },
+  { id: "n31", cat: "Ins & Liens", q: "After a project finishes, the owner may record a Notice of Completion within:", opts: ["10 days", "15 days", "30 days", "60 days"], ans: 1, why: "15 days of completion. Recording it SHORTENS everyone's lien windows (subs 30 days, prime 60) — that's exactly why owners file it." },
+  { id: "n32", cat: "Ins & Liens", q: "An owner may record a Notice of Cessation after work has stopped continuously for:", opts: ["15 days", "30 days", "60 days", "90 days"], ans: 1, why: "30 continuous days of no work. It triggers the same shortened lien deadlines as a notice of completion." },
+  { id: "n33", cat: "Ins & Liens", q: "A Notice of Completion WAS recorded. A SUBCONTRACTOR must record a mechanics lien within:", opts: ["15 days", "30 days", "60 days", "90 days"], ans: 1, why: "Subs: 30 days. The PRIME gets 60. If NO notice was recorded, everyone gets 90 days from completion. Memorize the 30/60/90 ladder." },
+  { id: "n34", cat: "Ins & Liens", q: "A Notice of Completion WAS recorded. The PRIME contractor must record a mechanics lien within:", opts: ["30 days", "60 days", "90 days", "120 days"], ans: 1, why: "Prime: 60 days when a notice was recorded. Subs get 30; everyone gets 90 if no notice exists." },
+  { id: "n35", cat: "Ins & Liens", q: "After recording a mechanics lien, the lawsuit to foreclose it must be filed within:", opts: ["30 days", "60 days", "90 days", "1 year"], ans: 2, why: "90 days from recording (and record a lis pendens with the county). Miss it and the lien simply expires — all that leverage gone." },
+  { id: "n36", cat: "Ins & Liens", q: "An owner discovers unauthorized work (e.g., a tenant hired a contractor). To avoid liens, the owner posts and records a Notice of Non-Responsibility within:", opts: ["5 days", "10 days", "15 days", "30 days"], ans: 1, why: "10 days of learning about the construction — BOTH posted on the property AND recorded with the county." },
+  { id: "n37", cat: "Employment", q: "You fire an installer on Tuesday at noon. His final wages are due:", opts: ["Immediately at termination", "Within 72 hours", "Next regular payday", "Within 5 days"], ans: 0, why: "Fired = paid IMMEDIATELY. Quit with no notice = within 72 hours. Quit with 72-hour notice = on the last day. Waiting-time penalties run up to 30 days of wages." },
+  { id: "n38", cat: "Employment", q: "A new hire must be reported to the EDD within:", opts: ["3 days", "10 days", "20 days", "30 days"], ans: 2, why: "20 days of the start-of-work date. Compare: the I-9 employer section is due within 3 business days." },
+  { id: "n39", cat: "Employment", q: "The employer's section of a new employee's I-9 form must be completed within:", opts: ["1 business day", "3 business days", "10 business days", "20 days"], ans: 1, why: "3 business days of the employee starting work. It verifies identity and authorization to work in the U.S." },
+  { id: "n40", cat: "Safety", q: "Tailgate (toolbox) safety meetings with field crews must be held at least every:", opts: ["5 working days", "10 working days", "15 working days", "30 days"], ans: 1, why: "Every 10 WORKING days. Supervisor/foreman safety meetings are MONTHLY. This exact number shows up on the exam constantly." },
+  { id: "n41", cat: "Safety", q: "A serious injury on your jobsite must be reported to Cal/OSHA:", opts: ["Within 24 hours", "Within 3 days", "Within 8 hours of the next shift", "Immediately"], ans: 3, why: "Immediately — same for a death. Your insurance carrier gets written accident notice within 5 days; unemployment claims get a response within 10." },
+  { id: "n42", cat: "Ins & Liens", q: "You must notify your insurance carrier of a jobsite accident within:", opts: ["24 hours", "5 days", "10 days", "30 days"], ans: 1, why: "5 days for accident notice to your insurer. (10 days to respond to an unemployment insurance claim — don't mix those two up.)" },
+  { id: "n43", cat: "Safety", q: "Before digging post holes for a new gate, you must contact 811 (Underground Service Alert) at least:", opts: ["24 hours before", "2 working days before", "5 calendar days before", "14 working days before"], ans: 1, why: "At least 2 WORKING days, no more than 14 calendar days ahead. Weekends don't count as working days — call Thursday for a Monday dig." },
+  { id: "n44", cat: "Safety", q: "An 811 locate ticket remains valid for:", opts: ["14 days", "21 days", "28 days", "90 days"], ans: 2, why: "28 calendar days. Job runs longer? Renew the ticket before it lapses — digging on an expired ticket is digging without one." },
+  { id: "n45", cat: "Safety", q: "Asbestos exposure monitoring and medical records must be kept for:", opts: ["5 years", "10 years", "30 years", "The life of the company"], ans: 2, why: "30 years — asbestos diseases take decades to appear. Regular injury/illness logs: 5 years." },
+  // ===== PENALTIES =====
+  { id: "n46", cat: "Licensing", q: "A FIRST conviction for contracting without a license carries:", opts: ["Up to $1,000 fine only", "Up to $5,000 and/or 6 months in jail", "20% of the contract price", "$30,000 civil penalty, mandatory"], ans: 1, why: "First offense: misdemeanor, up to $5,000 and/or 6 months. It gets much worse the second time." },
+  { id: "n47", cat: "Licensing", q: "A SECOND conviction for unlicensed contracting carries:", opts: ["The same as the first", "Up to $10,000 only", "20% of the contract price OR $5,000 (whichever is greater) PLUS at least 90 days in jail", "License denial only"], ans: 2, why: "The fine jumps to 20% of the contract price (or payments received) or $5,000, whichever is GREATER — and jail time of at least 90 days is mandatory." },
+  { id: "n48", cat: "Licensing", q: "The maximum CSLB citation — reserved for unlicensed activity and for LICENSED contractors who use unlicensed firms — is:", opts: ["$5,000", "$15,000", "$30,000", "$50,000"], ans: 2, why: "$30,000. It covers contracting unlicensed, aiding an unlicensed operator, or hiring an unlicensed sub. Standard citations run up to $5,000 per violation ($8,000–$30,000 for the serious tier)." },
+  { id: "n49", cat: "Licensing", q: "Deliberate, fraudulent use of another contractor's license number is punishable by:", opts: ["A warning letter", "Up to $10,000 and/or 1 year in jail", "$500 civil fine", "License probation only"], ans: 1, why: "Up to $10,000 and/or a year in jail. Exam instinct: the word 'FRAUD' in a question almost always signals possible jail time." },
+  { id: "n50", cat: "Licensing", q: "Holding only a D-28, you run an ad saying 'We also do electrical panel upgrades.' This is:", opts: ["Fine if you sub it out", "A misdemeanor with a $100–$5,000 fine", "Only a problem if someone hires you", "Legal under $1,000"], ans: 1, why: "Advertising outside your classification is a misdemeanor ($100–$5,000) — the AD itself is the violation, no customer needed. Advertise only what your license covers." },
+  { id: "n51", cat: "Contracts", q: "Using $3,000 a customer paid for their garage door job to cover a personal debt instead is:", opts: ["A civil matter only", "A misdemeanor", "A felony — up to $10,000 and/or 1 year", "Legal if repaid in 30 days"], ans: 2, why: "Diversion of construction funds over $2,350 = FELONY (up to $10,000 and/or a year). Under $2,350 = misdemeanor. $2,350 is the magic number — memorize it." },
+  { id: "n52", cat: "Safety", q: "A willful safety violation causes an employee's death. The employer faces:", opts: ["$10,000 max", "$25,000 and probation", "$100,000–$250,000 and/or 1–3 years in prison", "Civil liability only"], ans: 2, why: "$100,000–$250,000 and/or 1–3 years for a first offense; corporations/LLCs can be fined up to $1.5 million. The biggest penalties in the book protect human life." },
+  { id: "n53", cat: "Licensing", q: "The delinquency fee for renewing a license late is:", opts: ["A flat $50", "25% of the renewal fee", "50% of the renewal fee", "Double the renewal fee"], ans: 2, why: "50% of the renewal fee, on top of the renewal itself. And remember — contracting with an EXPIRED license is unlicensed contracting." },
+  { id: "n54", cat: "Safety", q: "Willfully digging WITHOUT notifying 811 first exposes you to a civil penalty of up to:", opts: ["$5,000", "$10,000", "$50,000", "$100,000"], ans: 2, why: "$50,000 for knowing/willful violations; $10,000 for negligent ones — plus repair costs and possible license discipline. Hitting a gas line can also get people killed." },
+  { id: "n55", cat: "Employment", q: "Penalties for child labor violations run:", opts: ["$100 / $200 / $500", "$1,000 / $2,000 / $5,000 for 1st, 2nd, 3rd offenses", "$5,000 flat", "Jail only"], ans: 1, why: "$1,000 first, $2,000 second, $5,000 third. Minors also need work permits and can't run dangerous equipment." },
+  { id: "n56", cat: "Contracts", q: "A contractor makes a false promise to land a home improvement contract. The owner may recover:", opts: ["Nothing without a lawsuit win", "$500 plus attorney fees plus actual damages", "Triple the contract price", "Only their deposit"], ans: 1, why: "A $500 penalty + attorney's fees + any actual damages. Violating home-improvement rules generally: $100–$5,000 civil, up to $5,000 and/or a year criminal." },
+  // ===== CONTRACTS =====
+  { id: "n57", cat: "Contracts", q: "Which is NOT one of the four essential elements of a valid contract?", opts: ["Mutual assent (offer + acceptance)", "Consideration", "Notarization", "Legal purpose"], ans: 2, why: "The four: mutual assent, consideration (something of value exchanged), capacity (legal ability to contract), legal purpose. Notarization is never required for validity." },
+  { id: "n58", cat: "Contracts", q: "A contract signed under duress or induced by fraud is:", opts: ["Void", "Voidable by the injured party", "Automatically criminal", "Fully enforceable"], ans: 1, why: "VOIDABLE — valid on its face, but the wronged party can cancel. VOID contracts (illegal purpose, or signed by an unlicensed contractor) never legally existed and nobody can enforce them." },
+  { id: "n59", cat: "Contracts", q: "A home improvement contract must be in WRITING whenever the price exceeds:", opts: ["$250", "$500", "$750", "$1,000"], ans: 1, why: "$500. Keep the three thresholds straight: $500 = written HIC required, $750 = service & repair ceiling, $1,000 = license required." },
+  { id: "n60", cat: "Contracts", q: "The maximum down payment on a $12,000 home improvement contract is:", opts: ["$1,200", "$1,000", "$2,400", "Always 10%"], ans: 1, why: "The LESSER of $1,000 or 10%. Here 10% = $1,200, so the cap is $1,000. On a $6,000 job it would be $600. The exam loves flipping this to 'whichever is greater' — don't bite." },
+  { id: "n61", cat: "Contracts", q: "On a home improvement job, each progress payment may not exceed:", opts: ["25% of the contract", "The value of work performed and materials delivered", "Whatever the schedule says", "50% at the halfway point"], ans: 1, why: "You can never be paid ahead of the work (except the legal down payment). The payment schedule in the contract must reflect actual work and materials." },
+  { id: "n62", cat: "Contracts", q: "A compliant SERVICE AND REPAIR contract requires that:", opts: ["The contractor initiated the sales contact", "The price is $750 or less and the BUYER initiated contact", "A 10% deposit was collected", "The job spans multiple visits"], ans: 1, why: "S&R: buyer calls YOU, $750 or less, generally one visit. Done correctly, the normal 3-day cancellation right doesn't apply once work is done and goods delivered — which is why the rules are strict." },
+  { id: "n63", cat: "Contracts", q: "A person who solicits and negotiates home improvement contracts for your company must:", opts: ["Hold their own contractor's license", "Register with the CSLB as a Home Improvement Salesperson", "Just be a W-2 employee", "Carry a $25,000 bond"], ans: 1, why: "Home Improvement Salespersons (HIS) register with the CSLB. Using an unregistered salesperson is a cause for discipline against YOUR license." },
+  { id: "n64", cat: "Contracts", q: "Your contract contains a 'complete agreement' (integration) clause. A verbal promise you made that never got written in is:", opts: ["Still binding", "Not enforceable — only the written terms count", "Binding if there were witnesses", "Binding up to $500"], ans: 1, why: "The written document IS the deal. This cuts both ways: get every change order in writing, because customers' verbal promises don't bind them either." },
+  { id: "n65", cat: "Contracts", q: "In a printed residential contract, an arbitration clause must appear in at least:", opts: ["Regular type anywhere", "10-point bold Roman type (or 8-point red), and both parties initial it", "A separate notarized page", "The first paragraph"], ans: 1, why: "10-pt bold (or contrasting red at 8-pt); typed contracts use CAPITAL LETTERS — and both parties initial the clause. Buried arbitration clauses are unenforceable." },
+  { id: "n66", cat: "Contracts", q: "Handwritten changes on a pre-printed contract form conflict with the printed text. Which controls?", opts: ["The printed text", "The handwritten/typed changes", "Neither — the contract is void", "Whichever favors the contractor"], ans: 1, why: "Handwriting and typed insertions beat pre-printed boilerplate — they show what the parties actually negotiated." },
+  { id: "n67", cat: "Contracts", q: "CSLB MANDATORY arbitration applies when the alleged financial harm is:", opts: ["$10,000 or less", "$25,000 or less", "$25,000–$50,000", "Any amount"], ans: 1, why: "Mandatory: ≤ $25,000 (contractor must participate; license must be in good standing, no prior discipline). Voluntary: $25,000–$50,000 with BOTH parties agreeing." },
+  { id: "n68", cat: "Contracts", q: "The small claims limit for a sole proprietor suing a customer is currently:", opts: ["$5,000", "$6,500", "$10,000", "$25,000"], ans: 2, why: "$10,000 for individuals/sole proprietors; $5,000 for corporations/LLCs/partnerships; and only two claims over $2,500 per calendar year. Money judgments only, no attorneys arguing for you." },
+  { id: "n69", cat: "Contracts", q: "Your garage door LLC gets sued in superior court. The company:", opts: ["May be represented by you personally", "Must appear through a licensed attorney", "Must settle", "Can move it to small claims"], ans: 1, why: "Corporations and LLCs must have an attorney in civil court. Sole owners and partnerships may represent themselves. (In small claims, nobody gets an attorney.)" },
+  { id: "n70", cat: "Contracts", q: "A contractor whose license was suspended for part of a job sues the owner for the unpaid balance. The court will:", opts: ["Award the balance", "Dismiss — you must be licensed at ALL times during performance to sue for compensation", "Award half", "Send it to the CSLB"], ans: 1, why: "No license = no lawsuit for pay, and the owner can even claw back money already paid. 'Substantial compliance' is a narrow exception — don't count on it." },
+  { id: "n71", cat: "Contracts", q: "A contractor disciplined twice within the last 8 years must, before contracting on a 1–4 unit residence:", opts: ["Post a larger bond", "Disclose those suspensions/revocations to the owner", "Get CSLB pre-approval per job", "Nothing special"], ans: 1, why: "Two disciplinary actions in 8 years triggers a written disclosure duty to residential customers before contracting." },
+  // ===== LIENS =====
+  { id: "n72", cat: "Ins & Liens", q: "The purpose of a PRELIMINARY notice is to:", opts: ["Start a lawsuit", "Preserve your right to later record a lien or stop notice", "Demand immediate payment", "Terminate the contract"], ans: 1, why: "It's not a threat — it's a required heads-up to the owner, prime, and lender that you're on the job. No prelim (when required) = no lien rights later." },
+  { id: "n73", cat: "Ins & Liens", q: "A mechanics lien attaches to:", opts: ["The owner's bank account", "The improved real property itself", "The prime contractor's bond", "Construction funds"], ans: 1, why: "The PROPERTY. It's enforced by foreclosure — forcing a sale to pay the debt. That's why it's the most powerful private-work collection tool. (Funds are what a STOP NOTICE reaches.)" },
+  { id: "n74", cat: "Public Works", q: "On a PUBLIC works project, an unpaid subcontractor's primary remedy is:", opts: ["A mechanics lien on the courthouse", "A stop payment notice", "Small claims court", "Repossessing installed materials"], ans: 1, why: "You cannot lien public property. A stop payment notice freezes unpaid construction FUNDS held by the public entity; the payment bond (required over $25,000) is the backup." },
+  { id: "n75", cat: "Public Works", q: "A payment bond is required on public works contracts over:", opts: ["$10,000", "$25,000", "$50,000", "$100,000"], ans: 1, why: "$25,000. The bond guarantees subs and suppliers get paid even if the prime goes under — the public-works substitute for lien rights." },
+  { id: "n76", cat: "Ins & Liens", q: "The 'Mechanics Lien Warning' must be given to:", opts: ["Only commercial clients", "The owner, as part of every home improvement contract", "The county recorder", "Subcontractors only"], ans: 1, why: "It's mandatory HIC content — it warns owners that unpaid subs/suppliers can lien the home even if the owner paid the prime in full. Omitting it is a disciplinable violation." },
+  { id: "n77", cat: "Ins & Liens", q: "Foreclosing a mechanics lien requires filing in:", opts: ["Small claims court", "Superior court", "Federal court", "CSLB arbitration"], ans: 1, why: "Superior court only — small claims can award money but cannot foreclose a lien. File within 90 days of recording the lien." },
+  // ===== EMPLOYMENT & SAFETY =====
+  { id: "n78", cat: "Employment", q: "Which payroll tax is paid by the EMPLOYEE only?", opts: ["FUTA", "SUI", "SDI", "Workers' compensation"], ans: 2, why: "SDI (State Disability) is withheld from the employee. Employer-only: FUTA, SUI/ETT, workers' comp. Shared: FICA at 7.65% each side (6.2% Social Security + 1.45% Medicare)." },
+  { id: "n79", cat: "Employment", q: "The FICA tax rate paid by the employer (matching the employee) is:", opts: ["5.2%", "6.2%", "7.65%", "15.3%"], ans: 2, why: "7.65% each — 6.2% Social Security + 1.45% Medicare. The full 15.3% only applies to self-employed people paying both halves." },
+  { id: "n80", cat: "Employment", q: "An installer works a 13-hour day. Hours 12 to 13 are paid at:", opts: ["Straight time", "Time and a half", "Double time", "Comp time"], ans: 2, why: "California daily OT: 1.5× after 8 hours (and over 40/week, and first 8 on a 7th straight day); 2× after 12 hours in a day (and after 8 on that 7th day)." },
+  { id: "n81", cat: "Ins & Liens", q: "Under current law, which licensed contractors must carry workers' compensation coverage?", opts: ["Only those with 5+ employees", "Only roofers", "ALL active licensees, even with zero employees", "Only primes on public works"], ans: 2, why: "As of January 1, 2026, the no-employee exemption is gone — every active licensee needs workers' comp or an approved self-insurance certificate. This affects YOUR application, so verify before you file." },
+  { id: "n82", cat: "Employment", q: "FUTA (federal unemployment) tax must be deposited quarterly when the quarter's liability exceeds:", opts: ["$100", "$500", "$1,000", "$7,000"], ans: 1, why: "Over $500 in a quarter → deposit quarterly. $500 or less can ride along and be paid with the annual return." },
+  { id: "n83", cat: "Employment", q: "Regular employees must be paid at least:", opts: ["Weekly", "Twice per calendar month", "Monthly", "Whenever cash flow allows"], ans: 1, why: "At least twice a month on designated paydays. (Final paychecks have their own faster rules — immediately if fired.)" },
+  { id: "n84", cat: "Employment", q: "Hiring a 17-year-old helper who is still in school generally requires:", opts: ["Nothing special", "A work permit, with limits on hours and hazardous tasks", "Parental signature only", "A CSLB waiver"], ans: 1, why: "Minors need work permits, have capped hours on school days, and are barred from hazardous work like operating power equipment. Violations: $1,000/$2,000/$5,000." },
+  { id: "n85", cat: "Employment", q: "Cal/OSHA must investigate a SERIOUS workplace complaint within:", opts: ["24 hours", "3 working days", "14 days", "30 days"], ans: 1, why: "Serious complaints: 3 working days. Non-serious: 14 days. Employers appeal citations within 15 working days." },
+  { id: "n86", cat: "Safety", q: "Inside the 24-inch 'tolerance zone' around a marked underground gas line you must:", opts: ["Use a mini-excavator slowly", "Use hand tools until the line is exposed", "Pour a concrete cap", "Notify the fire department"], ans: 1, why: "Hand-dig within 24 inches on EACH side of the mark until the utility is exposed and protected. Yellow = gas, red = electric, blue = water, green = sewer, orange = communications; white marks YOUR dig area." },
+  { id: "n87", cat: "Safety", q: "Utility marking colors: YELLOW paint on the ground means:", opts: ["Water", "Gas or oil", "Electric", "Communications"], ans: 1, why: "Yellow = gas/oil/petroleum. Red = electric, blue = water, green = sewer, orange = communications/TV, white = your proposed excavation." },
+  { id: "n88", cat: "Safety", q: "Your crew unearths human remains while trenching for a gate footing. You must:", opts: ["Rebury and continue", "Move them aside carefully", "Stop work immediately and notify the County Coroner", "Call the CSLB"], ans: 2, why: "Stop immediately; the Coroner has 2 working days to examine. If the remains are Native American, the Coroner alerts the Native American Heritage Commission within 24 hours." },
+  // ===== BUSINESS & MONEY =====
+  { id: "n89", cat: "Licensing", q: "Every business entity holding a contractor's license — sole owner, partnership, corporation, or LLC — must have:", opts: ["At least two owners", "A qualifying individual (QI)", "A payroll service", "An attorney on retainer"], ans: 1, why: "No license exists without a qualifier — the person whose experience and exam back the license (sole owner, RMO, or RME)." },
+  { id: "n90", cat: "Licensing", q: "The biggest legal drawback of operating as a sole proprietorship is:", opts: ["Double taxation", "Unlimited personal liability", "Annual franchise fees", "Required board meetings"], ans: 1, why: "Business debts and judgments reach your PERSONAL assets — house, truck, savings. Simplest structure, least protection. Corporations/LLCs create a liability shield (that's what you pay for)." },
+  { id: "n91", cat: "Licensing", q: "The president of a licensed corporation dies. The corporate license:", opts: ["Is void immediately", "Continues — the corporation is a separate legal entity", "Transfers to the family", "Converts to sole ownership"], ans: 1, why: "A corporation exists independently of its people, so the entity and its license continue (replace the qualifier within 90 days if needed). A SOLE OWNER's license generally cancels at death, subject to a 90-day continuance." },
+  { id: "n92", cat: "Licensing", q: "Which entity's profits are taxed TWICE — once at the company level and again as shareholder dividends?", opts: ["Sole proprietorship", "Partnership", "C corporation", "S corporation"], ans: 2, why: "C corps face double taxation. Sole props, partnerships, S corps and most LLCs 'pass through' — profits are taxed once, on the owners' returns." },
+  { id: "n93", cat: "Finances", q: "The basic accounting equation is:", opts: ["Assets = Revenue − Expenses", "Assets = Liabilities + Owner's Equity", "Profit = Assets − Liabilities", "Equity = Assets + Liabilities"], ans: 1, why: "Assets = Liabilities + Owner's Equity. It's the skeleton of every balance sheet: what you HAVE equals what you OWE plus what you OWN." },
+  { id: "n94", cat: "Finances", q: "Under ACCRUAL accounting, income is recorded when:", opts: ["Cash hits the bank", "It is EARNED, even if not yet collected", "Taxes are filed", "The job is bid"], ans: 1, why: "Accrual = record when earned/incurred; cash = record when money moves. Accrual gives contractors a truer picture because of receivables and retention." },
+  { id: "n95", cat: "Finances", q: "Current assets $50,000, current liabilities $25,000. Current ratio?", opts: ["0.5 to 1", "1 to 1", "2 to 1", "4 to 1"], ans: 2, why: "50,000 ÷ 25,000 = 2:1 — the classic healthy benchmark. At 1:1 you can barely cover short-term bills; below it you're in trouble." },
+  { id: "n96", cat: "Finances", q: "Gross profit equals:", opts: ["Revenue minus ALL expenses", "Revenue minus direct job costs", "Revenue minus taxes", "Cash on hand"], ans: 1, why: "Gross = revenue − direct costs (labor, materials, equipment, subs). NET profit further subtracts overhead. Bidding off gross profit while forgetting overhead is how contractors go broke." },
+  { id: "n97", cat: "Contracts", q: "The three parties to a surety bond are:", opts: ["Buyer, seller, broker", "Principal, obligee, surety", "Owner, lender, insurer", "Contractor, sub, supplier"], ans: 1, why: "Principal = you (the contractor). Obligee = who's protected (owner/state). Surety = the bonding company. Key: a bond is NOT insurance — if the surety pays a claim, it collects the money back from YOU." },
+  { id: "n98", cat: "Contracts", q: "Which bond guarantees that subs and suppliers on a project get paid?", opts: ["Bid bond", "Performance bond", "Payment bond", "License bond"], ans: 2, why: "Payment bond = payment to subs/suppliers. Performance bond = job gets completed per contract. Bid bond = you'll sign the contract if awarded." },
+  { id: "n99", cat: "Finances", q: "In an estimate, which of these is OVERHEAD rather than a direct cost?", opts: ["Springs and track for the job", "Installer wages on the job", "Office rent and bookkeeping", "The subcontracted concrete pad"], ans: 2, why: "Direct costs trace to one job (labor, materials, equipment, subs). Overhead — rent, office staff, insurance, advertising — spreads across ALL jobs. Price = direct + share of overhead + profit." },
+  { id: "n100", cat: "Finances", q: "Job costs are $8,000 and you want a 20% MARGIN on the selling price. You should bid:", opts: ["$9,600", "$10,000", "$8,800", "$12,000"], ans: 1, why: "Margin is a % of PRICE: price = cost ÷ (1 − 0.20) = $10,000. A 20% MARKUP (a % of COST) would only be $9,600. Mixing these up quietly shrinks your profit on every job." },
+  { id: "n101", cat: "Finances", q: "The main purpose of JOB COSTING is to:", opts: ["Satisfy the IRS", "Compare actual costs to your estimate so future bids improve", "Calculate sales tax", "Impress lenders"], ans: 1, why: "Track real labor/material/equipment costs per job against the bid. It catches losing jobs early and makes every future estimate sharper." },
+  // ===== NEW: FINANCES =====
+  { id: "f1", cat: "Finances", q: "What determines how often an employer's payroll tax deposits are made to the IRS?", opts: ["The number of employees", "The amount of payroll liability", "How long the company has existed", "The ratio of salaried to hourly workers"], ans: 1, why: "Deposit frequency is set by how much payroll TAX you owe (the lookback period) — bigger liability, more frequent deposits. This exact question appears in the official candidate bulletin's samples." },
+  { id: "f2", cat: "Finances", q: "A construction company buys a car for general use by the sales staff. Its depreciation is charged to:", opts: ["Direct job costs", "General and administrative (overhead) costs", "Project management expenses", "Company profits"], ans: 1, why: "The car isn't tied to any one job, so it's OVERHEAD (G&A) — spread across all jobs. Also straight from the bulletin's sample questions. If it were a job-site-only machine, it could be a direct cost." },
+  { id: "f3", cat: "Finances", q: "Working capital equals:", opts: ["Total assets minus total debt", "Current assets minus current liabilities", "Cash in the bank", "Revenue minus overhead"], ans: 1, why: "Working capital = current assets − current liabilities: the cushion you have to pay near-term bills. Related: current RATIO divides the same two numbers." },
+  { id: "f4", cat: "Finances", q: "'Retention' (retainage) on a construction contract is:", opts: ["A tax withheld by the state", "A percentage of each payment held back until the job is done right", "The contractor's profit margin", "A late-payment penalty"], ans: 1, why: "Typically 5–10% withheld from each progress payment as the owner's insurance that the work gets finished and corrected. Plan cash flow around not seeing that money until after completion." },
+  { id: "f5", cat: "Finances", q: "Which financial statement shows income and expenses over a PERIOD of time?", opts: ["Balance sheet", "Income (profit & loss) statement", "Lien release", "Depreciation schedule"], ans: 1, why: "Income/P&L statement = a movie (a period). Balance sheet = a snapshot (one date) showing assets, liabilities, and equity." },
+  { id: "f6", cat: "Finances", q: "The most common financial reason construction companies fail is:", opts: ["Paying too much in taxes", "Poor cash management and underbidding", "Buying too much equipment", "High insurance premiums"], ans: 1, why: "Running out of CASH — from underbidding, ignoring overhead, and slow receivables — kills more contractors than anything else. Profit on paper doesn't pay Friday's payroll." },
+  // ===== NEW: EMPLOYMENT =====
+  { id: "e1", cat: "Employment", q: "You pay an UNLICENSED worker to help install doors and call him a subcontractor. Legally he is:", opts: ["An independent contractor", "Your employee — with payroll taxes, workers' comp, and wage rules applying", "A joint venturer", "A day laborer with no status"], ans: 1, why: "An unlicensed 'sub' is your EMPLOYEE by law. That means withholding, workers' comp, overtime — all of it. Only a validly licensed contractor can be a true subcontractor." },
+  { id: "e2", cat: "Employment", q: "California sexual harassment prevention training is required for employers with:", opts: ["50+ employees only", "5 or more employees — 2 hrs for supervisors, 1 hr for others, every 2 years", "Union shops only", "It's optional"], ans: 1, why: "5+ employees triggers it: 2 hours for supervisors, 1 hour for everyone else, repeated every two years (and within 6 months of hire/promotion)." },
+  { id: "e3", cat: "Employment", q: "With every paycheck, California employers must provide:", opts: ["Nothing extra", "An itemized wage statement (hours, rates, deductions, dates)", "A copy of the timecard only", "A benefits summary"], ans: 1, why: "Itemized pay stubs are mandatory — gross wages, hours, rates, all deductions, pay period dates, employer name/address. Missing stubs carry per-employee penalties." },
+  { id: "e4", cat: "Employment", q: "Required state and federal labor law notices (minimum wage, safety, workers' comp, etc.) must be:", opts: ["Kept in the office file", "Posted where employees can see them", "Mailed to each employee annually", "Available on request only"], ans: 1, why: "Posting requirements are real: workplace posters where workers can read them — including the workers' comp 'notice to employees' and Cal/OSHA posters at the jobsite." },
+  // ===== NEW: INS & LIENS =====
+  { id: "i1", cat: "Ins & Liens", q: "Which license entity is REQUIRED by law to carry general liability insurance?", opts: ["Sole ownerships", "Partnerships", "LLCs — at least $1 million", "All contractors"], ans: 2, why: "Only LLCs must carry liability insurance by law: $1 million minimum (scaling up to $5 million with more members/employees). For everyone else it's smart but optional." },
+  { id: "i2", cat: "Ins & Liens", q: "Workers' compensation is called the 'exclusive remedy' because:", opts: ["Only one insurer can sell it", "An injured employee gets comp benefits instead of suing the employer, regardless of fault", "It excludes part-time workers", "It only covers exclusive contracts"], ans: 1, why: "No-fault trade-off: the worker gets medical care and wage benefits without proving fault, and in exchange generally cannot sue the employer for the injury." },
+  { id: "i3", cat: "Ins & Liens", q: "The difference between a CONDITIONAL and UNCONDITIONAL lien waiver:", opts: ["Conditional waivers are illegal", "A conditional waiver only takes effect once the payment actually clears; unconditional is effective immediately when signed", "Unconditional waivers need notarization", "There is no difference"], ans: 1, why: "Never sign an UNCONDITIONAL waiver before the check clears — you'd be giving up lien rights for money you might never receive. Conditional = 'effective IF paid.'" },
+  // ===== NEW: CONTRACTS =====
+  { id: "c1", cat: "Contracts", q: "Mid-job, the homeowner asks you to add a side gate. The safest way to handle it is:", opts: ["A handshake and do the work", "A written, signed change order stating the work and new price", "Add it to the final invoice", "A text message is enough"], ans: 1, why: "Change orders IN WRITING, signed before the extra work starts. With a 'complete agreement' clause, verbal extras may be unenforceable — you could do the work and never get paid for it." },
+  { id: "c2", cat: "Contracts", q: "On a private job, the owner must release RETENTION to the prime within ___ of completion, and the prime must pay subs their share within ___ of receiving it.", opts: ["10 days / 5 days", "45 days / 10 days", "90 days / 30 days", "30 days / 30 days"], ans: 1, why: "45 days owner→prime, then 10 days prime→subs. Wrongful withholding: 2%-per-month penalty plus attorney's fees." },
+  { id: "c3", cat: "Contracts", q: "A prime is late paying a sub's progress payment with no good-faith dispute. The penalty is:", opts: ["Nothing — it's a private matter", "2% per month on the amount due, plus attorney's fees", "A flat $100", "License revocation automatically"], ans: 1, why: "2% per month plus attorney's fees to the prevailing party — and willful violation is also a disciplinable offense. Pay your subs within 7 days of receiving each progress payment." },
+  // ===== NEW: PUBLIC WORKS =====
+  { id: "p1", cat: "Public Works", q: "Workers on California public works projects must be paid:", opts: ["Federal minimum wage", "The prevailing wage rate set by the Director of Industrial Relations (DIR)", "Whatever the bid assumed", "Union scale only if unionized"], ans: 1, why: "Prevailing wage — per-craft rates published by the DIR — applies to public works over $1,000. Bid using the DIR's published rates or your labor number will sink you." },
+  { id: "p2", cat: "Public Works", q: "To bid or work on public works projects, a contractor must first:", opts: ["Post a $100,000 cash deposit", "Register with the DIR (annual public works registration)", "Get a federal license", "Join a union"], ans: 1, why: "Annual DIR registration is required BEFORE bidding or performing public work — separate from your CSLB license. Unregistered contractors can be kicked off jobs and fined." },
+  { id: "p3", cat: "Public Works", q: "On public works, certified payroll records (CPRs) must be:", opts: ["Kept privately for 1 year", "Submitted to the Labor Commissioner (electronically), showing each worker's hours and wages", "Given only to the surety", "Optional under $100,000"], ans: 1, why: "CPRs prove prevailing wage compliance and go to the Labor Commissioner's eCPR system. Falsifying them is a crime, not just a violation." },
+  { id: "p4", cat: "Public Works", q: "On public works contracts of $30,000 or more, contractors generally must:", opts: ["Hire only journeymen", "Employ registered apprentices at a ratio of at least 1 apprentice hour per 5 journeyman hours", "Pay double time on Fridays", "Subcontract 50% of the work"], ans: 1, why: "The 1:5 apprentice-to-journeyman hour ratio (per craft) applies at $30,000+. Request dispatch from an approved apprenticeship program and keep proof." },
+  { id: "p5", cat: "Public Works", q: "Prevailing wage requirements generally apply to public works projects over:", opts: ["$500", "$1,000", "$25,000", "$100,000"], ans: 1, why: "Prevailing wage applies to public works over $1,000 — that's the number to remember. (Separate thresholds you'll also see: payment bonds over $25,000, and apprentice ratios at $30,000.)" },
+  // ===== NEW: SAFETY =====
+  { id: "s1", cat: "Safety", q: "EVERY California employer must have which written safety document?", opts: ["An OSHA 300 log only", "An Injury and Illness Prevention Program (IIPP)", "A union safety agreement", "A first-aid certificate"], ans: 1, why: "The IIPP is mandatory for every employer: named responsible person, hazard identification, correction procedures, training, and communication. It's Cal/OSHA's most-cited violation." },
+  { id: "s2", cat: "Safety", q: "Construction employers must also adopt and post at the jobsite a:", opts: ["Profit-sharing plan", "Code of Safe Practices", "Blueprint set", "Diversity statement"], ans: 1, why: "The Code of Safe Practices — general and job-specific safety rules — must be posted at each jobsite office or readily available, and it feeds your 10-working-day tailgate meetings." },
+  { id: "s3", cat: "Safety", q: "A Cal/OSHA permit is required before workers enter an excavation or trench that is:", opts: ["Any depth", "3 feet or deeper", "5 feet or deeper", "10 feet or deeper"], ans: 2, why: "5 feet or deeper (that a person enters) requires a Cal/OSHA permit — plus shoring/sloping protection. Same permit rule applies to buildings 3+ stories. Trench collapses kill fast; this is heavily tested." },
+  { id: "s4", cat: "Safety", q: "Under California's heat illness rules, outdoor workers must have shade available when the temperature exceeds:", opts: ["70°F", "80°F", "90°F", "100°F"], ans: 1, why: "Shade at 80°F+, fresh water (a quart per hour) at ALL times, cool-down rest breaks on request, and high-heat procedures at 95°F. Summer install jobs make this real for garage door crews." },
+  { id: "s5", cat: "Safety", q: "Safety Data Sheets (SDS) for hazardous products used on the job must be:", opts: ["Locked in the office safe", "Readily accessible to employees during their shifts", "Filed with the CSLB", "Memorized by the foreman"], ans: 1, why: "Hazard Communication: label containers, train workers, and keep SDSs where crews can actually reach them — lubricants, solvents, and paints on a door job all count." },
+
+  /* ============ MATH / CALCULATION QUESTIONS ============
+     The real exam gives you an on-screen calculator. These are the
+     computation types that show up. Work the steps, don't eyeball it. */
+  { id: "m1", cat: "Contracts", q: "A home improvement contract totals $8,000. The maximum legal down payment is:", opts: ["$800", "$1,000", "$1,600", "$2,000"], ans: 0, why: "The rule applies to EVERY home improvement contract: the LESSER of $1,000 or 10%. Here 10% of $8,000 = $800, which is less than $1,000, so $800 is the cap. Below a $10,000 contract the 10% figure is always the smaller one." },
+  { id: "m2", cat: "Contracts", q: "A home improvement contract totals $20,000. The maximum legal down payment is:", opts: ["$1,000", "$2,000", "$2,500", "$5,000"], ans: 0, why: "The rule applies to EVERY home improvement contract: the LESSER of $1,000 or 10%. Here 10% = $2,000, so the $1,000 figure is smaller and becomes the cap. $10,000 is just the crossover point — below it the 10% figure is smaller, above it the flat $1,000 is." },
+  { id: "m3", cat: "Contracts", q: "You're 60% complete on a $40,000 contract. The most you may have collected in progress payments so far is:", opts: ["$20,000", "$24,000", "$28,000", "$40,000"], ans: 1, why: "Payments can't exceed the value of work performed plus materials delivered. 60% × $40,000 = $24,000. Getting ahead of the work is a violation, even if the customer offers." },
+  { id: "m4", cat: "Contracts", q: "An owner holds 10% retention on a $50,000 contract. The amount withheld is:", opts: ["$500", "$2,500", "$5,000", "$10,000"], ans: 2, why: "10% × $50,000 = $5,000, held until the job is accepted. Plan cash flow around not seeing that money until 45 days after completion (then 10 days to pass shares to subs)." },
+  { id: "m5", cat: "Employment", q: "An installer earns $28/hour and works 10 hours in one day. His gross pay for that day is:", opts: ["$280", "$294", "$308", "$420"], ans: 2, why: "First 8 hrs at straight time: 8 × $28 = $224. Hours 9–10 at 1.5×: 2 × $42 = $84. Total $308. California pays daily OT after 8 — not just weekly after 40." },
+  { id: "m6", cat: "Employment", q: "A worker earning $30/hour puts in 13 hours in one day. Gross pay for that day:", opts: ["$390", "$450", "$480", "$585"], ans: 2, why: "Hrs 1–8 straight: 8 × $30 = $240. Hrs 9–12 at 1.5× ($45): 4 × $45 = $180. Hr 13 at 2× ($60) = $60. Total $480. Remember: 1.5× after 8, 2× after 12." },
+  { id: "m7", cat: "Employment", q: "An employee's gross pay is $2,000. The FICA amount withheld from HIS check is:", opts: ["$124", "$153", "$290", "$306"], ans: 1, why: "FICA = 7.65% (6.2% Social Security + 1.45% Medicare). $2,000 × .0765 = $153. The employer matches another $153, so $306 total goes to the government." },
+  { id: "m8", cat: "Finances", q: "Your direct job costs are $12,000 and you apply a 25% MARKUP. Your price is:", opts: ["$15,000", "$16,000", "$14,400", "$9,000"], ans: 0, why: "Markup is a percentage OF COST: $12,000 × 1.25 = $15,000. Your actual margin on that price is only 20% ($3,000 ÷ $15,000) — markup always sounds bigger than it is." },
+  { id: "m9", cat: "Finances", q: "Your direct job costs are $12,000 and you want a 25% MARGIN. Your price is:", opts: ["$15,000", "$16,000", "$14,400", "$18,000"], ans: 1, why: "Margin is a percentage OF PRICE: price = cost ÷ (1 − margin) = $12,000 ÷ 0.75 = $16,000. Same 25%, $1,000 more in your pocket. This markup/margin trap is the most common bidding mistake in construction." },
+  { id: "m10", cat: "Finances", q: "Current assets are $90,000 and current liabilities are $60,000. The current ratio is:", opts: ["0.67 to 1", "1.5 to 1", "2 to 1", "3 to 1"], ans: 1, why: "$90,000 ÷ $60,000 = 1.5:1. Below the healthy 2:1 benchmark but still solvent. Under 1:1 means you can't cover short-term debts with short-term assets." },
+  { id: "m11", cat: "Finances", q: "Current assets are $90,000 and current liabilities are $60,000. Working capital is:", opts: ["$30,000", "$60,000", "$90,000", "$150,000"], ans: 0, why: "Working capital = current assets − current liabilities = $30,000. That's the cash cushion for payroll and materials. RATIO divides those numbers; WORKING CAPITAL subtracts them." },
+  { id: "m12", cat: "Finances", q: "Revenue $80,000, direct job costs $50,000, overhead $20,000. Your GROSS profit is:", opts: ["$10,000", "$20,000", "$30,000", "$60,000"], ans: 2, why: "Gross profit = revenue − DIRECT costs = $80,000 − $50,000 = $30,000. Overhead is not subtracted yet — that step gives you NET profit." },
+  { id: "m13", cat: "Finances", q: "Revenue $80,000, direct job costs $50,000, overhead $20,000. Your NET profit is:", opts: ["$10,000", "$20,000", "$30,000", "$50,000"], ans: 0, why: "Net = revenue − direct − overhead = $10,000. Contractors who bid off the $30,000 gross number and forget the $20,000 of overhead think they made three times what they actually made." },
+  { id: "m14", cat: "Finances", q: "You buy a $35,000 truck with a 5-year life and $5,000 salvage value. Annual straight-line depreciation is:", opts: ["$5,000", "$6,000", "$7,000", "$8,000"], ans: 1, why: "(Cost − salvage) ÷ life = ($35,000 − $5,000) ÷ 5 = $6,000/year. Straight-line spreads it evenly; don't forget to subtract salvage first." },
+  { id: "m15", cat: "Finances", q: "Direct costs are $20,000. You add 15% for overhead, then 10% profit on the total. Your bid is:", opts: ["$23,000", "$25,300", "$25,000", "$24,500"], ans: 1, why: "Overhead: $20,000 × .15 = $3,000 → subtotal $23,000. Profit: $23,000 × .10 = $2,300. Bid = $25,300. Always layer overhead FIRST, then profit on the total." },
+  { id: "m16", cat: "Finances", q: "Your monthly overhead is $8,000 and your gross margin is 25%. Monthly revenue needed to break even:", opts: ["$10,000", "$24,000", "$32,000", "$40,000"], ans: 2, why: "Break-even = overhead ÷ gross margin = $8,000 ÷ 0.25 = $32,000. Every dollar of revenue only contributes 25 cents toward overhead, so you need four times the overhead in sales." },
+  { id: "m17", cat: "Finances", q: "You pay an installer $25/hour and your labor burden (taxes, comp, benefits) runs 30%. Your true hourly cost is:", opts: ["$27.50", "$30.00", "$32.50", "$35.00"], ans: 2, why: "$25 × 1.30 = $32.50. Bidding at the raw wage instead of the burdened rate silently eats your profit on every single hour worked." },
+  { id: "m18", cat: "Finances", q: "You bid a job at $60,000 and your direct costs came in at $52,000. Your gross profit percentage is:", opts: ["8%", "13.3%", "15.4%", "18%"], ans: 1, why: "Gross profit $8,000 ÷ revenue $60,000 = 13.3%. Note it's divided by the SELLING PRICE. Dividing by cost ($8,000 ÷ $52,000 = 15.4%) gives you markup, not margin." },
+
+  /* ============ MORE CONTRACTS ============ */
+  { id: "c4", cat: "Contracts", q: "Every home improvement contract must include approximate:", opts: ["Weather contingencies", "Start and completion dates", "Subcontractor names", "Material brand names"], ans: 1, why: "Approximate start and completion dates are required content — along with the contractor's name/address/license number, total price, payment schedule, and the required notices." },
+  { id: "c5", cat: "Contracts", q: "The 3-day 'Notice of Cancellation' must be given to the buyer:", opts: ["Verbally at signing", "In duplicate, attached to the contract", "Within 10 days of signing", "Only if requested"], ans: 1, why: "Two copies of the cancellation notice go to the buyer with the contract. If you don't provide it, the buyer's cancellation clock never starts — they can cancel much later." },
+  { id: "c6", cat: "Contracts", q: "The statute of limitations to sue on a WRITTEN contract in California is:", opts: ["1 year", "2 years", "4 years", "10 years"], ans: 2, why: "Written contracts: 4 years. ORAL contracts: only 2 years. Another reason to get everything in writing — you double your time to collect." },
+  { id: "c7", cat: "Contracts", q: "A contractor submits a bid and the owner accepts it before it's withdrawn. Legally:", opts: ["Nothing binding happens yet", "A contract is formed — the bid was an offer and acceptance completed it", "Only a letter of intent exists", "The contractor may re-price freely"], ans: 1, why: "Bid = offer. Acceptance = contract (assuming consideration, capacity, legal purpose). That's why a bidding mistake is so costly — withdraw a bad bid BEFORE it's accepted." },
+  { id: "c8", cat: "Contracts", q: "A 'liquidated damages' clause in a construction contract:", opts: ["Is always unenforceable", "Sets an agreed dollar amount per day of unexcused delay", "Waives the owner's right to sue", "Applies only to public works"], ans: 1, why: "It pre-sets damages (e.g., $500/day late) so nobody has to prove actual loss. It must be a reasonable estimate — a penalty designed to punish rather than compensate can be struck down." },
+  { id: "c9", cat: "Contracts", q: "Which is the LEAST reliable way to protect yourself on extra work?", opts: ["A signed written change order", "An email confirmation the owner replies to", "A verbal agreement at the jobsite", "A revised contract addendum"], ans: 2, why: "Verbal agreements on extras are how contractors go unpaid — especially with an integration clause in the contract. Written change order, signed, BEFORE the work starts." },
+
+  /* ============ MORE EMPLOYMENT ============ */
+  { id: "e5", cat: "Employment", q: "An employee working an 8-hour shift is entitled to an unpaid meal period of:", opts: ["15 minutes after 3 hours", "30 minutes after 5 hours", "60 minutes after 6 hours", "No meal period is required"], ans: 1, why: "A 30-minute unpaid meal period once the shift passes 5 hours (a second one after 10 hours). Miss it and you owe an extra hour of pay as a premium." },
+  { id: "e6", cat: "Employment", q: "Paid rest breaks must be provided at the rate of:", opts: ["10 minutes per 4 hours worked", "5 minutes per hour", "15 minutes per 8 hours", "Only at the employer's discretion"], ans: 0, why: "10 minutes PAID per 4 hours worked (or major fraction). Meal periods are 30 minutes and UNPAID — the exam likes to swap those two." },
+  { id: "e7", cat: "Employment", q: "An employer who willfully fails to pay a terminated employee's final wages faces a waiting time penalty of:", opts: ["$100 flat", "Up to 30 days of that employee's wages", "Triple damages", "License revocation"], ans: 1, why: "Up to 30 days of daily wages just for being late. On a $200/day installer that's $6,000 — for a paycheck you already owed. Pay fired employees IMMEDIATELY." },
+  { id: "e8", cat: "Employment", q: "Under California's ABC test, a worker is presumed to be an EMPLOYEE unless the hiring business proves all three of:", opts: ["The worker has a business card, tools, and a truck", "Freedom from control, work outside the usual course of business, and an independently established trade", "The worker signs a waiver, is paid by check, and files a 1099", "The worker is over 18, insured, and part-time"], ans: 1, why: "The ABC test is strict — all three prongs, or they're an employee. Prong B is the killer: an installer doing door installs for a door company is inside your usual course of business." },
+  { id: "e9", cat: "Employment", q: "The purpose of Form W-4 is to:", opts: ["Report a new hire to the EDD", "Tell the employer how much income tax to withhold", "Verify work authorization", "Report annual wages to the employee"], ans: 1, why: "W-4 = withholding instructions from the employee. I-9 = work authorization (3 business days). DE 34 = new hire report to EDD (20 days). W-2 = year-end wage statement." },
+
+  /* ============ MORE LICENSING ============ */
+  { id: "l1", cat: "Licensing", q: "The three license classifications issued by CSLB are:", opts: ["Residential, commercial, industrial", "A (General Engineering), B (General Building), and C (Specialty)", "Master, journeyman, apprentice", "Prime, sub, supplier"], ans: 1, why: "Class 'A' General Engineering, Class 'B' General Building, and 'C' Specialty classifications (including C-61 Limited Specialty, where your D-28 lives)." },
+  { id: "l2", cat: "Licensing", q: "A 'B' General Building contractor may take a project only if it involves:", opts: ["Any single trade", "At least two unrelated trades", "Only framing", "A permit over $50,000"], ans: 1, why: "Two or more UNRELATED trades — otherwise the job belongs to the appropriate C specialty contractor. A 'B' can't take a doors-only job that a D-28 should do." },
+  { id: "l3", cat: "Licensing", q: "Your license number must appear:", opts: ["Only on contracts", "In ALL advertising, on contracts, bids, and proposals", "Only on vehicles", "Only when the customer asks"], ans: 1, why: "Business cards, websites, truck lettering, flyers, bids, contracts — everywhere you solicit work. Advertising without it is a citable violation." },
+  { id: "l4", cat: "Licensing", q: "California requires licensed contractors to complete continuing education for renewal:", opts: ["8 hours annually", "16 hours every 2 years", "No continuing education is required", "Only for A and B classes"], ans: 2, why: "CSLB requires NO continuing education — unlike many states. Renewal means paying the fee and keeping your bond and workers' comp current." },
+  { id: "l5", cat: "Licensing", q: "All license applicants must submit to:", opts: ["A credit check", "Fingerprinting and a criminal background check", "A physical exam", "An IRS audit"], ans: 1, why: "Fingerprints go through DOJ and FBI. A conviction substantially related to contracting can mean denial — disclose honestly, since concealment is worse than the conviction." },
+  { id: "l6", cat: "Licensing", q: "Work involving more than 100 square feet of asbestos-containing material requires:", opts: ["Nothing special", "Asbestos certification and Cal/OSHA registration", "Only a dust mask", "A B license"], ans: 1, why: "Over 100 sq ft triggers asbestos certification (an exam with CSLB) plus Cal/OSHA registration. Older garage door jobs can disturb asbestos siding or drywall — know when to stop and call a certified abatement contractor." },
+
+  /* ============ MORE INSURANCE & LIENS ============ */
+  { id: "i4", cat: "Ins & Liens", q: "There are four statutory lien waiver forms. They are divided by:", opts: ["Residential vs commercial", "Conditional vs unconditional, and progress vs final payment", "Prime vs subcontractor", "Public vs private", ], ans: 1, why: "Conditional/Unconditional × Progress/Final = four forms. Use CONDITIONAL until the check clears, then unconditional. Signing the wrong one gives away rights for money you haven't got." },
+  { id: "i5", cat: "Ins & Liens", q: "General liability insurance primarily covers:", opts: ["Your employees' work injuries", "Third-party bodily injury and property damage you cause", "Your own tools being stolen", "Your vehicles"], ans: 1, why: "GL = damage you do to OTHERS (a door falls on the customer's car). Workers' comp = your EMPLOYEES' injuries. Inland marine/tool floater = your tools. Commercial auto = your vehicles." },
+  { id: "i6", cat: "Ins & Liens", q: "An 'experience modification rate' (EMR) of 1.25 on your workers' comp policy means:", opts: ["You get a 25% discount", "You pay 25% more than average due to claims history", "You have 25 employees", "Your policy expires in 25 months"], ans: 1, why: "1.0 is average. Above 1.0 = worse-than-average claims and higher premiums; below 1.0 earns a discount. A good safety program pays you back directly here." },
+  { id: "i7", cat: "Ins & Liens", q: "A general contractor asks to be named 'additional insured' on your policy. This means:", opts: ["They pay your premium", "Your policy also protects them for liability arising from your work", "You get access to their coverage", "Nothing legally"], ans: 1, why: "Standard on commercial jobs — your GL extends to cover the GC for claims arising from YOUR work. Expect to provide a certificate of insurance proving it before you start." },
+
+  /* ============ MORE PUBLIC WORKS ============ */
+  { id: "p6", cat: "Public Works", q: "A bid bond on a public works project typically guarantees:", opts: ["That subs get paid", "That the winning bidder will sign the contract and provide required bonds", "That the job finishes on time", "The owner's financing"], ans: 1, why: "Usually 10% of the bid. If you win and walk away, the surety pays the difference to the next bidder — and then comes after you." },
+  { id: "p7", cat: "Public Works", q: "A performance bond on public works generally guarantees completion in the amount of:", opts: ["10% of the contract", "50% of the contract", "100% of the contract", "$25,000 flat"], ans: 2, why: "100% of the contract price — the surety finishes the job if you can't. Payment bonds (subs and suppliers) are also typically 100% and required over $25,000." },
+  { id: "p8", cat: "Public Works", q: "On public works, overtime is generally owed after how many hours per day?", opts: ["6", "8", "10", "12"], ans: 1, why: "8 hours a day / 40 a week on public works, at the prevailing OT rate. Prevailing wage isn't just the base rate — it includes fringe benefits and the correct OT multipliers." },
+
+  /* ============ MORE SAFETY ============ */
+  { id: "s6", cat: "Safety", q: "In California construction, fall protection is generally required when working at heights of:", opts: ["4 feet", "6 feet", "7.5 feet", "15 feet"], ans: 2, why: "7.5 feet in California construction (federal OSHA says 6). Guardrails, personal fall arrest, or safety nets — relevant any time you're on a ladder or lift setting a high door or opener." },
+  { id: "s7", cat: "Safety", q: "Before servicing a garage door opener, the correct safety procedure is to:", opts: ["Work quickly", "Lock out and tag out the power source", "Tell a coworker", "Wear gloves only"], ans: 1, why: "Lockout/tagout: de-energize, lock the disconnect, tag it with your name. An opener that cycles while your hands are in the mechanism causes amputations. This applies directly to your trade." },
+  { id: "s8", cat: "Safety", q: "The Cal/OSHA Form 300 is:", opts: ["A permit application", "The log of work-related injuries and illnesses", "A prevailing wage report", "A workers' comp claim form"], ans: 1, why: "The injury/illness log. Post the 300A summary February 1 – April 30 each year, and keep the records for 5 years." },
+  { id: "s9", cat: "Safety", q: "A 'competent person' on a jobsite is someone who:", opts: ["Has 10 years of experience", "Can identify hazards AND has authority to correct them immediately", "Holds a contractor's license", "Passed a written safety test"], ans: 1, why: "Both halves matter: recognition of hazards PLUS authority to fix them on the spot. Required for trenching, scaffolding, and fall protection oversight." },
+  { id: "s10", cat: "Safety", q: "Employers must report a serious injury to Cal/OSHA immediately by:", opts: ["Mailing Form 300", "Phone or the online reporting portal", "Telling the workers' comp carrier only", "Posting a notice on site"], ans: 1, why: "Immediate report by phone or Cal/OSHA's online system for any serious injury, illness, or death — 'immediately' means as soon as practically possible, not end of shift. Failure to report carries its own penalty." },
+];
+const SHEETS = [
+  { title: "Money Numbers", rows: [
+    ["License required at", "$1,000+ (labor + materials)"],
+    ["HIC must be written over", "$500"],
+    ["Service & repair contract max", "$750"],
+    ["Max HIC down payment", "$1,000 or 10% — the LESSER"],
+    ["License bond", "$25,000"],
+    ["LLC worker bond", "$100,000 extra"],
+    ["Diversion felony line", "$2,350"],
+    ["Top CSLB citation (unlicensed)", "$30,000"],
+    ["Small claims (individual / biz)", "$10,000 / $5,000"],
+    ["Mandatory arbitration", "≤ $25,000"],
+    ["Voluntary arbitration", "$25,000–$50,000"],
+    ["Public works payment bond", "required over $25,000"],
+  ]},
+  { title: "The 90-Day Family", rows: [
+    ["Pay license fee after pass letter", "90 days"],
+    ["Notify Registrar: disassociation / replace QI", "90 days"],
+    ["Notify Registrar: name, address, comp carrier", "90 days"],
+    ["Continuance after a death", "90 days"],
+    ["Lien or stop notice, no completion notice filed", "90 days"],
+    ["Foreclosure suit after recording lien", "90 days"],
+    ["Send civil judgment copy to CSLB", "90 days"],
+  ]},
+  { title: "Lien Law Ladder", rows: [
+    ["Preliminary notice", "20 days from first work"],
+    ["Notice of completion recorded by owner", "15 days"],
+    ["Notice of cessation possible after", "30 days of stopped work"],
+    ["Sub's lien (completion notice filed)", "30 days"],
+    ["Prime's lien (completion notice filed)", "60 days"],
+    ["Anyone's lien (no notice filed)", "90 days"],
+    ["Notice of non-responsibility", "post + record in 10 days"],
+  ]},
+  { title: "People & Paychecks", rows: [
+    ["Fired employee paid", "IMMEDIATELY"],
+    ["Quit, no notice", "within 72 hours"],
+    ["Quit with 72-hr notice", "last day"],
+    ["I-9 employer section", "3 business days"],
+    ["New hire → EDD", "20 days"],
+    ["Tailgate safety meetings", "every 10 working days"],
+    ["Supervisor safety meetings", "monthly"],
+    ["Serious injury → Cal/OSHA", "IMMEDIATELY"],
+    ["Accident → your insurer", "5 days"],
+    ["Injury records kept", "5 years (asbestos: 30)"],
+  ]},
+  { title: "Timers on the License", rows: [
+    ["Pass both exams within", "18 months"],
+    ["Passing score valid", "5 years"],
+    ["Active renewal", "every 2 years"],
+    ["Inactive renewal", "every 4 years"],
+    ["Expired license renewable", "within 5 years"],
+    ["Project records kept", "5 years"],
+    ["Patent defect complaint", "4 years"],
+    ["Latent defect complaint", "10 years"],
+    ["Citation appeal", "15 working days"],
+    ["Agreement to Arbitrate returned", "30 days"],
+  ]},
+  { title: "Math You'll Need", rows: [
+    ["Markup (% of COST)", "price = cost × (1 + %)"],
+    ["Margin (% of PRICE)", "price = cost ÷ (1 − %)"],
+    ["Gross profit", "revenue − direct costs"],
+    ["Net profit", "gross − overhead"],
+    ["Current ratio", "current assets ÷ current liab."],
+    ["Working capital", "current assets − current liab."],
+    ["Break-even revenue", "overhead ÷ gross margin %"],
+    ["Straight-line depreciation", "(cost − salvage) ÷ years"],
+    ["Labor burden", "wage × (1 + burden %)"],
+    ["Daily OT", "1.5× after 8 hrs, 2× after 12"],
+    ["FICA each side", "7.65% (6.2 SS + 1.45 Med)"],
+    ["Max HIC down payment", "lesser of $1,000 or 10%"],
+  ]},
+  { title: "Dig Safe (811)", rows: [
+    ["Call before digging", "2 working days min"],
+    ["Max advance notice", "14 calendar days"],
+    ["Ticket valid", "28 calendar days"],
+    ["Tolerance zone (hand dig)", "24 in. each side"],
+    ["Your excavation marks", "WHITE"],
+    ["Electric / Gas / Water / Sewer", "Red / Yellow / Blue / Green"],
+    ["Negligent vs willful fine", "$10,000 / $50,000"],
+    ["Human remains found", "STOP + County Coroner"],
+  ]},
+];
+
+
+/* Plain-English definitions. Written to be understood cold, with no other
+   legal knowledge assumed. Longer terms are listed first so "mechanics lien"
+   matches before "lien". */
+const GLOSSARY = [
+  // --- liens & property ---
+  {t:"mechanics lien", d:"A legal claim you file against someone's PROPERTY when they don't pay you. It sticks to the house or building. The owner usually can't sell or refinance until it's paid off."},
+  {t:"stop payment notice", d:"A demand that freezes the MONEY still sitting with the owner or the bank, instead of going after the property. This is what you use on government jobs, where you can't lien the property."},
+  {t:"preliminary notice", d:"A letter you send at the START of a job telling the owner and lender you're working there. It's not a complaint. But if you skip it, you lose the right to file a lien later."},
+  {t:"notice of completion", d:"A paper the OWNER files with the county saying the job is finished. Filing it shortens how long everyone has to file a lien."},
+  {t:"notice of cessation", d:"A paper the owner files when work has STOPPED for 30 days straight. Same effect as a notice of completion: it starts the lien clock."},
+  {t:"notice of non-responsibility", d:"A sign the owner posts and records saying 'I didn't order this work, don't lien me.' Used when a tenant hires a contractor without the owner's OK."},
+  {t:"foreclose", d:"To force the sale of the property to collect what you're owed. Filing a lien is step one; foreclosing is actually going to court to make them sell it."},
+  {t:"lis pendens", d:"Latin for 'lawsuit pending.' A notice you record at the county so anyone looking at the property can see there's a court case over it."},
+  {t:"lien waiver", d:"A form you sign giving up your lien rights, usually in exchange for payment. CONDITIONAL means 'only if the check actually clears.' UNCONDITIONAL means 'I give up my rights right now.' Never sign unconditional before the money is in the bank."},
+  {t:"real property", d:"Land and anything permanently attached to it — the dirt, the house, the garage. As opposed to things you can pick up and carry away."},
+
+  // --- contracts ---
+  {t:"mutual assent", d:"Both sides agreed to the same deal. One side offered, the other accepted. Also called 'a meeting of the minds.'"},
+  {t:"consideration", d:"Each side gives up something of value. You give labor and materials; they give money. A promise with nothing given in return isn't a contract."},
+  {t:"capacity", d:"Being legally allowed to sign a contract — an adult, of sound mind, not intoxicated. A contract signed by a child generally can't be enforced against them."},
+  {t:"void", d:"The contract NEVER legally existed. Nobody can enforce it. Example: a contract for illegal work, or one signed by an unlicensed contractor."},
+  {t:"voidable", d:"The contract is real, but the person who got wronged (through fraud, threats, or a serious mistake) can cancel it if they want to. Their choice."},
+  {t:"duress", d:"Being forced or threatened into signing. A contract signed under duress can be cancelled by the person who was threatened."},
+  {t:"integration clause", d:"A line in the contract saying 'this document is the whole deal.' Anything you promised out loud but didn't write down doesn't count anymore."},
+  {t:"complete agreement", d:"Same as an integration clause — the written contract is the entire agreement, and verbal side-promises don't count."},
+  {t:"change order", d:"A written add-on to the contract when the customer wants something extra or different. Get it signed BEFORE you do the extra work, or you may never get paid for it."},
+  {t:"liquidated damages", d:"A dollar amount agreed to IN ADVANCE that you owe for each day you're late. Saves everyone from arguing later about what the delay actually cost."},
+  {t:"home solicitation", d:"A sale where YOU came to THEM — knocked on the door, cold-called, or met at a home show. These give the buyer extra cancellation rights because they didn't go looking for you."},
+  {t:"service and repair contract", d:"A small job ($750 or less) where the CUSTOMER called you, and it's normally done in one visit. It has its own simpler set of rules."},
+  {t:"progress payment", d:"A partial payment made as the work moves along, instead of one lump sum at the end."},
+  {t:"retention", d:"Money the owner holds back from each payment — usually 5-10% — until the whole job is done and accepted. Also called retainage. Budget for not seeing it for a while."},
+  {t:"statute of limitations", d:"The deadline for filing a lawsuit. Miss it and you lose the right to sue at all, even if you were completely in the right."},
+  {t:"substantial compliance", d:"A narrow legal excuse where a contractor whose license had a technical problem may still be allowed to collect payment. Hard to win — don't plan around it."},
+
+  // --- licensing ---
+  {t:"Registrar", d:"The person who runs the day-to-day operations of the CSLB — issues licenses, investigates complaints, and disciplines contractors. The Board sets policy; the Registrar enforces it."},
+  {t:"qualifying individual", d:"The person whose experience and exam scores the license is built on. Every license needs one. Could be you as the owner, or an employee/officer who qualifies on the company's behalf."},
+  {t:"RMO", d:"Responsible Managing Officer — an officer of a corporation who serves as the license's qualifying individual."},
+  {t:"RME", d:"Responsible Managing Employee — an employee (not an owner) who qualifies the license. Must actually work there at least 32 hours a week or 80% of business hours."},
+  {t:"disassociation", d:"When the qualifying individual leaves the business. You have 90 days to notify the CSLB and name a replacement, or the license gets suspended."},
+  {t:"joint venture", d:"Two or more licensed companies teaming up to bid one project together, under a shared license."},
+  {t:"reciprocity", d:"An agreement between states to accept each other's licensing. California has this with Arizona, Nevada, and Utah — but only for the TRADE exam, never the Law and Business exam."},
+  {t:"citation", d:"An official written violation from the CSLB with a fine attached. Not a criminal charge, but you must pay it or appeal within 15 working days."},
+  {t:"delinquency fee", d:"The late penalty for renewing your license after it expired — 50% of the renewal fee on top of the renewal itself."},
+  {t:"diversion of funds", d:"Taking money a customer paid for THEIR job and spending it on something else. Over $2,350 this is a felony."},
+  {t:"patent defect", d:"A problem you can SEE — obvious on inspection. Cracked stucco, a crooked door. Complaint window: 4 years."},
+  {t:"latent defect", d:"A HIDDEN problem, usually structural, that shows up later. Bad framing behind a wall. Complaint window: 10 years, because nobody could have spotted it."},
+
+  // --- bonds & insurance ---
+  {t:"surety", d:"The bonding company that guarantees you'll do what you promised. Important: if they pay out a claim, they come after YOU for the money. A bond is a guarantee, not insurance."},
+  {t:"principal", d:"On a bond, that's you — the contractor whose performance is being guaranteed."},
+  {t:"obligee", d:"On a bond, the party being protected — usually the property owner or the State of California."},
+  {t:"bid bond", d:"Guarantees that if you win the bid, you'll actually sign the contract. Usually about 10% of your bid."},
+  {t:"performance bond", d:"Guarantees the job gets finished per the contract. If you can't finish, the bonding company pays to have it completed."},
+  {t:"payment bond", d:"Guarantees your subs and material suppliers get paid. Required on public jobs over $25,000."},
+  {t:"disciplinary bond", d:"An extra, larger bond the CSLB makes you post to get your license back after discipline. Can run up to 10 times the normal bond."},
+  {t:"additional insured", d:"When a general contractor asks to be added to YOUR insurance policy, so your coverage also protects them for problems caused by your work."},
+  {t:"exclusive remedy", d:"The trade-off in workers' comp: an injured employee gets medical care and wage benefits automatically without proving anyone was at fault, and in exchange they generally can't sue you over the injury."},
+  {t:"experience modification rate", d:"A number that adjusts your workers' comp premium based on your claims history. 1.0 is average. Above 1.0 you pay more; below 1.0 you get a discount."},
+  {t:"general liability", d:"Insurance for damage YOU cause to other people or their property — a door falls on a customer's car. Different from workers' comp, which covers your own employees' injuries."},
+
+  // --- money & accounting ---
+  {t:"assets", d:"Everything the business owns that has value — cash, trucks, tools, money customers owe you."},
+  {t:"liabilities", d:"Everything the business owes — loans, unpaid bills, taxes due."},
+  {t:"owner's equity", d:"What's actually yours after debts are subtracted. Assets minus liabilities."},
+  {t:"current assets", d:"Assets you could turn into cash within a year — cash on hand, money customers owe you, materials in the shop."},
+  {t:"current liabilities", d:"Bills coming due within a year — this month's payroll, the credit card, the next loan payment."},
+  {t:"working capital", d:"Current assets MINUS current liabilities. The cushion of money you have to cover near-term bills."},
+  {t:"current ratio", d:"Current assets DIVIDED BY current liabilities. 2 to 1 is considered healthy. Below 1 to 1 means you can't cover your short-term bills."},
+  {t:"direct costs", d:"Costs you can point at one specific job — the springs, the track, the installer's hours on that job."},
+  {t:"overhead", d:"Costs of being in business that aren't tied to any one job — rent, phone, insurance, advertising, the bookkeeper. Spread across all your jobs."},
+  {t:"gross profit", d:"Revenue minus DIRECT costs only. It looks bigger than your real profit because overhead hasn't been subtracted yet."},
+  {t:"net profit", d:"What's actually left after subtracting BOTH direct costs and overhead. This is the real number."},
+  {t:"markup", d:"A percentage added on top of your COST. Cost $100 plus 25% markup = $125 price."},
+  {t:"margin", d:"Profit measured as a percentage of the PRICE. That same $125 price with $100 cost is only a 20% margin. Markup and margin are different numbers — this trips up a lot of contractors."},
+  {t:"labor burden", d:"The real cost of an employee beyond their wage — payroll taxes, workers' comp, benefits. Often adds 25-35% on top of the hourly rate."},
+  {t:"break-even", d:"The amount of revenue you need just to cover costs — no profit, no loss."},
+  {t:"job costing", d:"Tracking what a job ACTUALLY cost versus what you estimated, so your next bid is more accurate."},
+  {t:"depreciation", d:"Spreading the cost of something expensive and long-lasting, like a truck, across the years you'll use it, instead of counting it all in one year."},
+  {t:"salvage value", d:"What you expect the truck or equipment to still be worth at the end of its useful life."},
+  {t:"accrual", d:"An accounting method where you record income when you EARN it and expenses when you INCUR them, even if no money has moved yet."},
+  {t:"cash basis", d:"An accounting method where you only record things when money actually changes hands."},
+  {t:"double taxation", d:"When a C corporation pays tax on its profits, and then shareholders pay tax AGAIN on the dividends they receive from those same profits."},
+
+  // --- employment & payroll ---
+  {t:"FICA", d:"Social Security and Medicare tax. 7.65% comes out of the employee's check and the employer pays a matching 7.65%."},
+  {t:"FUTA", d:"Federal unemployment tax. Paid by the EMPLOYER only — never withheld from the worker."},
+  {t:"SUI", d:"State Unemployment Insurance. Employer pays this one too."},
+  {t:"SDI", d:"State Disability Insurance. Withheld from the EMPLOYEE's paycheck."},
+  {t:"PIT", d:"Personal Income Tax withheld from the employee's paycheck and sent to the state."},
+  {t:"I-9", d:"The federal form proving a new hire is legally allowed to work in the U.S. Employer's part must be done within 3 business days of their start."},
+  {t:"W-4", d:"The form where the employee tells you how much income tax to withhold from their pay."},
+  {t:"ABC test", d:"California's strict three-part test for whether someone is truly an independent contractor. You must pass all three parts or they're legally your employee, with all the taxes and comp that come with it."},
+  {t:"waiting time penalty", d:"A penalty of up to 30 days of that worker's wages for being late with a final paycheck. Expensive — pay fired employees immediately."},
+  {t:"prevailing wage", d:"The minimum hourly rate (plus benefits) set by the state for each trade on government jobs. Higher than normal market rates. Applies to public works over $1,000."},
+  {t:"certified payroll", d:"Payroll records you must submit on government jobs proving you paid everyone the correct prevailing wage."},
+
+  // --- safety ---
+  {t:"IIPP", d:"Injury and Illness Prevention Program — the written safety plan every California employer must have. Names who's in charge of safety, how hazards get spotted and fixed, and how workers are trained."},
+  {t:"Code of Safe Practices", d:"A written list of safety rules for your type of work, posted or kept available at the jobsite."},
+  {t:"tailgate meeting", d:"A short safety talk with the crew at the jobsite. Required at least every 10 working days. Also called a toolbox talk."},
+  {t:"competent person", d:"Someone who can both SPOT a hazard and has the AUTHORITY to fix it on the spot. Both halves are required."},
+  {t:"lockout tagout", d:"Shutting off the power to equipment, locking the switch so it can't be turned back on, and tagging it with your name — before you put your hands in the machinery."},
+  {t:"tolerance zone", d:"The 24 inches on each side of a marked underground utility line. Inside that zone you dig by hand only, until you can see the pipe or cable."},
+  {t:"SDS", d:"Safety Data Sheet — the document explaining the hazards of a chemical product and what to do if someone is exposed. Must be where workers can actually get to it."},
+  {t:"Cal/OSHA", d:"California's workplace safety agency. Sets the safety rules, inspects jobsites, and issues citations."},
+
+  // --- general legal ---
+  {t:"misdemeanor", d:"A less serious crime. Typically punishable by a fine and up to a year in county jail."},
+  {t:"felony", d:"A serious crime, with bigger fines and the possibility of prison rather than county jail."},
+  {t:"civil penalty", d:"A fine, not a criminal charge. No jail, no criminal record — but you still have to pay."},
+  {t:"arbitration", d:"Settling a dispute in front of a neutral decision-maker instead of going to court. Faster and cheaper than a lawsuit."},
+  {t:"prime contractor", d:"The contractor who signed the contract directly with the property owner. Everyone else on the job works under them as subcontractors. WATCH OUT: the law now officially calls this a DIRECT CONTRACTOR, and older books say ORIGINAL CONTRACTOR. Three names, one job."},
+  {t:"direct contractor", d:"The current legal term for the contractor who has the contract directly with the owner. Same thing older materials call the PRIME contractor or ORIGINAL contractor. On liens, this is the one who gets 60 days when a notice of completion was filed."},
+  {t:"public works", d:"Construction paid for with government money — schools, roads, city buildings. Comes with extra rules: prevailing wage, certified payroll, DIR registration."},
+  {t:"DIR", d:"California's Department of Industrial Relations. Sets prevailing wage rates and requires contractors to register before doing public works."},
+];
+
+/* Diagrams for concepts that are easier to see than to read.
+   Colors match the app. Text avoids apostrophes so it stays safe in JS strings. */
+const DIAGRAMS = {
+
+profit: { t:"Where the money actually goes", svg:`
+<svg width="100%" viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Gross profit versus net profit</title>
+<rect x="10" y="8" width="300" height="48" rx="8" fill="#F1EFE8" stroke="#8A94A8" stroke-width="1"/>
+<text x="160" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">Customer pays you</text>
+<text x="160" y="46" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A3852">$3,000</text>
+<path d="M160 56 L160 74" stroke="#8A94A8" stroke-width="1.5"/><path d="M155 69 L160 75 L165 69" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<rect x="10" y="78" width="300" height="48" rx="8" fill="#FBEAEA" stroke="#D64545" stroke-width="1"/>
+<text x="160" y="98" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#8C2C2C">Minus job costs</text>
+<text x="160" y="116" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#A34141">Door, opener, installer: $1,800</text>
+<path d="M160 126 L160 144" stroke="#8A94A8" stroke-width="1.5"/><path d="M155 139 L160 145 L165 139" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<rect x="10" y="148" width="300" height="56" rx="8" fill="#FDF3E0" stroke="#F5A623" stroke-width="1"/>
+<text x="160" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#6B5510">GROSS profit: $1,200</text>
+<text x="160" y="190" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#8A6D18">Not yours yet. Overhead still unpaid.</text>
+<path d="M160 204 L160 222" stroke="#8A94A8" stroke-width="1.5"/><path d="M155 217 L160 223 L165 217" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<rect x="10" y="226" width="300" height="48" rx="8" fill="#FBEAEA" stroke="#D64545" stroke-width="1"/>
+<text x="160" y="246" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#8C2C2C">Minus overhead</text>
+<text x="160" y="264" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#A34141">Rent, phone, insurance: $800</text>
+<path d="M160 274 L160 292" stroke="#8A94A8" stroke-width="1.5"/><path d="M155 287 L160 293 L165 287" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<rect x="10" y="296" width="300" height="56" rx="8" fill="#E6F4EC" stroke="#1F9D55" stroke-width="1.5"/>
+<text x="160" y="318" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#14683A">NET profit: $400</text>
+<text x="160" y="338" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#1F9D55">This is the clean profit</text>
+<text x="160" y="374" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A3852">GROSS stops after job costs.</text>
+<text x="160" y="392" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A3852">NET is after overhead too.</text>
+</svg>`},
+
+markup: { t:"Markup and margin are different numbers", svg:`
+<svg width="100%" viewBox="0 0 320 330" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Markup versus margin</title>
+<rect x="10" y="8" width="300" height="40" rx="8" fill="#F1EFE8" stroke="#8A94A8" stroke-width="1"/>
+<text x="160" y="33" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">Your cost: $100</text>
+<rect x="10" y="62" width="142" height="120" rx="8" fill="#FDF3E0" stroke="#F5A623" stroke-width="1"/>
+<text x="81" y="84" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#6B5510">25% MARKUP</text>
+<text x="81" y="104" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#8A6D18">percent of COST</text>
+<text x="81" y="130" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#2A3852">100 x 1.25</text>
+<text x="81" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="17" font-weight="700" fill="#101B33">$125</text>
+<text x="81" y="174" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#8A94A8">you keep $25</text>
+<rect x="168" y="62" width="142" height="120" rx="8" fill="#E6F1FB" stroke="#1E4FD8" stroke-width="1"/>
+<text x="239" y="84" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#153CA8">25% MARGIN</text>
+<text x="239" y="104" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#1E4FD8">percent of PRICE</text>
+<text x="239" y="130" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#2A3852">100 divided by .75</text>
+<text x="239" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="17" font-weight="700" fill="#101B33">$133</text>
+<text x="239" y="174" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#8A94A8">you keep $33</text>
+<rect x="10" y="198" width="300" height="52" rx="8" fill="#E6F4EC" stroke="#1F9D55" stroke-width="1"/>
+<text x="160" y="220" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#14683A">Same 25 percent. Different money.</text>
+<text x="160" y="240" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#1F9D55">Margin always pays you more.</text>
+<text x="160" y="276" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A3852">MARKUP: multiply the cost.</text>
+<text x="160" y="296" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A3852">MARGIN: divide the cost.</text>
+<text x="160" y="316" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#8A94A8">Divide by (1 minus the margin).</text>
+</svg>`},
+
+down: { t:"Max down payment: lesser of $1,000 or 10%", svg:`
+<svg width="100%" viewBox="0 0 320 330" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Home improvement down payment rule</title>
+<rect x="10" y="8" width="300" height="44" rx="8" fill="#E6F1FB" stroke="#1E4FD8" stroke-width="1"/>
+<text x="160" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#153CA8">Every home improvement contract</text>
+<text x="160" y="45" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#1E4FD8">Take the LESSER of the two</text>
+<rect x="10" y="66" width="300" height="76" rx="8" fill="#FFF" stroke="#DDE3EE" stroke-width="1"/>
+<text x="24" y="88" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">$8,000 job</text>
+<text x="24" y="110" font-family="IBM Plex Mono,monospace" font-size="12.5" fill="#8A94A8">flat cap . . . $1,000</text>
+<text x="24" y="130" font-family="IBM Plex Mono,monospace" font-size="12.5" fill="#1F9D55">10 percent . . $800</text>
+<rect x="212" y="88" width="84" height="38" rx="6" fill="#E6F4EC" stroke="#1F9D55" stroke-width="1.5"/>
+<text x="254" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="16" font-weight="700" fill="#14683A">$800</text>
+<rect x="10" y="152" width="300" height="76" rx="8" fill="#FFF" stroke="#DDE3EE" stroke-width="1"/>
+<text x="24" y="174" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">$20,000 job</text>
+<text x="24" y="196" font-family="IBM Plex Mono,monospace" font-size="12.5" fill="#1F9D55">flat cap . . . $1,000</text>
+<text x="24" y="216" font-family="IBM Plex Mono,monospace" font-size="12.5" fill="#8A94A8">10 percent . . $2,000</text>
+<rect x="212" y="174" width="84" height="38" rx="6" fill="#E6F4EC" stroke="#1F9D55" stroke-width="1.5"/>
+<text x="254" y="198" text-anchor="middle" font-family="Inter,sans-serif" font-size="16" font-weight="700" fill="#14683A">$1,000</text>
+<rect x="10" y="240" width="300" height="76" rx="8" fill="#FDF3E0" stroke="#F5A623" stroke-width="1"/>
+<text x="160" y="262" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#6B5510">The rule never changes.</text>
+<text x="160" y="282" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#8A6D18">Under $10,000 the 10 percent is smaller.</text>
+<text x="160" y="302" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#8A6D18">Over $10,000 the $1,000 is smaller.</text>
+</svg>`},
+
+lien: { t:"The lien clock, start to finish", svg:`
+<svg width="100%" viewBox="0 0 320 430" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Mechanics lien deadlines</title>
+<rect x="10" y="8" width="300" height="52" rx="8" fill="#E6F1FB" stroke="#1E4FD8" stroke-width="1.5"/>
+<text x="160" y="30" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#153CA8">STEP 1 . You start work</text>
+<text x="160" y="50" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#1E4FD8">Send preliminary notice within 20 days</text>
+<path d="M160 60 L160 78" stroke="#8A94A8" stroke-width="1.5"/><path d="M155 73 L160 79 L165 73" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<rect x="10" y="82" width="300" height="40" rx="8" fill="#F1EFE8" stroke="#8A94A8" stroke-width="1"/>
+<text x="160" y="99" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">STEP 2 . Job ends</text>
+<text x="160" y="115" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Did the owner file a notice of completion?</text>
+<path d="M160 122 L160 134 L80 134 L80 148" fill="none" stroke="#8A94A8" stroke-width="1.5"/><path d="M75 143 L80 149 L85 143" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<path d="M160 122 L160 134 L240 134 L240 148" fill="none" stroke="#8A94A8" stroke-width="1.5"/><path d="M235 143 L240 149 L245 143" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<rect x="10" y="152" width="140" height="96" rx="8" fill="#FDF3E0" stroke="#F5A623" stroke-width="1"/>
+<text x="80" y="172" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#6B5510">YES, filed</text>
+<text x="80" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Subs and suppliers</text>
+<text x="80" y="212" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#101B33">30 days</text>
+<text x="80" y="230" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Direct / prime</text>
+<text x="80" y="245" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#101B33">60 days</text>
+<rect x="170" y="152" width="140" height="96" rx="8" fill="#E6F4EC" stroke="#1F9D55" stroke-width="1"/>
+<text x="240" y="172" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#14683A">NO, not filed</text>
+<text x="240" y="200" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Everybody gets</text>
+<text x="240" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="17" font-weight="700" fill="#101B33">90 days</text>
+<text x="240" y="240" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#8A94A8">after completion</text>
+<path d="M80 248 L80 262 L160 262 L160 276" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<path d="M240 248 L240 262 L160 262" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<path d="M155 271 L160 277 L165 271" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<rect x="10" y="280" width="300" height="44" rx="8" fill="#F1EFE8" stroke="#8A94A8" stroke-width="1"/>
+<text x="160" y="300" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">STEP 3 . You record the lien</text>
+<text x="160" y="317" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">A brand new clock starts here</text>
+<path d="M160 324 L160 342" stroke="#8A94A8" stroke-width="1.5"/><path d="M155 337 L160 343 L165 337" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<rect x="10" y="346" width="300" height="52" rx="8" fill="#FBEAEA" stroke="#D64545" stroke-width="1.5"/>
+<text x="160" y="368" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#8C2C2C">STEP 4 . File the lawsuit</text>
+<text x="160" y="388" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#A34141">90 days from recording, or the lien dies</text>
+<text x="160" y="420" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#8A94A8">Two different 90s. They are not the same one.</text>
+</svg>`},
+
+ot: { t:"California overtime in one day", svg:`
+<svg width="100%" viewBox="0 0 320 250" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Daily overtime tiers</title>
+<rect x="14" y="30" width="120" height="52" rx="6" fill="#E6F4EC" stroke="#1F9D55" stroke-width="1"/>
+<text x="74" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#14683A">Hours 1 to 8</text>
+<text x="74" y="71" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">Regular pay</text>
+<rect x="140" y="30" width="106" height="52" rx="6" fill="#FDF3E0" stroke="#F5A623" stroke-width="1"/>
+<text x="193" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#6B5510">Hours 9 to 12</text>
+<text x="193" y="71" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">1.5 times</text>
+<rect x="252" y="30" width="56" height="52" rx="6" fill="#FBEAEA" stroke="#D64545" stroke-width="1"/>
+<text x="280" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#8C2C2C">13 plus</text>
+<text x="280" y="71" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#101B33">2 times</text>
+<text x="14" y="20" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#8A94A8">START OF SHIFT</text>
+<text x="306" y="20" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="11.5" fill="#8A94A8">LONG DAY</text>
+<rect x="10" y="102" width="300" height="96" rx="8" fill="#FFF" stroke="#DDE3EE" stroke-width="1"/>
+<text x="24" y="124" font-family="Inter,sans-serif" font-size="13.5" font-weight="700" fill="#101B33">Example: $30 per hour, 13 hour day</text>
+<text x="24" y="146" font-family="IBM Plex Mono,monospace" font-size="12.5" fill="#2A3852">8 hrs x $30 . . . . $240</text>
+<text x="24" y="164" font-family="IBM Plex Mono,monospace" font-size="12.5" fill="#2A3852">4 hrs x $45 . . . . $180</text>
+<text x="24" y="182" font-family="IBM Plex Mono,monospace" font-size="12.5" fill="#2A3852">1 hr  x $60 . . . . $60</text>
+<line x1="180" y1="188" x2="296" y2="188" stroke="#DDE3EE" stroke-width="1"/>
+<text x="296" y="164" text-anchor="end" font-family="Inter,sans-serif" font-size="19" font-weight="700" fill="#1F9D55">$480</text>
+<text x="160" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A3852">California counts overtime by the DAY,</text>
+<text x="160" y="240" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#2A3852">not just by the 40 hour week.</text>
+</svg>`},
+
+bond: { t:"The three parties to a bond", svg:`
+<svg width="100%" viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Bond parties</title>
+<rect x="88" y="10" width="144" height="52" rx="8" fill="#E6F1FB" stroke="#1E4FD8" stroke-width="1"/>
+<text x="160" y="32" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#153CA8">SURETY</text>
+<text x="160" y="51" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#1E4FD8">the bonding company</text>
+<path d="M110 62 L60 108" fill="none" stroke="#8A94A8" stroke-width="1.5"/><path d="M62 100 L58 110 L68 108" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<path d="M210 62 L260 108" fill="none" stroke="#8A94A8" stroke-width="1.5"/><path d="M258 100 L262 110 L252 108" fill="none" stroke="#8A94A8" stroke-width="1.5"/>
+<text x="46" y="90" font-family="Inter,sans-serif" font-size="11.5" fill="#8A94A8">pays claims</text>
+<text x="216" y="90" font-family="Inter,sans-serif" font-size="11.5" fill="#8A94A8">bills you back</text>
+<rect x="10" y="112" width="128" height="56" rx="8" fill="#E6F4EC" stroke="#1F9D55" stroke-width="1"/>
+<text x="74" y="134" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#14683A">OBLIGEE</text>
+<text x="74" y="152" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#1F9D55">who is protected</text>
+<text x="74" y="164" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8A94A8">owner or the State</text>
+<rect x="182" y="112" width="128" height="56" rx="8" fill="#FDF3E0" stroke="#F5A623" stroke-width="1"/>
+<text x="246" y="134" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#6B5510">PRINCIPAL</text>
+<text x="246" y="152" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#8A6D18">that is YOU</text>
+<text x="246" y="164" text-anchor="middle" font-family="Inter,sans-serif" font-size="11.5" fill="#8A94A8">the contractor</text>
+<rect x="10" y="188" width="300" height="66" rx="8" fill="#FBEAEA" stroke="#D64545" stroke-width="1.5"/>
+<text x="160" y="210" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#8C2C2C">A bond is NOT insurance</text>
+<text x="160" y="230" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#A34141">Insurance absorbs the loss.</text>
+<text x="160" y="248" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#A34141">A surety pays, then collects from you.</text>
+<text x="160" y="282" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#8A94A8">You always end up paying. Every time.</text>
+</svg>`},
+
+paycheck: { t:"When the final paycheck is due", svg:`
+<svg width="100%" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Final paycheck deadlines</title>
+<rect x="10" y="10" width="300" height="60" rx="8" fill="#FBEAEA" stroke="#D64545" stroke-width="1.5"/>
+<text x="24" y="34" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#8C2C2C">You FIRE them</text>
+<text x="24" y="56" font-family="Inter,sans-serif" font-size="12.5" fill="#A34141">Hand them the check on the spot</text>
+<rect x="216" y="26" width="80" height="30" rx="6" fill="#FFF" stroke="#D64545" stroke-width="1"/>
+<text x="256" y="46" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#8C2C2C">NOW</text>
+<rect x="10" y="80" width="300" height="60" rx="8" fill="#FDF3E0" stroke="#F5A623" stroke-width="1"/>
+<text x="24" y="104" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#6B5510">They QUIT, no warning</text>
+<text x="24" y="126" font-family="Inter,sans-serif" font-size="12.5" fill="#8A6D18">You get three days to get it ready</text>
+<rect x="216" y="96" width="80" height="30" rx="6" fill="#FFF" stroke="#F5A623" stroke-width="1"/>
+<text x="256" y="116" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#6B5510">72 HRS</text>
+<rect x="10" y="150" width="300" height="60" rx="8" fill="#E6F4EC" stroke="#1F9D55" stroke-width="1"/>
+<text x="24" y="174" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#14683A">They QUIT with notice</text>
+<text x="24" y="196" font-family="Inter,sans-serif" font-size="12.5" fill="#1F9D55">Gave you 72 hours heads up</text>
+<rect x="216" y="166" width="80" height="30" rx="6" fill="#FFF" stroke="#1F9D55" stroke-width="1"/>
+<text x="256" y="186" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" font-weight="700" fill="#14683A">LAST DAY</text>
+<text x="160" y="236" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Late? Up to 30 days of their wages</text>
+<text x="160" y="253" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">as a penalty. Do not be late.</text>
+</svg>`},
+
+dig: { t:"The 811 tolerance zone", svg:`
+<svg width="100%" viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Tolerance zone around a marked utility</title>
+<rect x="10" y="20" width="300" height="120" rx="8" fill="#F1EFE8" stroke="#8A94A8" stroke-width="1"/>
+<rect x="120" y="20" width="80" height="120" fill="#FDF3E0"/>
+<line x1="120" y1="20" x2="120" y2="140" stroke="#F5A623" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="200" y1="20" x2="200" y2="140" stroke="#F5A623" stroke-width="1.5" stroke-dasharray="5 4"/>
+<line x1="160" y1="20" x2="160" y2="140" stroke="#D64545" stroke-width="3"/>
+<text x="160" y="14" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#8C2C2C">MARKED LINE</text>
+<text x="160" y="86" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#6B5510">HAND</text>
+<text x="160" y="104" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#6B5510">TOOLS</text>
+<text x="160" y="122" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#6B5510">ONLY</text>
+<text x="65" y="80" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Machines</text>
+<text x="65" y="98" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">are OK</text>
+<text x="255" y="80" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Machines</text>
+<text x="255" y="98" text-anchor="middle" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">are OK</text>
+<text x="140" y="158" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#8A6D18">24 in</text>
+<text x="180" y="158" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#8A6D18">24 in</text>
+<rect x="10" y="172" width="300" height="94" rx="8" fill="#FFF" stroke="#DDE3EE" stroke-width="1"/>
+<text x="24" y="194" font-family="Inter,sans-serif" font-size="13.5" font-weight="700" fill="#101B33">Paint colors on the ground</text>
+<circle cx="30" cy="212" r="6" fill="#D64545"/><text x="44" y="217" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Red is electric</text>
+<circle cx="170" cy="212" r="6" fill="#F5A623"/><text x="184" y="217" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Yellow is gas</text>
+<circle cx="30" cy="234" r="6" fill="#1E4FD8"/><text x="44" y="239" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Blue is water</text>
+<circle cx="170" cy="234" r="6" fill="#1F9D55"/><text x="184" y="239" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">Green is sewer</text>
+<circle cx="30" cy="256" r="6" fill="#FFF" stroke="#8A94A8" stroke-width="1.5"/><text x="44" y="261" font-family="Inter,sans-serif" font-size="12.5" fill="#2A3852">White is where YOU plan to dig</text>
+</svg>`},
+};
+
+/* Which questions get which picture */
+const QDIA = {
+  m12:"profit", m13:"profit", n96:"profit", m16:"profit", m18:"profit",
+  m8:"markup", m9:"markup", n100:"markup", m15:"markup",
+  m1:"down", m2:"down", n60:"down", n61:"down",
+  n30:"lien", n31:"lien", n32:"lien", n33:"lien", n34:"lien", n35:"lien", n72:"lien", n73:"lien",
+  m5:"ot", m6:"ot", n80:"ot",
+  n97:"bond", n98:"bond", p6:"bond", p7:"bond",
+  n37:"paycheck", e7:"paycheck",
+  n86:"dig", n43:"dig", n87:"dig", n44:"dig",
+};
+
+/* ==== STORAGE: localStorage, survives updates and reloads ==== */
+var KEY = 'cslb_lb_trainer_v1';
+var S = { weak:{}, mastered:{}, scores:[], notes:[] };
+function load(){
+  try{ var r = localStorage.getItem(KEY); if(r){ var d = JSON.parse(r);
+    S.weak=d.weak||{}; S.mastered=d.mastered||{}; S.scores=d.scores||[]; S.notes=d.notes||[]; } }
+  catch(e){}
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+var CATS = ["All","Contracts","Employment","Finances","Safety","Licensing","Ins & Liens","Public Works"];
+var WEIGHTS = {"Contracts":21,"Employment":20,"Finances":15,"Safety":14,"Licensing":13,"Ins & Liens":12,"Public Works":5};
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function shuffle(a){ for(var k=a.length-1;k>0;k--){ var j=Math.floor(Math.random()*(k+1)); var t=a[k];a[k]=a[j];a[j]=t; } return a; }
+function byId(id){ for(var i=0;i<BANK.length;i++) if(BANK[i].id===id) return BANK[i]; return null; }
+
+/* ==== WORD HELP: finds hard words in a question and explains them ==== */
+var GSORT = GLOSSARY.slice().sort(function(a,b){ return b.t.length-a.t.length; });
+var gCache = {};
+function termsIn(item){
+  if(gCache[item.id]) return gCache[item.id];
+  var hay = (item.q+' '+item.opts.join(' ')+' '+item.why).toLowerCase();
+  var found=[], used='|';
+  for(var i=0;i<GSORT.length;i++){
+    var t=GSORT[i].t.toLowerCase();
+    var re=new RegExp('(^|[^a-z])'+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^a-z]|$)');
+    if(re.test(hay) && used.indexOf('|'+t+'|')===-1){ found.push(GSORT[i]); used+=t+'|'; }
+    if(found.length>=5) break;
+  }
+  gCache[item.id]=found;
+  return found;
+}
+var wordHelpOpen = {}, activeDef = null, diaOpen = {};
+function toggleWords(id){ wordHelpOpen[id]=!wordHelpOpen[id]; render(); }
+function showDef(t){ activeDef = (activeDef===t?null:t); render(); }
+function toggleDia(id){ diaOpen[id]=!diaOpen[id]; render(); }
+function defByName(t){ for(var i=0;i<GLOSSARY.length;i++) if(GLOSSARY[i].t.toLowerCase()===t.toLowerCase()) return GLOSSARY[i]; return null; }
+
+/* underline any glossary word found in the text so it can be tapped */
+function mark(text, item){
+  var out = esc(text);
+  var ts = termsIn(item);
+  if(!ts.length) return out;
+  var pat = ts.map(function(g){ return g.t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }).join('|');
+  var re = new RegExp('\\b('+pat+')\\b','gi');
+  return out.replace(re, function(m){
+    return '<span class="gt" onclick="showDef(\''+m.toLowerCase().replace(/'/g,"")+'\')">'+m+'</span>';
+  });
+}
+
+/* the definition panel that opens when a word is tapped */
+function defPanel(){
+  if(!activeDef) return '';
+  var g = defByName(activeDef);
+  if(!g) return '';
+  return '<div style="background:#F2F6FF;border:1.5px solid #1E4FD8;border-radius:10px;padding:13px 15px;margin-top:10px">'
+    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">'
+    +'<div style="font-weight:700;font-size:15px;color:var(--cobalt)">'+esc(g.t)+'</div>'
+    +'<button onclick="showDef(null)" style="background:none;border:none;color:var(--steel);font-size:18px;line-height:1;cursor:pointer;padding:0 2px">\u00D7</button></div>'
+    +'<div style="font-size:14.5px;line-height:1.6;color:var(--inkSoft);margin-top:5px">'+esc(g.d)+'</div></div>';
+}
+
+/* fallback list, catches hard words that sit in the answer choices */
+function wordHelp(item){
+  var ts=termsIn(item);
+  if(!ts.length) return '';
+  var open=wordHelpOpen[item.id];
+  var body='';
+  if(open){
+    body='<div style="padding:2px 14px 12px">'+ts.map(function(g){
+      return '<div style="padding:9px 0;border-top:1px solid #C9D9FA">'
+        +'<div style="font-weight:700;font-size:14.5px;color:var(--ink)">'+esc(g.t)+'</div>'
+        +'<div style="font-size:14px;line-height:1.55;color:var(--inkSoft);margin-top:3px">'+esc(g.d)+'</div></div>';
+    }).join('')+'</div>';
+  }
+  return '<div style="background:#F2F6FF;border:1px solid #C9D9FA;border-radius:10px;margin-top:10px;overflow:hidden">'
+    +'<button onclick="toggleWords(\''+item.id+'\')" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:none;border:none;cursor:pointer;font-family:inherit">'
+    +'<span style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;letter-spacing:.4px;color:var(--cobalt)">ALL WORD MEANINGS ('+ts.length+')</span>'
+    +'<span style="color:var(--cobalt);font-size:18px">'+(open?'\u2212':'+')+'</span></button>'+body+'</div>';
+}
+
+/* the picture, when this question has one */
+function diaBlock(item){
+  var key = QDIA[item.id];
+  if(!key || !DIAGRAMS[key]) return '';
+  var d = DIAGRAMS[key], open = diaOpen[item.id];
+  return '<div style="background:#FFF;border:1.5px solid var(--cobalt);border-radius:10px;margin-top:10px;overflow:hidden">'
+    +'<button onclick="toggleDia(\''+item.id+'\')" style="width:100%;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:none;border:none;cursor:pointer;font-family:inherit">'
+    +'<span style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:16px;letter-spacing:.4px;color:var(--cobalt);text-align:left">SHOW ME THE PICTURE</span>'
+    +'<span style="color:var(--cobalt);font-size:18px">'+(open?'\u2212':'+')+'</span></button>'
+    +(open?'<div style="padding:0 10px 12px"><div style="font-size:13.5px;font-weight:600;color:var(--inkSoft);margin-bottom:6px">'+esc(d.t)+'</div>'+d.svg+'</div>':'')
+    +'</div>';
+}
+
+/* ==== APP STATE ==== */
+var tab='home';
+var st={cat:'All',mode:'all',order:[],idx:0,picked:null,streak:0};
+var qz={cat:'All',len:10,qs:null,i:0,picked:null,right:0,done:false};
+var openSheet=0, showBackup=false, restoreMsg='', glossQuery='';
+function setGloss(v){ glossQuery=v; render();
+  var el=document.getElementById('gq'); if(el){ el.focus(); el.setSelectionRange(v.length,v.length); } }
+
+/* ==== RENDER ==== */
+function render(){
+  var m=document.getElementById('main');
+  if(tab==='home') m.innerHTML=viewHome();
+  else if(tab==='study') m.innerHTML=viewStudy();
+  else if(tab==='quiz') m.innerHTML=viewQuiz();
+  else if(tab==='sheet') m.innerHTML=viewSheet();
+  else m.innerHTML=viewNotes();
+  var tabs=[['home','HOME'],['study','STUDY'],['quiz','QUIZ'],['sheet','SHEET'],['notes','NOTES']];
+  document.getElementById('nav').innerHTML=tabs.map(function(t){
+    return '<button class="'+(tab===t[0]?'on':'')+'" onclick="go(\''+t[0]+'\')">'+t[1]+'</button>';
+  }).join('');
+  if(!glossQuery) window.scrollTo(0,0);
+}
+function go(t){ tab=t; render(); }
+
+/* ---- HOME ---- */
+function viewHome(){
+  var mCount=Object.keys(S.mastered).length, wCount=Object.keys(S.weak).length;
+  var best=S.scores.length?Math.max.apply(null,S.scores.map(function(s){return s.pct;})):null;
+  function tile(n,l,s,c){ return '<div class="tile"><div class="n" style="color:'+c+'">'+n+'</div><div class="l">'+l+'</div>'+(s?'<div class="s">'+s+'</div>':'')+'</div>'; }
+  function nb(t,d,tb,c){ return '<button class="nav-btn" style="border-left:5px solid '+c+'" onclick="go(\''+tb+'\')"><div class="t">'+t+'</div><div class="d">'+d+'</div></button>'; }
+  return '<div class="tiles">'
+    + tile(mCount,'answered right','of '+BANK.length,'var(--green)')
+    + tile(wCount,'needs work','',wCount?'var(--red)':'var(--steel)')
+    + tile(best!==null?best+'%':'—','best quiz','',best>=90?'var(--green)':'var(--cobalt)')
+    + '</div>'
+    + nb('STUDY','Multiple choice with instant answers and the why.','study','var(--cobalt)')
+    + nb('EXAM SIMULATOR','Weighted like the real exam, scored at the end.','quiz','var(--amber)')
+    + nb('CHEAT SHEET','Every number that matters, grouped so it sticks.','sheet','var(--green)')
+    + nb('MY NOTES','Memory hooks, trouble spots, and your backup code.','notes','var(--steel)')
+    + '<div class="note-box"><span class="k">GAME PLAN · </span>Finish your course chapter first, then drill that category here. '
+    + 'The seven categories mirror the exam\u2019s seven sections, and the simulator draws in real-exam proportions. '
+    + 'Miss a question and it lands in Needs Work. Exam: Fri Aug 28, 9:30 AM.</div>';
+}
+
+/* ---- STUDY ---- */
+function studyPool(){
+  var p=BANK.filter(function(x){ return st.cat==='All'||x.cat===st.cat; });
+  if(st.mode==='weak') p=p.filter(function(x){ return S.weak[x.id]; });
+  return p;
+}
+function reorder(){ st.order=shuffle(studyPool().map(function(x){return x.id;})); st.idx=0; st.picked=null; }
+function setCat(c){ st.cat=c; reorder(); render(); }
+function setMode(m){ st.mode=m; reorder(); render(); }
+function viewStudy(){
+  if(!st.order.length) reorder();
+  var pills=CATS.map(function(c){ return '<button class="pill '+(st.cat===c?'on':'')+'" onclick="setCat(\''+c.replace(/'/g,"\\'")+'\')">'+c+'</button>'; }).join('');
+  var modes='<button class="pill '+(st.mode==='all'?'on':'')+'" onclick="setMode(\'all\')">All questions</button>'
+          + '<button class="pill '+(st.mode==='weak'?'on':'')+'" onclick="setMode(\'weak\')">Needs work ('+Object.keys(S.weak).length+')</button>';
+  var head='<div class="row">'+pills+'</div><div class="row" style="padding-bottom:12px">'+modes+'</div>';
+  var item=byId(st.order[st.idx]);
+  if(!item) return head+'<div class="card" style="text-align:center;color:var(--steel)">'
+    +(st.mode==='weak'?'Nothing in the needs-work pile here. Nice.':'No questions in this category.')+'</div>';
+  var tag = st.streak>=3 ? '\u{1F525} '+st.streak+' IN A ROW' : (S.mastered[item.id]?'\u2713 MASTERED':(S.weak[item.id]?'MISSED \u00D7'+S.weak[item.id]:'NEW'));
+  return head
+    + '<div class="meta"><span>'+item.cat.toUpperCase()+' \u00B7 '+(st.idx+1)+'/'+st.order.length+'</span><span>'+tag+'</span></div>'
+    + qCard(item, st.picked, 'pickStudy')
+    + (st.picked!==null?'<button class="btn" onclick="nextStudy()">NEXT QUESTION \u2192</button>':'');
+}
+function qCard(item,picked,fn){
+  var h='<div class="card"><div class="q">'+mark(item.q,item)+'</div>';
+  for(var n=0;n<item.opts.length;n++){
+    var cls='opt', mk='';
+    if(picked!==null){
+      if(n===item.ans){ cls+=' right'; mk='<span class="mk">\u2713</span>'; }
+      else if(n===picked){ cls+=' wrong'; mk='<span class="mk">\u2715</span>'; }
+    }
+    h+='<button class="'+cls+'" onclick="'+fn+'('+n+')"><span class="ltr">'+'ABCD'[n]+'.</span>'+esc(item.opts[n])+mk+'</button>';
+  }
+  if(picked!==null){
+    var ok=picked===item.ans;
+    h+='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Correct \u2014 here\u2019s the why:':'Not quite \u2014 the answer is '+'ABCD'[item.ans]+'.')+'</b>'+mark(item.why,item)+'</div>';
+    h+=diaBlock(item);
+  }
+  h+=defPanel();
+  if(picked!==null) h+=wordHelp(item);
+  return h+'</div>';
+}
+function pickStudy(n){
+  if(st.picked!==null) return;
+  var item=byId(st.order[st.idx]); st.picked=n;
+  if(n===item.ans){ delete S.weak[item.id]; S.mastered[item.id]=true; st.streak++; }
+  else { S.weak[item.id]=(S.weak[item.id]||0)+1; delete S.mastered[item.id]; st.streak=0; }
+  save(); render();
+}
+function nextStudy(){ st.picked=null; st.idx=(st.idx+1<st.order.length)?st.idx+1:0; render(); }
+
+/* ---- QUIZ (weighted to the real exam) ---- */
+function setQCat(c){ qz.cat=c; render(); }
+function setQLen(n){ qz.len=n; render(); }
+function startQuiz(){
+  var picked=[];
+  if(qz.cat==='All'){
+    var total=0; for(var k in WEIGHTS) total+=WEIGHTS[k];
+    var t=[]; for(var c in WEIGHTS){ var ex=(WEIGHTS[c]/total)*qz.len; t.push({c:c,n:Math.floor(ex),rem:ex-Math.floor(ex)}); }
+    var got=0; t.forEach(function(x){got+=x.n;});
+    t.sort(function(a,b){return b.rem-a.rem;});
+    for(var i=0;i<qz.len-got;i++) t[i%t.length].n++;
+    t.forEach(function(x){
+      var pool=shuffle(BANK.filter(function(q){return q.cat===x.c;}));
+      picked=picked.concat(pool.slice(0,Math.min(x.n,pool.length)));
+    });
+    picked=shuffle(picked).slice(0,qz.len);
+  } else {
+    picked=shuffle(BANK.filter(function(q){return q.cat===qz.cat;})).slice(0,qz.len);
+  }
+  qz.qs=picked; qz.i=0; qz.picked=null; qz.right=0; qz.done=false; render();
+}
+function pickQuiz(n){
+  if(qz.picked!==null) return;
+  qz.picked=n; if(n===qz.qs[qz.i].ans) qz.right++;
+  render();
+}
+function nextQuiz(){
+  if(qz.i+1<qz.qs.length){ qz.i++; qz.picked=null; }
+  else {
+    var pct=Math.round(qz.right/qz.qs.length*100);
+    S.scores.push({pct:pct,cat:qz.cat,when:new Date().toLocaleDateString()});
+    S.scores=S.scores.slice(-20); save(); qz.done=true;
+  }
+  render();
+}
+function viewQuiz(){
+  if(!qz.qs){
+    var pills=CATS.map(function(c){ return '<button class="pill '+(qz.cat===c?'on':'')+'" onclick="setQCat(\''+c.replace(/'/g,"\\'")+'\')">'+c+'</button>'; }).join('');
+    var recent='';
+    if(S.scores.length){
+      recent='<div style="margin-top:16px"><div style="font-family:\'IBM Plex Mono\',monospace;font-size:12px;color:var(--steel);margin-bottom:6px">RECENT SCORES</div><div style="display:flex;gap:6px;flex-wrap:wrap">'
+        + S.scores.slice(-8).map(function(s){
+            var bg=s.pct>=90?'#E6F4EC':(s.pct>=70?'#FDF3E0':'#FBEAEA');
+            var fg=s.pct>=90?'var(--green)':(s.pct>=70?'#A87613':'var(--red)');
+            return '<span class="score" style="background:'+bg+';color:'+fg+'">'+s.pct+'%</span>';
+          }).join('') + '</div></div>';
+    }
+    return '<div class="row">'+pills+'</div>'
+      + '<div class="card"><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:24px;font-weight:700">Exam Simulator</div>'
+      + '<p style="font-size:14.5px;color:var(--inkSoft);line-height:1.55">Questions are drawn in the same proportions as the real exam, so your score here predicts test day. Target 90% or better.</p>'
+      + '<div class="row" style="padding-bottom:12px"><button class="pill '+(qz.len===10?'on':'')+'" onclick="setQLen(10)">Quick 10</button>'
+      + '<button class="pill '+(qz.len===25?'on':'')+'" onclick="setQLen(25)">Exam Sim 25</button></div>'
+      + '<button class="btn" style="margin-top:0" onclick="startQuiz()">START QUIZ</button>'+recent+'</div>';
+  }
+  if(qz.done){
+    var pct=Math.round(qz.right/qz.qs.length*100);
+    var col=pct>=90?'var(--green)':(pct>=70?'var(--amber)':'var(--red)');
+    var msg=pct>=90?'Exam-ready territory. Keep the streak going.':(pct>=70?'Solid \u2014 hit Study \u2192 Needs Work to close the gaps.':'Hit the cheat sheet, then run it again. Repetition wins.');
+    return '<div class="card" style="text-align:center">'
+      + '<div style="font-family:\'IBM Plex Mono\',monospace;font-size:13px;color:var(--steel)">FINAL SCORE</div>'
+      + '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:64px;font-weight:700;line-height:1;color:'+col+'">'+pct+'%</div>'
+      + '<div style="font-size:15px;color:var(--inkSoft);margin:10px 0 4px">'+msg+'</div>'
+      + '<button class="btn" onclick="startQuiz()">RUN ANOTHER '+qz.len+'</button>'
+      + '<button class="btn dark" onclick="qz.qs=null;render()">BACK</button></div>';
+  }
+  var Q=qz.qs[qz.i];
+  return '<div class="meta"><span>QUESTION '+(qz.i+1)+' OF '+qz.qs.length+'</span><span>'+qz.right+' CORRECT</span></div>'
+    + '<div class="bar"><div style="width:'+(qz.i/qz.qs.length*100)+'%"></div></div>'
+    + qCard(Q,qz.picked,'pickQuiz')
+    + (qz.picked!==null?'<button class="btn dark" onclick="nextQuiz()">'+(qz.i+1<qz.qs.length?'NEXT QUESTION \u2192':'SEE MY SCORE')+'</button>':'');
+}
+
+/* ---- CHEAT SHEET ---- */
+function toggleSheet(k){ openSheet = (openSheet===k?-1:k); render(); }
+function viewSheet(){
+  var h=SHEETS.map(function(s,k){
+    var body='';
+    if(openSheet===k){
+      body='<div class="body">'+s.rows.map(function(r){
+        return '<div class="sr"><span class="a">'+esc(r[0])+'</span><span class="b">'+esc(r[1])+'</span></div>';
+      }).join('')+'</div>';
+    }
+    return '<div class="acc"><button onclick="toggleSheet('+k+')"><span class="h">'+esc(s.title)+'</span><span class="pm">'+(openSheet===k?'\u2212':'+')+'</span></button>'+body+'</div>';
+  }).join('');
+  var gq=(glossQuery||'').toLowerCase();
+  var gl=GLOSSARY.filter(function(g){ return !gq || g.t.toLowerCase().indexOf(gq)>-1 || g.d.toLowerCase().indexOf(gq)>-1; });
+  var glist=gl.slice(0,gq?40:GLOSSARY.length).map(function(g){
+    return '<div style="padding:10px 0;border-top:1px solid var(--line)">'
+      +'<div style="font-weight:700;font-size:15px;color:var(--ink)">'+esc(g.t)+'</div>'
+      +'<div style="font-size:14px;line-height:1.55;color:var(--inkSoft);margin-top:3px">'+esc(g.d)+'</div></div>';
+  }).join('') || '<div style="padding:14px 0;color:var(--steel);font-size:14px">No word matches that. Try a shorter piece of it.</div>';
+  var gopen = openSheet===999;
+  h += '<div class="acc"><button onclick="toggleSheet(999)"><span class="h">PLAIN-ENGLISH DICTIONARY</span><span class="pm">'+(gopen?'\u2212':'+')+'</span></button>'
+    + (gopen? '<div class="body"><input id="gq" value="'+esc(glossQuery)+'" oninput="setGloss(this.value)" placeholder="Type a word, like lien or margin" '
+      +'style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);font-size:15px;font-family:inherit;margin-bottom:4px">'
+      + '<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;color:var(--steel);margin:8px 0 2px">'+gl.length+' OF '+GLOSSARY.length+' WORDS</div>'
+      + glist + '</div>' : '') + '</div>';
+  return h + '<div class="tip"><b>Exam instincts:</b> the word \u201Cfraud\u201D usually signals possible jail. '
+    + 'The biggest fines protect life (safety deaths: $100k\u2013$250k) and punish unlicensed activity ($30k). '
+    + 'When two answers both look right, pick the one that protects the public \u2014 that\u2019s the CSLB\u2019s top priority.</div>';
+}
+
+/* ---- NOTES + BACKUP ---- */
+function addNote(){
+  var el=document.getElementById('draft'); var v=el.value.trim(); if(!v) return;
+  S.notes.unshift({t:v,d:new Date().toLocaleDateString()}); save(); render();
+}
+function delNote(k){ S.notes.splice(k,1); save(); render(); }
+function toggleBackup(){ showBackup=!showBackup; render(); }
+function doRestore(){
+  var v=document.getElementById('restore').value.trim();
+  try{
+    var d=JSON.parse(v);
+    if(d.weak)S.weak=d.weak; if(d.mastered)S.mastered=d.mastered;
+    if(d.scores)S.scores=d.scores; if(d.notes)S.notes=d.notes;
+    save(); restoreMsg='Restored \u2713';
+  }catch(e){ restoreMsg='That code didn\u2019t parse \u2014 paste the whole thing.'; }
+  render(); setTimeout(function(){ restoreMsg=''; },3000);
+}
+function viewNotes(){
+  var list=S.notes.length?S.notes.map(function(n,k){
+    return '<div class="card" style="padding:12px 14px;margin-bottom:8px;box-shadow:none">'
+      +'<div style="font-size:14.5px;line-height:1.5;white-space:pre-wrap">'+esc(n.t)+'</div>'
+      +'<div style="display:flex;justify-content:space-between;margin-top:6px">'
+      +'<span style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;color:var(--steel)">'+esc(n.d)+'</span>'
+      +'<button onclick="delNote('+k+')" style="background:none;border:none;color:var(--red);font-size:12.5px;cursor:pointer;font-weight:600;font-family:inherit">delete</button>'
+      +'</div></div>';
+  }).join(''):'<div style="text-align:center;color:var(--steel);font-size:14px;padding:20px">Saved notes stay on this device.</div>';
+
+  var code=JSON.stringify({weak:S.weak,mastered:S.mastered,scores:S.scores,notes:S.notes});
+  var backup='';
+  if(showBackup){
+    backup='<div class="body">'
+      +'<div style="font-size:13.5px;color:var(--inkSoft);line-height:1.55;margin-bottom:10px">'
+      +'Your progress already saves on this device. Use this to move it to another phone or browser: copy the code, then paste it there and tap Restore.</div>'
+      +'<textarea class="mono" readonly onclick="this.select()" style="height:70px">'+esc(code)+'</textarea>'
+      +'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;color:var(--steel);margin:10px 0 6px">PASTE A SAVED CODE TO RESTORE</div>'
+      +'<textarea class="mono" id="restore" placeholder="Paste your backup code here" style="height:60px"></textarea>'
+      +'<button class="btn ghost" onclick="doRestore()">RESTORE</button>'
+      +(restoreMsg?'<div style="margin-top:8px;text-align:center;font-weight:600;font-size:13.5px;color:'+(restoreMsg.indexOf('\u2713')>-1?'var(--green)':'var(--red)')+'">'+esc(restoreMsg)+'</div>':'')
+      +'</div>';
+  }
+  return '<textarea id="draft" placeholder="Jot a memory hook, a number you keep missing, a question to look up" style="min-height:90px"></textarea>'
+    + '<button class="btn" style="padding:13px 0;font-size:17px" onclick="addNote()">SAVE NOTE</button>'
+    + '<div style="margin-top:16px">'+list+'</div>'
+    + '<div class="acc" style="margin-top:18px"><button onclick="toggleBackup()">'
+    + '<span class="h">MOVE PROGRESS TO ANOTHER DEVICE</span><span class="pm">'+(showBackup?'\u2212':'+')+'</span></button>'+backup+'</div>';
+}
+
+load(); render();
+</script>
+</body>
+</html>
