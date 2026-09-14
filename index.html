@@ -149,13 +149,40 @@ button:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
 .category-grid .pill{min-width:0;white-space:normal;text-align:left;border-radius:10px;padding:10px 12px;font-family:inherit;letter-spacing:0;border-width:1px}
 .category-name{display:block;font-size:13px;font-weight:700;line-height:1.3}
 .category-rate{display:block;font-size:11px;font-weight:600;line-height:1.4;margin-top:5px;color:var(--steel)}
-.category-rate.trouble{color:var(--red)}
+.category-rate.danger{color:var(--red)}
+.category-rate.warning{color:#A86B09}
 .category-rate.clear{color:var(--green)}
+.category-title-row{display:flex;align-items:center;gap:7px}
+.category-status-icon{width:18px;height:18px;flex:0 0 18px}
+.category-mini-bar{display:block;height:4px;margin-top:7px;border-radius:999px;background:#E8EDF5;overflow:hidden}
+.category-mini-bar>span{display:block;height:100%;border-radius:999px;transition:width .35s ease,background-color .35s ease}
 .category-grid .pill.on{background:#EDF2FF;border-color:var(--cobalt);color:var(--ink)}
 .category-grid .pill.weakest{border-color:#E3A0A8}
 .category-grid .pill.on.weakest{border-color:var(--cobalt)}
 .section-label{font-size:12px;font-weight:700;color:var(--inkSoft);margin:0 0 10px}
 .progress-help{font-size:12px;color:var(--steel);line-height:1.6;margin:0 0 14px}
+.focus-picker{width:100%;display:flex;align-items:center;gap:11px;padding:11px 12px;border:1.5px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);font-family:inherit;text-align:left;cursor:pointer;margin-bottom:10px;transition:border-color .2s ease,background-color .2s ease,transform .15s ease}
+.focus-picker:active{transform:scale(.992)}
+.focus-picker.danger{border-color:#E7ADB3;background:#FFF8F8}
+.focus-picker.warning{border-color:#E9D49F;background:#FFFCF3}
+.focus-picker.clear{border-color:#A9D5BE;background:#F5FBF7}
+.focus-picker-icon{width:34px;height:34px;display:grid;place-items:center;flex:0 0 34px;border-radius:9px;background:#EEF2F7;color:var(--steel)}
+.focus-picker.danger .focus-picker-icon{background:#FBE6E8;color:var(--red)}
+.focus-picker.warning .focus-picker-icon{background:#FFF0C8;color:#A86B09}
+.focus-picker.clear .focus-picker-icon{background:#E4F4EB;color:var(--green)}
+.focus-picker-icon svg{width:21px;height:21px}
+.focus-picker-copy{min-width:0;flex:1}
+.focus-picker-label{display:block;font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--steel);text-transform:uppercase;margin-bottom:2px}
+.focus-picker-value{display:block;font-size:14px;font-weight:700;line-height:1.35}
+.focus-picker-rate{display:block;font-size:11px;font-weight:600;line-height:1.4;margin-top:2px;color:var(--steel)}
+.focus-picker.danger .focus-picker-rate{color:var(--red)}
+.focus-picker.warning .focus-picker-rate{color:#A86B09}
+.focus-picker.clear .focus-picker-rate{color:var(--green)}
+.focus-chevron{width:20px;height:20px;color:var(--steel);transition:transform .2s ease}
+.focus-picker.open .focus-chevron{transform:rotate(180deg)}
+.focus-menu{padding:13px;margin:-3px 0 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:0 8px 22px rgba(16,27,51,.08);animation:focusReveal .2s ease-out both}
+.focus-menu .category-grid{margin-bottom:10px}
+.question-stage{scroll-margin-top:10px;animation:questionIn .2s ease-out both}
 .focus-card{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:13px 14px;border:1px solid #F0C8CD;border-radius:10px;background:#FFF6F7;text-align:left;font-family:inherit;cursor:pointer;margin-bottom:16px;color:var(--ink)}
 .focus-card strong{display:block;font-size:14px;line-height:1.5}
 .focus-card small{display:block;font-size:12px;line-height:1.6;color:var(--red)}
@@ -167,11 +194,13 @@ button:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
 .wname{font-family:inherit;font-size:14px;letter-spacing:0}
 .wpct{font-family:inherit;font-size:12px}
 .wtop{gap:10px}.wsub{font-size:11px;line-height:1.5}
+@keyframes focusReveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes questionIn{from{opacity:.6;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 @media(min-width:600px){.category-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:380px){.card{padding:15px}.category-grid .pill{padding:9px}.focus-card{align-items:flex-start;flex-direction:column;gap:4px}}
 
 .hide{display:none}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -847,10 +876,11 @@ const QDIA = {
 
 /* ==== STORAGE: localStorage, survives updates and reloads ==== */
 var KEY = 'cslb_lb_trainer_v1';
-var S = { weak:{}, mastered:{}, scores:[], notes:[] };
+var S = { weak:{}, mastered:{}, scores:[], notes:[], history:{}, study:null, activeQuiz:null, lastTab:'home' };
 function load(){
   try{ var r = localStorage.getItem(KEY); if(r){ var d = JSON.parse(r);
-    S.weak=d.weak||{}; S.mastered=d.mastered||{}; S.scores=d.scores||[]; S.notes=d.notes||[]; } }
+    S.weak=d.weak||{}; S.mastered=d.mastered||{}; S.scores=d.scores||[]; S.notes=d.notes||[];
+    S.history=d.history||{}; S.study=d.study||null; S.activeQuiz=d.activeQuiz||null; S.lastTab=d.lastTab||'home'; } }
   catch(e){}
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
@@ -942,9 +972,10 @@ function diaBlock(item){
 
 /* ==== APP STATE ==== */
 var tab='home';
-var st={cat:'All',mode:'all',order:[],idx:0,picked:null,streak:0};
+var st={cat:'All',mode:'all',order:[],idx:0,picked:null,streak:0,focusOpen:false};
 var qz={cat:'All',len:10,qs:null,i:0,picked:null,right:0,done:false};
 var openSheet=0, showBackup=false, restoreMsg='', glossQuery='';
+var keepPagePosition=false;
 function setGloss(v){ glossQuery=v; render();
   var el=document.getElementById('gq'); if(el){ el.focus(); el.setSelectionRange(v.length,v.length); } }
 
@@ -960,9 +991,10 @@ function render(){
   document.getElementById('nav').innerHTML=tabs.map(function(t){
     return '<button class="'+(tab===t[0]?'on':'')+'" onclick="go(\''+t[0]+'\')">'+t[1]+'</button>';
   }).join('');
-  if(!glossQuery) window.scrollTo(0,0);
+  if(!glossQuery && !keepPagePosition) window.scrollTo(0,0);
+  keepPagePosition=false;
 }
-function go(t){ tab=t; render(); }
+function go(t){ tab=t; S.lastTab=t; save(); render(); }
 
 
 /* ---- WEAKNESS TRACKING ----
@@ -987,13 +1019,33 @@ function byPriority(a,b){
   return br-ar || b.weak-a.weak || b.weight-a.weight;
 }
 function weakestCategory(){ return allStats().filter(function(s){return s.weak>0;}).sort(byPriority)[0]||null; }
+function statusInfo(s){
+  if(!s.seen) return {key:'neutral',label:'Not started',color:'var(--steel)'};
+  if(s.needPct===0) return {key:'clear',label:'0% needs work',color:'var(--green)'};
+  if(s.needPct>=40) return {key:'danger',label:s.needPct+'% needs work',color:'var(--red)'};
+  return {key:'warning',label:s.needPct+'% needs work',color:'#A86B09'};
+}
+function statusIcon(key){
+  if(key==='clear') return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m8 12 2.5 2.5L16 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  if(key==='danger') return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2.8 20h18.4L12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v5m0 3h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  if(key==='warning') return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v6m0 4h.01" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>';
+}
 function catPill(c,active,fn){
   var s=catStats(c), worst=weakestCategory();
-  var label=s.seen?s.needPct+'% needs work':'Not started';
+  var info=statusInfo(s), label=info.label;
   var help=s.seen?s.weak+' of '+s.seen+' answered questions still need work; '+s.total+' total questions.':'No questions answered yet.';
-  return '<button class="pill '+(active?'on ':'')+(worst&&worst.cat===c?'weakest':'')+'" aria-pressed="'+active+'" title="'+help+'" onclick="'+fn+'(\''+c+'\')">'
-    +'<span class="category-name">'+(c==='All'?'All categories':c)+'</span>'
-    +'<span class="category-rate '+(s.weak?'trouble':s.seen?'clear':'')+'">'+label+'</span></button>';
+  return '<button class="pill '+info.key+' '+(active?'on ':'')+(worst&&worst.cat===c?'weakest':'')+'" aria-pressed="'+active+'" title="'+help+'" onclick="'+fn+'(\''+c+'\')">'
+    +'<span class="category-title-row"><span class="category-status-icon" style="color:'+info.color+'">'+statusIcon(info.key)+'</span><span class="category-name">'+(c==='All'?'All categories':c)+'</span></span>'
+    +'<span class="category-rate '+info.key+'">'+label+'</span>'
+    +'<span class="category-mini-bar"><span style="width:'+(s.seen?s.needPct:0)+'%;background:'+info.color+'"></span></span></button>';
+}
+function focusPicker(){
+  var s=catStats(st.cat), info=statusInfo(s);
+  return '<button class="focus-picker '+info.key+(st.focusOpen?' open':'')+'" onclick="toggleFocus()" aria-expanded="'+st.focusOpen+'">'
+    +'<span class="focus-picker-icon">'+statusIcon(info.key)+'</span>'
+    +'<span class="focus-picker-copy"><span class="focus-picker-label">Study focus</span><span class="focus-picker-value">'+(st.cat==='All'?'All categories':st.cat)+'</span><span class="focus-picker-rate">'+info.label+'</span></span>'
+    +'<svg class="focus-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
 }
 function focusCard(){
   var worst=weakestCategory();
@@ -1005,10 +1057,9 @@ function focusCard(){
 function weakPanel(){
   var stats=allStats().sort(byPriority);
   return '<section style="margin:20px 0 12px"><h2 class="section-label">YOUR WEAK AREAS</h2>'
-    +'<p class="progress-help">Red shows the share of answered questions still needing work. Highest first. Correct a missed question to bring it down.</p>'
+    +'<p class="progress-help">Red marks high needs work, yellow means you are improving, and green means the category is cleared. Correct a missed question to bring the percentage down.</p>'
     +focusCard()+stats.map(function(s){
-      var label=s.seen?s.needPct+'% needs work':'Not started';
-      var col=s.weak?'var(--red)':s.seen?'var(--green)':'var(--steel)';
+      var info=statusInfo(s), label=info.label, col=info.color;
       return '<button class="wrow" onclick="jumpCat(\''+s.cat+'\')">'
         +'<div class="wtop"><span class="wname">'+s.cat+'</span><span class="wpct" style="color:'+col+'">'+label+'</span></div>'
         +'<div class="wbar"><div style="width:'+(s.needPct||0)+'%;background:'+col+'"></div></div>'
@@ -1019,7 +1070,7 @@ function weakPanel(){
 function jumpCat(c){
   st.cat=c;
   st.mode = catStats(c).weak>0 ? 'weak' : 'all';
-  reorder(); tab='study'; render();
+  st.focusOpen=false; reorder(); tab='study'; S.lastTab='study'; saveStudyState(); render(); scrollToStudyQuestion();
 }
 
 /* ---- HOME ---- */
@@ -1050,25 +1101,35 @@ function studyPool(){
   return p;
 }
 function reorder(){ st.order=shuffle(studyPool().map(function(x){return x.id;})); st.idx=0; st.picked=null; }
-function setCat(c){ st.cat=c; reorder(); render(); }
-function setMode(m){ st.mode=m; reorder(); render(); }
+function saveStudyState(){
+  S.study={cat:st.cat,mode:st.mode,order:st.order.slice(),idx:st.idx,picked:st.picked,streak:st.streak};
+  save();
+}
+function toggleFocus(){ st.focusOpen=!st.focusOpen; keepPagePosition=true; render(); }
+function setCat(c){ st.cat=c; st.focusOpen=false; reorder(); saveStudyState(); render(); scrollToStudyQuestion(); }
+function setMode(m){ st.mode=m; reorder(); saveStudyState(); render(); scrollToStudyQuestion(); }
+function scrollToStudyQuestion(){
+  requestAnimationFrame(function(){
+    var el=document.getElementById('study-question');
+    if(el) el.scrollIntoView({behavior:window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+  });
+}
 function viewStudy(){
   if(!st.order.length) reorder();
   var pills=CATS.map(function(c){ return catPill(c, st.cat===c, 'setCat'); }).join('');
   var needs=catStats(st.cat).weak;
   var modes='<button class="pill '+(st.mode==='all'?'on':'')+'" onclick="setMode(\'all\')">All questions</button>'
           + '<button class="pill '+(st.mode==='weak'?'on':'')+'" onclick="setMode(\'weak\')">Needs work ('+needs+')</button>';
-  var head='<h2 class="section-label">CHOOSE YOUR FOCUS</h2><div class="category-grid">'+pills+'</div>'
-    +'<p class="progress-help">Needs work = missed questions ÷ answered questions. Unanswered questions do not count.</p>'
-    +focusCard()+'<div class="study-modes">'+modes+'</div>';
+  var chooser=focusPicker()+(st.focusOpen?'<div class="focus-menu"><h2 class="section-label">CHOOSE YOUR FOCUS</h2><div class="category-grid">'+pills+'</div><p class="progress-help">Red = high needs work, yellow = improving, green = cleared. Unanswered questions do not count.</p></div>':'');
+  var head=chooser+'<div class="study-modes">'+modes+'</div>';
   var item=byId(st.order[st.idx]);
   if(!item) return head+'<div class="card" style="text-align:center;color:var(--steel)">'
     +(st.mode==='weak'?'Nothing in the needs-work pile here. Nice.':'No questions in this category.')+'</div>';
   var tag = st.streak>=3 ? '\u{1F525} '+st.streak+' IN A ROW' : (S.mastered[item.id]?'\u2713 MASTERED':(S.weak[item.id]?'MISSED \u00D7'+S.weak[item.id]:'NEW'));
   return head
-    + '<div class="meta"><span>'+item.cat.toUpperCase()+' \u00B7 '+(st.idx+1)+'/'+st.order.length+'</span><span>'+tag+'</span></div>'
+    + '<div id="study-question" class="question-stage"><div class="meta"><span>'+item.cat.toUpperCase()+' \u00B7 '+(st.idx+1)+'/'+st.order.length+'</span><span>'+tag+'</span></div>'
     + qCard(item, st.picked, 'pickStudy')
-    + (st.picked!==null?'<button class="btn" onclick="nextStudy()">NEXT QUESTION \u2192</button>':'');
+    + (st.picked!==null?'<button class="btn" onclick="nextStudy()">NEXT QUESTION \u2192</button>':'')+'</div>';
 }
 function qCard(item,picked,fn){
   var h='<div class="card"><div class="q">'+mark(item.q,item)+'</div>';
@@ -1092,9 +1153,9 @@ function qCard(item,picked,fn){
 function pickStudy(n){
   if(st.picked!==null) return;
   var item=byId(st.order[st.idx]); st.picked=n;
-  if(n===item.ans){ delete S.weak[item.id]; S.mastered[item.id]=true; st.streak++; }
-  else { S.weak[item.id]=(S.weak[item.id]||0)+1; delete S.mastered[item.id]; st.streak=0; }
-  save(); render();
+  if(n===item.ans) st.streak++; else st.streak=0;
+  recordAnswer(item,n===item.ans,'study');
+  saveStudyState(); keepPagePosition=true; render();
 }
 function nextStudy(){
   var remaining=st.order.slice(st.idx+1);
@@ -1103,12 +1164,24 @@ function nextStudy(){
     if(remaining.length){st.order=remaining;st.idx=0;st.picked=null;}
     else reorder();
   } else {st.picked=null;st.idx=(st.idx+1<st.order.length)?st.idx+1:0;}
-  render();
+  saveStudyState(); render(); scrollToStudyQuestion();
 }
 
 /* ---- QUIZ (weighted to the real exam) ---- */
-function setQCat(c){ qz.cat=c; render(); }
-function setQLen(n){ qz.len=n; render(); }
+function recordAnswer(item,correct,source){
+  if(correct){ delete S.weak[item.id]; S.mastered[item.id]=true; }
+  else { S.weak[item.id]=(S.weak[item.id]||0)+1; delete S.mastered[item.id]; }
+  var h=S.history[item.id]||{right:0,wrong:0};
+  if(correct) h.right++; else h.wrong++;
+  h.cat=item.cat; h.lastCorrect=correct; h.lastAnswered=Date.now(); h.lastSource=source;
+  S.history[item.id]=h; save();
+}
+function saveQuizState(){
+  S.activeQuiz=qz.qs?{cat:qz.cat,len:qz.len,ids:qz.qs.map(function(q){return q.id;}),i:qz.i,picked:qz.picked,right:qz.right,done:qz.done}:null;
+  save();
+}
+function setQCat(c){ qz.cat=c; saveQuizState(); render(); }
+function setQLen(n){ qz.len=n; saveQuizState(); render(); }
 function startQuiz(){
   var picked=[];
   if(qz.cat==='All'){
@@ -1125,26 +1198,25 @@ function startQuiz(){
   } else {
     picked=shuffle(BANK.filter(function(q){return q.cat===qz.cat;})).slice(0,qz.len);
   }
-  qz.qs=picked; qz.i=0; qz.picked=null; qz.right=0; qz.done=false; render();
+  qz.qs=picked; qz.i=0; qz.picked=null; qz.right=0; qz.done=false; saveQuizState(); render();
 }
 function pickQuiz(n){
   if(qz.picked!==null) return;
   qz.picked=n;
   var item=qz.qs[qz.i];
-  if(n===item.ans){qz.right++;delete S.weak[item.id];S.mastered[item.id]=true;}
-  else {S.weak[item.id]=(S.weak[item.id]||0)+1;delete S.mastered[item.id];}
-  save();
-  render();
+  var correct=n===item.ans; if(correct) qz.right++;
+  recordAnswer(item,correct,'quiz'); saveQuizState(); keepPagePosition=true; render();
 }
 function nextQuiz(){
   if(qz.i+1<qz.qs.length){ qz.i++; qz.picked=null; }
   else {
     var pct=Math.round(qz.right/qz.qs.length*100);
     S.scores.push({pct:pct,cat:qz.cat,when:new Date().toLocaleDateString()});
-    S.scores=S.scores.slice(-20); save(); qz.done=true;
+    qz.done=true;
   }
-  render();
+  saveQuizState(); render();
 }
+function resetQuiz(){ qz.qs=null; qz.picked=null; qz.done=false; saveQuizState(); render(); }
 function viewQuiz(){
   if(!qz.qs){
     var pills=CATS.map(function(c){ return catPill(c, qz.cat===c, 'setQCat'); }).join('');
@@ -1173,7 +1245,7 @@ function viewQuiz(){
       + '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:64px;font-weight:700;line-height:1;color:'+col+'">'+pct+'%</div>'
       + '<div style="font-size:15px;color:var(--inkSoft);margin:10px 0 4px">'+msg+'</div>'
       + '<button class="btn" onclick="startQuiz()">RUN ANOTHER '+qz.len+'</button>'
-      + '<button class="btn dark" onclick="qz.qs=null;render()">BACK</button></div>';
+      + '<button class="btn dark" onclick="resetQuiz()">BACK</button></div>';
   }
   var Q=qz.qs[qz.i];
   return '<div class="meta"><span>QUESTION '+(qz.i+1)+' OF '+qz.qs.length+'</span><span>'+qz.right+' CORRECT</span></div>'
@@ -1225,7 +1297,8 @@ function doRestore(){
     var d=JSON.parse(v);
     if(d.weak)S.weak=d.weak; if(d.mastered)S.mastered=d.mastered;
     if(d.scores)S.scores=d.scores; if(d.notes)S.notes=d.notes;
-    save(); restoreMsg='Restored \u2713';
+    if(d.history)S.history=d.history; if(d.study)S.study=d.study; if(Object.prototype.hasOwnProperty.call(d,'activeQuiz'))S.activeQuiz=d.activeQuiz;
+    if(d.lastTab)S.lastTab=d.lastTab; restoreAppState(); save(); restoreMsg='Restored \u2713';
   }catch(e){ restoreMsg='That code didn\u2019t parse \u2014 paste the whole thing.'; }
   render(); setTimeout(function(){ restoreMsg=''; },3000);
 }
@@ -1239,7 +1312,7 @@ function viewNotes(){
       +'</div></div>';
   }).join(''):'<div style="text-align:center;color:var(--steel);font-size:14px;padding:20px">Saved notes stay on this device.</div>';
 
-  var code=JSON.stringify({weak:S.weak,mastered:S.mastered,scores:S.scores,notes:S.notes});
+  var code=JSON.stringify({weak:S.weak,mastered:S.mastered,scores:S.scores,notes:S.notes,history:S.history,study:S.study,activeQuiz:S.activeQuiz,lastTab:S.lastTab});
   var backup='';
   if(showBackup){
     backup='<div class="body">'
@@ -1259,7 +1332,30 @@ function viewNotes(){
     + '<span class="h">MOVE PROGRESS TO ANOTHER DEVICE</span><span class="pm">'+(showBackup?'\u2212':'+')+'</span></button>'+backup+'</div>';
 }
 
-load(); render();
+function restoreAppState(){
+  var tabs=['home','study','quiz','sheet','notes'];
+  if(tabs.indexOf(S.lastTab)>-1) tab=S.lastTab;
+  if(S.study){
+    if(CATS.indexOf(S.study.cat)>-1) st.cat=S.study.cat;
+    if(S.study.mode==='all'||S.study.mode==='weak') st.mode=S.study.mode;
+    if(Array.isArray(S.study.order)) st.order=S.study.order.filter(function(id){return !!byId(id);});
+    st.idx=Math.max(0,Math.min(Number(S.study.idx)||0,Math.max(0,st.order.length-1)));
+    st.picked=typeof S.study.picked==='number'?S.study.picked:null;
+    st.streak=Number(S.study.streak)||0;
+  }
+  if(S.activeQuiz&&Array.isArray(S.activeQuiz.ids)){
+    var restored=S.activeQuiz.ids.map(byId).filter(function(q){return !!q;});
+    if(restored.length){
+      qz.cat=CATS.indexOf(S.activeQuiz.cat)>-1?S.activeQuiz.cat:'All';
+      qz.len=Number(S.activeQuiz.len)||restored.length; qz.qs=restored;
+      qz.i=Math.max(0,Math.min(Number(S.activeQuiz.i)||0,restored.length-1));
+      qz.picked=typeof S.activeQuiz.picked==='number'?S.activeQuiz.picked:null;
+      qz.right=Number(S.activeQuiz.right)||0; qz.done=!!S.activeQuiz.done;
+    }
+  }
+}
+
+load(); restoreAppState(); render();
 </script>
 </body>
 </html>
