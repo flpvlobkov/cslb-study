@@ -115,6 +115,61 @@ nav button{flex:1;background:none;border:none;padding:8px 0;cursor:pointer;
 nav button.on{color:var(--cobalt);border-top-color:var(--cobalt)}
 .gt{border-bottom:2px dotted var(--cobalt);color:var(--cobalt);cursor:pointer;font-weight:600}
 .gt:active{background:#E6F1FB}
+.badge{display:inline-block;margin-left:6px;background:var(--red);color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  padding:1px 6px;border-radius:999px;vertical-align:1px}
+.pill.on .badge{background:#fff;color:var(--cobalt)}
+.wrow{display:block;width:100%;text-align:left;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;padding:12px 14px;
+  margin-bottom:8px;cursor:pointer;font-family:inherit}
+.wtop{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.wname{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;
+  letter-spacing:.3px;color:var(--ink)}
+.wpct{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:15px}
+.wbar{height:7px;background:var(--line);border-radius:4px;overflow:hidden}
+.wbar>div{height:7px;border-radius:4px;transition:width .3s}
+.wsub{display:flex;justify-content:space-between;gap:10px;margin-top:6px;
+  font-size:12px;color:var(--steel)}
+/* Clean study layout; bottom navigation retains its original styling. */
+:root{--steel:#66748B;--red:#BD303D;--green:#167743}
+.wrap{max-width:720px;padding-bottom:110px}
+header{padding:24px 2px 20px}
+h1{font-family:'Inter',system-ui,sans-serif;font-size:clamp(21px,5.7vw,29px);letter-spacing:-.8px;line-height:1.2}
+.sub{font-family:inherit;font-size:11px;line-height:1.6;margin-top:7px}
+.stripe{height:3px;margin-top:17px;background:var(--cobalt);border-radius:0;opacity:.18}
+.card,.tile,.nav-btn,.acc{box-shadow:none;border-radius:12px}
+.card{padding:20px}
+.q{line-height:1.65;font-size:18px}
+.opt{font-size:16px;padding:14px;line-height:1.6}
+.opt:last-child{margin-bottom:0}
+.why{line-height:1.75}
+button{touch-action:manipulation}
+button:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.category-grid .pill{min-width:0;white-space:normal;text-align:left;border-radius:10px;padding:10px 12px;font-family:inherit;letter-spacing:0;border-width:1px}
+.category-name{display:block;font-size:13px;font-weight:700;line-height:1.3}
+.category-rate{display:block;font-size:11px;font-weight:600;line-height:1.4;margin-top:5px;color:var(--steel)}
+.category-rate.trouble{color:var(--red)}
+.category-rate.clear{color:var(--green)}
+.category-grid .pill.on{background:#EDF2FF;border-color:var(--cobalt);color:var(--ink)}
+.category-grid .pill.weakest{border-color:#E3A0A8}
+.category-grid .pill.on.weakest{border-color:var(--cobalt)}
+.section-label{font-size:12px;font-weight:700;color:var(--inkSoft);margin:0 0 10px}
+.progress-help{font-size:12px;color:var(--steel);line-height:1.6;margin:0 0 14px}
+.focus-card{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:13px 14px;border:1px solid #F0C8CD;border-radius:10px;background:#FFF6F7;text-align:left;font-family:inherit;cursor:pointer;margin-bottom:16px;color:var(--ink)}
+.focus-card strong{display:block;font-size:14px;line-height:1.5}
+.focus-card small{display:block;font-size:12px;line-height:1.6;color:var(--red)}
+.focus-action{font-size:12px;font-weight:700;color:var(--red);white-space:nowrap}
+.study-modes{padding:4px;background:#E9EEF6;border-radius:10px;display:flex;gap:4px;margin-bottom:18px}
+.study-modes .pill{flex:1;padding:10px 6px;border:0;border-radius:7px;font-family:inherit;font-size:12px;letter-spacing:0;background:transparent}
+.study-modes .pill.on{background:white;color:var(--cobalt);box-shadow:0 1px 3px #101b3310}
+.meta{font-family:inherit;font-size:11px;line-height:1.5;gap:12px;margin-bottom:10px}
+.wname{font-family:inherit;font-size:14px;letter-spacing:0}
+.wpct{font-family:inherit;font-size:12px}
+.wtop{gap:10px}.wsub{font-size:11px;line-height:1.5}
+@media(min-width:600px){.category-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:380px){.card{padding:15px}.category-grid .pill{padding:9px}.focus-card{align-items:flex-start;flex-direction:column;gap:4px}}
+
 .hide{display:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -537,6 +592,30 @@ const GLOSSARY = [
   {t:"direct contractor", d:"The current legal term for the contractor who has the contract directly with the owner. Same thing older materials call the PRIME contractor or ORIGINAL contractor. On liens, this is the one who gets 60 days when a notice of completion was filed."},
   {t:"public works", d:"Construction paid for with government money — schools, roads, city buildings. Comes with extra rules: prevailing wage, certified payroll, DIR registration."},
   {t:"DIR", d:"California's Department of Industrial Relations. Sets prevailing wage rates and requires contractors to register before doing public works."},
+  {t:"Notice of Cancellation", d:"The form you must hand the buyer WITH the contract, in TWO copies, spelling out their right to cancel within 3 business days (5 if they are 65 or older). Leave it out and the buyer's cancellation clock never starts, so they can cancel much later."},
+  {t:"Mechanics Lien Warning", d:"A warning that must appear in every home improvement contract. It tells the owner that if you or your suppliers go unpaid, a lien can be put on their home EVEN IF the owner already paid you in full. Skipping it is grounds for discipline."},
+  {t:"Agreement to Arbitrate", d:"The form the CSLB mails to both sides when a complaint is headed to arbitration. Send it back within 30 days so a hearing can be scheduled."},
+  {t:"CSLB", d:"Contractors State License Board. The California agency that issues contractor licenses, investigates complaints, and disciplines contractors. Its number one job is protecting the public."},
+  {t:"the Board", d:"Another way of saying the CSLB. Fifteen members: 8 from the public, 5 contractors, 1 local building official, 1 labor representative. The Board sets policy; the Registrar carries it out."},
+  {t:"EDD", d:"Employment Development Department. California's payroll tax and unemployment agency. Every new hire must be reported to them within 20 days."},
+  {t:"HIC", d:"Home Improvement Contract. Must be in writing for any home improvement job over $500, and must contain specific notices like the Mechanics Lien Warning."},
+  {t:"LLC", d:"Limited Liability Company. A business structure that keeps business debts away from your personal assets. Contractor LLCs in California need an extra $100,000 worker bond and at least $1 million in liability insurance, and must use an attorney in civil court."},
+  {t:"IRS", d:"Internal Revenue Service, the federal tax agency. Your payroll tax deposits go to them, and how OFTEN you deposit depends on how much you owe."},
+  {t:"Labor Commissioner", d:"The California official who enforces wage laws and collects certified payroll records on public works jobs."},
+  {t:"Limited Specialty", d:"The C-61 license class. It covers trades that do not fit the other categories and is split into 'D' subcategories. Yours is D-28, doors and gates."},
+  {t:"General Building", d:"The Class 'B' license. A 'B' can only take a project that involves at least TWO unrelated trades, otherwise the job belongs to the matching specialty contractor."},
+  {t:"General Engineering", d:"The Class 'A' license. Covers fixed works like roads, bridges, pipelines, and other heavy engineering projects."},
+  {t:"Underground Service Alert", d:"The free 811 service you call before digging. They send utilities out to paint-mark their buried lines. Call at least 2 working days ahead, and no more than 14 calendar days."},
+  {t:"fraud", d:"Lying on purpose to get money or an advantage. On this exam, the word 'fraud' in a question almost always signals CRIMINAL penalties and possible jail, not just a fine."},
+  {t:"sole proprietorship", d:"A business owned by one person with no legal wall between the business and the owner. Cheapest and simplest to set up, but business debts can reach your personal house, truck, and savings."},
+  {t:"subcontractor", d:"A contractor hired by the prime (direct) contractor rather than by the owner. They must hold a valid license. If they do not, the law treats them as YOUR employee, with payroll taxes and workers' comp owed."},
+  {t:"journeyman", d:"A fully trained, experienced worker in a trade. On public works, apprentice hours are measured against journeyman hours at roughly 1 apprentice hour per 5 journeyman hours."},
+  {t:"apprentice", d:"A worker enrolled in a state-approved training program who learns the trade while getting paid. Required on public works contracts of $30,000 or more."},
+  {t:"Social Security", d:"The federal retirement program funded by payroll tax. It is the 6.2% half of FICA; Medicare is the other 1.45%."},
+  {t:"ETT", d:"Employment Training Tax. A small California payroll tax paid by the EMPLOYER, never withheld from the worker."},
+  {t:"good faith", d:"Acting honestly and fairly, without trying to cheat anyone. A 'good faith dispute' means you genuinely believe you owe less, which is different from just refusing to pay."},
+  {t:"willful", d:"On purpose, knowing what you were doing. Willful violations carry much bigger penalties than careless or accidental ones."},
+  {t:"negligent", d:"Careless. You did not mean to cause harm, but you failed to take reasonable care. Penalties are lower than for willful violations."},
 ];
 
 /* Diagrams for concepts that are easier to see than to read.
@@ -885,6 +964,64 @@ function render(){
 }
 function go(t){ tab=t; render(); }
 
+
+/* ---- WEAKNESS TRACKING ----
+   Current needs-work questions / distinct answered questions. A correct retry
+   removes that question from needs work. Unanswered questions are excluded. */
+function catStats(cat){
+  var qs=BANK.filter(function(q){ return cat==='All'||q.cat===cat; });
+  var right=0, weak=0;
+  qs.forEach(function(q){
+    if(S.weak[q.id]) weak++;
+    else if(S.mastered[q.id]) right++;
+  });
+  var seen=right+weak;
+  return {cat:cat,total:qs.length,seen:seen,right:right,weak:weak,
+    acc:seen?Math.round(right/seen*100):null,
+    needPct:seen?Math.round(weak/seen*100):null,
+    weight:WEIGHTS[cat]||0};
+}
+function allStats(){ return CATS.filter(function(c){return c!=='All';}).map(catStats); }
+function byPriority(a,b){
+  var ar=a.seen?a.weak/a.seen:-1, br=b.seen?b.weak/b.seen:-1;
+  return br-ar || b.weak-a.weak || b.weight-a.weight;
+}
+function weakestCategory(){ return allStats().filter(function(s){return s.weak>0;}).sort(byPriority)[0]||null; }
+function catPill(c,active,fn){
+  var s=catStats(c), worst=weakestCategory();
+  var label=s.seen?s.needPct+'% needs work':'Not started';
+  var help=s.seen?s.weak+' of '+s.seen+' answered questions still need work; '+s.total+' total questions.':'No questions answered yet.';
+  return '<button class="pill '+(active?'on ':'')+(worst&&worst.cat===c?'weakest':'')+'" aria-pressed="'+active+'" title="'+help+'" onclick="'+fn+'(\''+c+'\')">'
+    +'<span class="category-name">'+(c==='All'?'All categories':c)+'</span>'
+    +'<span class="category-rate '+(s.weak?'trouble':s.seen?'clear':'')+'">'+label+'</span></button>';
+}
+function focusCard(){
+  var worst=weakestCategory();
+  if(!worst) return '';
+  return '<button class="focus-card" onclick="jumpCat(\''+worst.cat+'\')">'
+    +'<span><strong>Focus next: '+worst.cat+'</strong><small>Weakest area · '+worst.needPct+'% needs work · '+worst.weak+' of '+worst.seen+' answered</small></span>'
+    +'<span class="focus-action">Practice missed →</span></button>';
+}
+function weakPanel(){
+  var stats=allStats().sort(byPriority);
+  return '<section style="margin:20px 0 12px"><h2 class="section-label">YOUR WEAK AREAS</h2>'
+    +'<p class="progress-help">Red shows the share of answered questions still needing work. Highest first. Correct a missed question to bring it down.</p>'
+    +focusCard()+stats.map(function(s){
+      var label=s.seen?s.needPct+'% needs work':'Not started';
+      var col=s.weak?'var(--red)':s.seen?'var(--green)':'var(--steel)';
+      return '<button class="wrow" onclick="jumpCat(\''+s.cat+'\')">'
+        +'<div class="wtop"><span class="wname">'+s.cat+'</span><span class="wpct" style="color:'+col+'">'+label+'</span></div>'
+        +'<div class="wbar"><div style="width:'+(s.needPct||0)+'%;background:'+col+'"></div></div>'
+        +'<div class="wsub"><span>'+s.weak+' need work / '+s.seen+' answered · '+s.total+' total</span><span>'+s.weight+'% of exam</span></div></button>';
+    }).join('')+'</section>';
+}
+/* tapping a row takes you straight to drilling that category */
+function jumpCat(c){
+  st.cat=c;
+  st.mode = catStats(c).weak>0 ? 'weak' : 'all';
+  reorder(); tab='study'; render();
+}
+
 /* ---- HOME ---- */
 function viewHome(){
   var mCount=Object.keys(S.mastered).length, wCount=Object.keys(S.weak).length;
@@ -900,6 +1037,7 @@ function viewHome(){
     + nb('EXAM SIMULATOR','Weighted like the real exam, scored at the end.','quiz','var(--amber)')
     + nb('CHEAT SHEET','Every number that matters, grouped so it sticks.','sheet','var(--green)')
     + nb('MY NOTES','Memory hooks, trouble spots, and your backup code.','notes','var(--steel)')
+    + weakPanel()
     + '<div class="note-box"><span class="k">GAME PLAN · </span>Finish your course chapter first, then drill that category here. '
     + 'The seven categories mirror the exam\u2019s seven sections, and the simulator draws in real-exam proportions. '
     + 'Miss a question and it lands in Needs Work. Exam: Fri Aug 28, 9:30 AM.</div>';
@@ -916,10 +1054,13 @@ function setCat(c){ st.cat=c; reorder(); render(); }
 function setMode(m){ st.mode=m; reorder(); render(); }
 function viewStudy(){
   if(!st.order.length) reorder();
-  var pills=CATS.map(function(c){ return '<button class="pill '+(st.cat===c?'on':'')+'" onclick="setCat(\''+c.replace(/'/g,"\\'")+'\')">'+c+'</button>'; }).join('');
+  var pills=CATS.map(function(c){ return catPill(c, st.cat===c, 'setCat'); }).join('');
+  var needs=catStats(st.cat).weak;
   var modes='<button class="pill '+(st.mode==='all'?'on':'')+'" onclick="setMode(\'all\')">All questions</button>'
-          + '<button class="pill '+(st.mode==='weak'?'on':'')+'" onclick="setMode(\'weak\')">Needs work ('+Object.keys(S.weak).length+')</button>';
-  var head='<div class="row">'+pills+'</div><div class="row" style="padding-bottom:12px">'+modes+'</div>';
+          + '<button class="pill '+(st.mode==='weak'?'on':'')+'" onclick="setMode(\'weak\')">Needs work ('+needs+')</button>';
+  var head='<h2 class="section-label">CHOOSE YOUR FOCUS</h2><div class="category-grid">'+pills+'</div>'
+    +'<p class="progress-help">Needs work = missed questions ÷ answered questions. Unanswered questions do not count.</p>'
+    +focusCard()+'<div class="study-modes">'+modes+'</div>';
   var item=byId(st.order[st.idx]);
   if(!item) return head+'<div class="card" style="text-align:center;color:var(--steel)">'
     +(st.mode==='weak'?'Nothing in the needs-work pile here. Nice.':'No questions in this category.')+'</div>';
@@ -955,7 +1096,15 @@ function pickStudy(n){
   else { S.weak[item.id]=(S.weak[item.id]||0)+1; delete S.mastered[item.id]; st.streak=0; }
   save(); render();
 }
-function nextStudy(){ st.picked=null; st.idx=(st.idx+1<st.order.length)?st.idx+1:0; render(); }
+function nextStudy(){
+  var remaining=st.order.slice(st.idx+1);
+  if(st.mode==='weak'){
+    remaining=remaining.filter(function(id){return S.weak[id];});
+    if(remaining.length){st.order=remaining;st.idx=0;st.picked=null;}
+    else reorder();
+  } else {st.picked=null;st.idx=(st.idx+1<st.order.length)?st.idx+1:0;}
+  render();
+}
 
 /* ---- QUIZ (weighted to the real exam) ---- */
 function setQCat(c){ qz.cat=c; render(); }
@@ -980,7 +1129,11 @@ function startQuiz(){
 }
 function pickQuiz(n){
   if(qz.picked!==null) return;
-  qz.picked=n; if(n===qz.qs[qz.i].ans) qz.right++;
+  qz.picked=n;
+  var item=qz.qs[qz.i];
+  if(n===item.ans){qz.right++;delete S.weak[item.id];S.mastered[item.id]=true;}
+  else {S.weak[item.id]=(S.weak[item.id]||0)+1;delete S.mastered[item.id];}
+  save();
   render();
 }
 function nextQuiz(){
@@ -994,7 +1147,7 @@ function nextQuiz(){
 }
 function viewQuiz(){
   if(!qz.qs){
-    var pills=CATS.map(function(c){ return '<button class="pill '+(qz.cat===c?'on':'')+'" onclick="setQCat(\''+c.replace(/'/g,"\\'")+'\')">'+c+'</button>'; }).join('');
+    var pills=CATS.map(function(c){ return catPill(c, qz.cat===c, 'setQCat'); }).join('');
     var recent='';
     if(S.scores.length){
       recent='<div style="margin-top:16px"><div style="font-family:\'IBM Plex Mono\',monospace;font-size:12px;color:var(--steel);margin-bottom:6px">RECENT SCORES</div><div style="display:flex;gap:6px;flex-wrap:wrap">'
@@ -1004,7 +1157,7 @@ function viewQuiz(){
             return '<span class="score" style="background:'+bg+';color:'+fg+'">'+s.pct+'%</span>';
           }).join('') + '</div></div>';
     }
-    return '<div class="row">'+pills+'</div>'
+    return '<h2 class="section-label">QUIZ CATEGORIES</h2><div class="category-grid">'+pills+'</div>'
       + '<div class="card"><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:24px;font-weight:700">Exam Simulator</div>'
       + '<p style="font-size:14.5px;color:var(--inkSoft);line-height:1.55">Questions are drawn in the same proportions as the real exam, so your score here predicts test day. Target 90% or better.</p>'
       + '<div class="row" style="padding-bottom:12px"><button class="pill '+(qz.len===10?'on':'')+'" onclick="setQLen(10)">Quick 10</button>'
