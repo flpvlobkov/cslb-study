@@ -73,6 +73,8 @@ h1 span{color:var(--cobalt)}
 .tile .n{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:700;line-height:1}
 .tile .l{font-size:12px;color:var(--steel);margin-top:4px}
 .tile .s{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--steel)}
+button.tile{min-width:0;font-family:inherit;color:inherit;cursor:pointer;transition:border-color .2s,background-color .2s}
+button.tile:hover,button.tile:active{border-color:var(--red);background:#FFF8F8}
 .nav-btn{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);
   border-radius:14px;padding:15px 16px;margin-bottom:10px;cursor:pointer;font-family:inherit}
 .nav-btn .t{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;
@@ -1077,11 +1079,11 @@ function jumpCat(c){
 function viewHome(){
   var mCount=Object.keys(S.mastered).length, wCount=Object.keys(S.weak).length;
   var best=S.scores.length?Math.max.apply(null,S.scores.map(function(s){return s.pct;})):null;
-  function tile(n,l,s,c){ return '<div class="tile"><div class="n" style="color:'+c+'">'+n+'</div><div class="l">'+l+'</div>'+(s?'<div class="s">'+s+'</div>':'')+'</div>'; }
+  function tile(n,l,s,c,action){ var tag=action?'button':'div'; return '<'+tag+' class="tile"'+(action?' type="button" onclick="'+action+'()" aria-label="Practice all missed questions in random order"':'')+'><div class="n" style="color:'+c+'">'+n+'</div><div class="l">'+l+'</div>'+(s?'<div class="s">'+s+'</div>':'')+'</'+tag+'>'; }
   function nb(t,d,tb,c){ return '<button class="nav-btn" style="border-left:5px solid '+c+'" onclick="go(\''+tb+'\')"><div class="t">'+t+'</div><div class="d">'+d+'</div></button>'; }
   return '<div class="tiles">'
     + tile(mCount,'answered right','of '+BANK.length,'var(--green)')
-    + tile(wCount,'needs work','',wCount?'var(--red)':'var(--steel)')
+    + tile(wCount,'needs work','Practice all →',wCount?'var(--red)':'var(--steel)','practiceAllMissed')
     + tile(best!==null?best+'%':'—','best quiz','',best>=90?'var(--green)':'var(--cobalt)')
     + '</div>'
     + nb('STUDY','Multiple choice with instant answers and the why.','study','var(--cobalt)')
@@ -1095,6 +1097,11 @@ function viewHome(){
 }
 
 /* ---- STUDY ---- */
+function practiceAllMissed(){
+  st.cat='All'; st.mode='weak'; st.focusOpen=false;
+  reorder(); tab='study'; S.lastTab='study'; saveStudyState();
+  render(); scrollToStudyQuestion();
+}
 function studyPool(){
   var p=BANK.filter(function(x){ return st.cat==='All'||x.cat===st.cat; });
   if(st.mode==='weak') p=p.filter(function(x){ return S.weak[x.id]; });
