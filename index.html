@@ -538,7 +538,7 @@ const SHEETS = [
    Legal sources checked September 2026; arithmetic examples are illustrative. */
 var LAW_BOOK='https://www.cslb.ca.gov/Resources/GuidesAndPublications/2026/2026_CSLB_Law_Book.pdf';
 function lawRef(code,section){return ['California '+code+' § '+section,'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode='+code+'&sectionNum='+section];}
-function dirRef(section){return ['Cal/OSHA § '+section,'https://www.dir.ca.gov/title8/'+section.replace('.','_')+'.html'];}
+function dirRef(section){return ['Cal/OSHA § '+section,'https://www.dir.ca.gov/'+(section.indexOf('14300.')===0?'t8/':'title8/')+section.replace('.','_')+'.html'];}
 var PAY_REF=['California final-pay rules','https://www.dir.ca.gov/dlse/FAQ_Paydays.htm'];
 var SHEET_HELP=[
  [
