@@ -148,6 +148,9 @@ nav button.on{color:var(--cobalt);border-top-color:var(--cobalt)}
 .meaning-body summary,.source-detail summary{color:var(--cobalt);cursor:pointer;padding:8px 0;min-height:36px}
 .memory-cue{padding:10px 12px;border-radius:8px;background:rgba(255,255,255,.7);margin:12px 0 0;font-size:16px;line-height:1.6}
 .source-detail{margin-top:12px;font-size:14px;line-height:1.65}.plain-answer{margin:8px 0}
+.reading-help{margin:12px 0 18px;border:1px solid #C9D9FA;border-radius:10px;background:#F2F6FF;padding:0 12px;font-size:16px;line-height:1.65}
+.reading-help summary{padding:11px 0;color:var(--cobalt);cursor:pointer;font-weight:600}.reading-help p{margin:0 0 12px}
+.reading-label{font-size:12px;color:var(--steel);margin-bottom:9px;letter-spacing:.3px}.math-steps{padding-left:23px;font-size:16px;line-height:1.65}.math-steps li{margin:7px 0}
 .gt:active{background:#E6F1FB}
 .badge{display:inline-block;margin-left:6px;background:var(--red);color:#fff;
   font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
@@ -1350,6 +1353,90 @@ BANK.find(function(q){return q.id==='p3';}).opts=['Keep the records privately fo
 BANK.find(function(q){return q.id==='p3';}).q='On public work covered by DIR’s online payroll-reporting rule, what must the contractor do?';
 BANK.find(function(q){return q.id==='c5';}).q='You are signing a home-sale contract (home solicitation) that requires a separate Notice of Cancellation form. How must you give that form to the customer?';
 
+/* Exam reading uses the reviewed question bank, with concise scenario wording.
+   The everyday rephrasing stays available as optional Study help. */
+var EXAM_STYLE_QUESTIONS={
+n4:'Which official administers CSLB’s day-to-day licensing and enforcement activities?',
+n5:'Within what period after CSLB accepts an application must an applicant generally pass the required qualifying examinations?',
+n6:'CSLB sends an applicant a notice requiring the initial license fee and final documents. What is the usual deadline to complete these requirements?',
+n16:'On a D-28 contractor’s commercially registered work vehicle, what minimum height and width generally apply to the business-name and license-number characters?',
+n20:'During which overnight period does a housing inspector need the owner’s or occupant’s consent to enter a dwelling under Health and Safety Code 17972?',
+n22:'A 68-year-old buyer signs a nonemergency home solicitation contract and receives the required cancellation notice. Under the ordinary senior cancellation rule, how long may the buyer cancel?',
+n23:'A contractor receives a valid cancellation of a home solicitation contract. Within how many days must the contractor return the buyer’s down payment?',
+n24:'A prime contractor receives a progress payment on the 1st. With no payment dispute or different written agreement, by which date must the subcontractors receive their shares?',
+n25:'Within what period after service of a CSLB citation must a licensee generally file an appeal?',
+n26:'A qualifying individual leaves a company. Within what period must the company generally notify CSLB and replace the qualifier?',
+n27:'After CSLB mails an Agreement to Arbitrate, how many calendar days do the participants have to return it?',
+n28:'What CSLB complaint period can apply to a qualifying latent structural defect?',
+n30:'For full protection of lien rights, within how many days after first supplying labor or materials must a required preliminary notice generally be served?',
+n31:'Within how many days after project completion may an owner record a Notice of Completion?',
+n33:'On a private project, a valid Notice of Completion is recorded. What shorter lien-recording period generally applies to a subcontractor, measured from that recording? Assume no earlier deadline applies.',
+n34:'On a private project, a valid Notice of Completion is recorded. What shorter lien-recording period generally applies to the direct contractor, measured from that recording? Assume no earlier deadline applies.',
+n35:'Within how many days after recording a private-work mechanics lien must a foreclosure lawsuit generally be filed? Assume no extension of credit applies.',
+n36:'An owner qualifies to use a Notice of Nonresponsibility. Within how many days after learning of the work must the owner both post and record the notice?',
+n39:'A new employee will work at least three business days. Within how many business days after the first paid workday must the employer complete Form I-9 Section 2?',
+n42:'An employer learns of a work injury requiring treatment beyond first aid or lost time after the injury day. Within how many days must the employer report it to the insurer?',
+n45:'Under the asbestos standard, how long must employee exposure-monitoring records generally be retained?',
+n47:'What penalty normally applies to a second conviction for unlicensed contracting? Assume the court does not grant the unusual-case exception.',
+n51:'A contractor willfully uses $3,000 of construction funds for a personal debt and willfully fails to finish the work or pay for its labor and materials. What punishment is possible under Penal Code 484b?',
+n52:'An employer’s willful safety violation causes a worker’s death or qualifying lasting impairment. What penalties are possible under Labor Code 6425?',
+n54:'What is the usual maximum civil penalty for a knowing and willful 811-law violation? Exclude the special case involving a hazardous pipeline release.',
+n56:'A contractor knowingly makes a false statement that causes an owner to sign a home improvement contract. What may the owner recover under BPC 7160?',
+n60:'A $12,000 home improvement contract is subject to the ordinary down-payment limit. No bond exception applies. What is the maximum down payment?',
+n61:'Under the ordinary home improvement payment rule, progress payments must not exceed which amount? Exclude the permitted down payment and bond exceptions.',
+n63:'A hired salesperson negotiates home improvement contracts and does not qualify for a registration exemption. What must the salesperson do?',
+n64:'A prior oral promise conflicts with a final written contract that states the complete agreement. How is that promise generally treated? Assume no exception applies.',
+n65:'For a printed arbitration notice in a covered residential contract of four units or fewer, which type-size and agreement requirements apply?',
+n67:'A dispute meets CSLB’s other mandatory-arbitration conditions. What contract-price or claim limit applies?',
+n69:'A garage-door corporation is sued in civil court outside small claims. How must its nonlawyer owner handle representation of the corporation?',
+n70:'A contractor was unlicensed during part of a job requiring a license. No exception applies. How is the contractor’s lawsuit for the unpaid contract balance normally handled?',
+n71:'A contractor’s license has been suspended or revoked at least twice in the last eight years. What is required before contracting for work on a residence of four units or fewer?',
+n74:'Which remedy may an eligible unpaid subcontractor use to hold construction funds held by a public agency?',
+n75:'For public contracts covered by the ordinary payment-bond threshold, a payment bond is required when the contract exceeds what amount?',
+n76:'Where must the mechanics-lien warning appear in an ordinary written home improvement contract?',
+n79:'What is the usual employer FICA rate on wages below the Social Security wage cap, before any additional Medicare tax?',
+n80:'A nonexempt installer works 13 hours in one day. Under the ordinary California daily-overtime rule, how is the 13th hour paid?',
+n82:'At quarter-end, an employer adds current FUTA tax to undeposited tax from earlier quarters. A deposit is required when that total exceeds what amount?',
+n85:'Cal/OSHA receives a credible employee complaint classified as serious. What is the latest normal deadline to begin the investigation?',
+n92:'Which business entity generally pays tax on its profit, followed by shareholder tax when that profit is paid as dividends?',
+n95:'A business has current assets of $50,000 and current liabilities of $25,000. What is its current ratio?',
+e1:'An unlicensed installer performs work requiring a contractor license under the hiring contractor’s direction. The contractor calls the installer a subcontractor. Which worker classification applies?',
+e3:'Which document must an employer normally provide with a nonexempt hourly employee’s wages?',
+i1:'Which business entity has CSLB’s special liability-insurance requirement of at least $1 million?',
+c2:'On private work, no payment dispute or other exception applies. Retention is generally due from owner to prime within how many days of completion, and from prime to sub within how many days of receipt?',
+c3:'A prime contractor wrongfully withholds a subcontractor’s progress payment after its due date. What monthly penalty applies?',
+p3:'On public work covered by DIR electronic certified-payroll reporting, which action must the contractor take?',
+p4:'A public-work contract is at least $30,000 and uses an apprenticeable trade. With no exception, what apprentice-hour requirement normally applies?',
+s1:'Which safety program must a California construction employer generally establish and maintain?',
+s2:'Which written safety rules must a construction employer post at the jobsite office or make readily available through supervisors?',
+s3:'A worker must enter an excavation. With no permit exception, at what depth is a Cal/OSHA permit required?',
+m1:'A home improvement contract is $8,000. Under the ordinary down-payment rule, with no bond exception, what is the maximum down payment?',
+m2:'A home improvement contract is $20,000. Under the ordinary down-payment rule, with no bond exception, what is the maximum down payment?',
+m3:'A home improvement contract totals $40,000. The completed work and materials delivered to the jobsite are valued at 60% of the contract price. What is the dollar value of that work and those materials?',
+m5:'A nonexempt installer earns $28 per hour and works 10 hours in one day. Under the ordinary daily-overtime rule, what is the installer’s gross pay for that day?',
+m6:'A nonexempt employee earns $30 per hour and works 13 hours in one day. Under the ordinary daily-overtime rule, what is the employee’s gross pay for that day?',
+m13:'A business has $80,000 in revenue, $50,000 in direct costs and $20,000 in overhead. With no other expenses or taxes, what is its net profit?',
+c4:'An ordinary written home improvement contract must include approximate dates for which events?',
+c5:'A home solicitation contract requires the separate Notice of Cancellation form under Civil Code 1689.7(c). How must the completed form be provided to the buyer?',
+c6:'What is the usual California time limit for a lawsuit on a written contract? Assume no special deadline or pause in the time limit applies.',
+c7:'An owner accepts a complete offer exactly as written before it expires or is withdrawn. All other contract requirements are met. What normally results?',
+e5:'A nonexempt employee works an eight-hour shift under the ordinary meal-period rule. What unpaid meal period is required?',
+e6:'Under the ordinary California rule for nonexempt employees, paid rest periods are provided at what rate?',
+l2:'Under the usual multiple-trade rule, what must a B General Building project involve? Exclude framing/carpentry and other exceptions.',
+l6:'Regulated asbestos work covers 100 square feet or more. With no exception, what additional licensing and registration requirements apply?',
+s6:'For residential framing work on top plates, joists or rafters covered by Cal/OSHA’s framing rule, at what height is fall protection required?',
+s7:'Before servicing a garage-door opener that could start unexpectedly and cause injury, which procedure must the worker follow?'
+};
+BANK.forEach(function(q){q.plainQuestion=q.q;q.q=EXAM_STYLE_QUESTIONS[q.id]||q.legalQuestion;q.opts=q.legalOpts.slice();});
+/* Repair grammar in the existing payroll choices without moving any answer. */
+BANK.find(function(q){return q.id==='p3';}).opts=['Keep the records privately for one year only','Submit certified payroll showing each worker’s hours and wages electronically to the Labor Commissioner','Give the records only to the surety','Skip reporting on contracts under $100,000'];
+var percentQuestion=BANK.find(function(q){return q.id==='m3';});
+percentQuestion.plainQuestion='The whole job costs $40,000. The finished work and materials already delivered together make up 60% of that amount. How much money is that 60% worth?';
+percentQuestion.why='The 60% already includes BOTH the finished work and the delivered materials. Find 60% of the full $40,000 price: $40,000 × 0.60 = $24,000.';
+percentQuestion.cue='“Percent of the total” means multiply the total by the percentage divided by 100.';
+percentQuestion.steps=['100% of the job = $40,000.','10% = $4,000. Divide by 10.','60% = six lots of $4,000 = $24,000.'];
+['f1','f2','n27'].forEach(function(id){var refs=QUESTION_REFS[id];if(!refs.some(function(r){return r[1]===EXAM_GUIDE;}))refs.push(['CSLB published sample topic (practice adaptation)',EXAM_GUIDE]);});
+
 var SHEET_DETAILS=SHEET_HELP.map(function(section){return section.map(function(d){return d[0];});});
 var PLAIN_SHEET=[
 [
@@ -1888,7 +1975,7 @@ function viewHome(){
     + weakPanel()
     + '<div class="note-box"><span class="k">YOUR NEXT TEST · FRIDAY, SEPTEMBER 25, 2026</span><br>Try a short practice set, reread the explanations, and pause when you need to. '
     + 'The simulator approximates CSLB’s topic weights. Missed questions stay in Needs Work until you answer them correctly. '
-    + '<br><small>All 174 questions reviewed September 14, 2026. Questions and meanings use everyday words. Open More detail &amp; source under an answer to read the full explanation and check its rule or calculation.</small></div>';
+    + '<br><small>All 174 questions reviewed September 14, 2026. Practice reading exam-style questions, with simple helpers. Open More detail &amp; source under an answer to check its rule or calculation. <a href="'+EXAM_GUIDE+'" target="_blank" rel="noopener noreferrer">CSLB’s published samples and exam outline ↗</a></small></div>';
 }
 
 /* ---- STUDY ---- */
@@ -1934,7 +2021,8 @@ function viewStudy(){
     + (st.picked!==null?'<button class="btn" onclick="nextStudy()">NEXT QUESTION \u2192</button>':'')+'</div>';
 }
 function qCard(item,picked,fn){
-  var h='<div class="card"><div class="q">'+mark(item.q,item)+'</div>';
+  var h='<div class="card"><div class="reading-label">Exam-style practice · choose the best answer</div><div class="q">'+mark(item.q,item)+'</div>';
+  if(fn==='pickStudy')h+=readingHelp(item);
   for(var n=0;n<item.opts.length;n++){
     var cls='opt', mk='';
     if(picked!==null){
@@ -1945,13 +2033,15 @@ function qCard(item,picked,fn){
   }
   if(picked!==null){
     var ok=picked===item.ans;
-    h+='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Correct — ':'Answer: ')+'ABCD'[item.ans]+'. '+esc(item.opts[item.ans])+'</b><p class="plain-answer">'+mark(item.why,item)+'</p><p class="memory-cue"><strong>Remember:</strong> '+esc(item.cue)+'</p>'+questionReferences(item)+'</div>';
+    h+='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Correct — ':'Answer: ')+'ABCD'[item.ans]+'. '+esc(item.opts[item.ans])+'</b><p class="plain-answer">'+mark(item.why,item)+'</p>'+(item.steps?'<ol class="math-steps">'+item.steps.map(function(step){return '<li>'+esc(step)+'</li>';}).join('')+'</ol>':'')+'<p class="memory-cue"><strong>Remember:</strong> '+esc(item.cue)+'</p>'+questionReferences(item)+'</div>';
+    if(fn!=='pickStudy')h+=readingHelp(item);
     h+=diaBlock(item);
   }
   h+=defPanel();
   if(fn==='pickStudy'||picked!==null) h+=wordHelp(item);
   return h+'</div>';
 }
+function readingHelp(item){return '<details class="reading-help"><summary>Help me read this question</summary><p>'+esc(item.plainQuestion)+'</p></details>';}
 function pickStudy(n){
   if(st.picked!==null) return;
   var item=byId(st.order[st.idx]); st.picked=n;
@@ -2033,7 +2123,7 @@ function viewQuiz(){
     }
     return '<h2 class="section-label">QUIZ CATEGORIES</h2><div class="category-grid">'+pills+'</div>'
       + '<div class="card"><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:24px;font-weight:700">Exam Simulator</div>'
-      + '<p style="font-size:14.5px;color:var(--inkSoft);line-height:1.55">All-category quizzes approximate the topic weights in CSLB’s March 2026 study guide. These are practice questions, not the official exam; this score does not predict or guarantee a pass.</p>'
+      + '<p style="font-size:14.5px;color:var(--inkSoft);line-height:1.55">Practice exam-style reading with four choices and one best answer. All-category quizzes approximate CSLB’s March 2026 topic weights. The real exam is closed-book; here, simple helpers appear after you answer. These practice questions do not reproduce or predict your live exam.</p>'
       + '<details style="font-size:13px;line-height:1.6;margin-bottom:14px"><summary>✓ Sources reviewed · September 14, 2026</summary><p>All 174 practice questions have been reviewed. The supplied 2025 Television Education textbook was compared with the official 2026 CSLB reference book and current California and federal agency sources. Each answer includes its specific reference or checked calculation.</p><p><b>For C-61/D-28:</b> Law &amp; Business is the relevant qualifying exam; C-61 has no separate trade exam. These are independent practice questions, not CSLB’s live test.</p><p><b>Corrections to remember:</b> the ordinary small-claims limits are $12,500 for individuals and $6,250 for entities; the broad no-employee workers’ compensation change is scheduled for 2028; covered new private contracts have a 5% retention cap; the regulated asbestos threshold includes exactly 100 square feet. Read each explanation for scope and exceptions.</p><p>Your saved results remain as earned. Updates do not retroactively regrade earlier work.</p><a class="help-source" href="'+LAW_BOOK+'" target="_blank" rel="noopener noreferrer">Official 2026 CSLB law book ↗</a><a class="help-source" href="'+EXAM_GUIDE+'" target="_blank" rel="noopener noreferrer">Official exam topics and weights ↗</a></details>'
       + '<div class="row" style="padding-bottom:12px"><button class="pill '+(qz.len===10?'on':'')+'" onclick="setQLen(10)">Quick 10</button>'
       + '<button class="pill '+(qz.len===25?'on':'')+'" onclick="setQLen(25)">Exam Sim 25</button></div>'
