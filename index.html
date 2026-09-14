@@ -1023,6 +1023,9 @@ var REVIEWED_MEANINGS={
  'journeyman':'An experienced worker competent in the trade. For covered public-work apprenticeship requirements, the usual minimum apprentice-hour ratio is one to five journeyman hours, subject to applicable exceptions.',
  'IIPP':'Injury and Illness Prevention Program: the employer’s system for finding and correcting hazards, assigning responsibility, communicating and training. Written-documentation rules depend on applicable requirements.'
 };
+REVIEWED_MEANINGS['tolerance zone']=SHEET_HELP[6][3][0];
+REVIEWED_MEANINGS['lockout tagout']='The required procedure for isolating hazardous energy and preventing unexpected startup during covered servicing. Control stored energy as well as electricity and verify isolation; switching off a garage-door motor does not remove spring tension or gravity hazards.';
+REVIEWED_MEANINGS['I-9']=SHEET_HELP[3][3][0];
 GLOSSARY.forEach(function(g){if(REVIEWED_MEANINGS[g.t])g.d=REVIEWED_MEANINGS[g.t];});
 
 /* Diagrams for concepts that are easier to see than to read.
