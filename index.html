@@ -97,6 +97,33 @@ button.tile:hover,button.tile:active{border-color:var(--red);background:#FFF8F8}
 .sr .a{color:var(--inkSoft);line-height:1.4}
 .sr .b{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--cobalt);
   text-align:right;white-space:nowrap}
+.sheet-row{border-top:1px solid var(--line)}
+.sheet-row .sr{border:0;align-items:center;padding:12px 0}
+.sheet-row .a{flex:1;min-width:0}
+.sheet-row .b{flex:1;min-width:0;max-width:58%;white-space:normal;overflow-wrap:anywhere;
+  background:#EFF3FF;border:0;border-radius:8px;padding:10px;min-height:44px;
+  font-size:13px;line-height:1.55;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px}
+.sheet-row .b[aria-expanded=true]{background:#DFE8FF;outline:2px solid var(--cobalt)}
+.sheet-help{background:#F5F8FF;border-left:3px solid var(--cobalt);border-radius:8px;padding:16px;margin:0 0 14px;animation:help-in .18s ease-out}
+.sheet-help p{margin:6px 0 16px;font-size:15px;line-height:1.7;color:var(--inkSoft)}
+.sheet-help h3{margin:0;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--cobalt)}
+.sheet-help .cue{padding:12px;background:#FFF8E5;border-radius:8px;color:#685116}
+.help-actions,.learning-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.help-actions button,.learning-tools button,.review-item{font:inherit;cursor:pointer;min-height:44px;
+  padding:9px 12px;background:white;border:1px solid var(--line);border-radius:8px;color:var(--cobalt);font-size:13px}
+.help-actions button[aria-pressed=true]{background:#E8F5ED;color:var(--green);border-color:var(--green)}
+.help-source{display:block;color:var(--cobalt);font-size:13px;line-height:1.5;margin:12px 0;overflow-wrap:anywhere}
+.learning-tools{margin:0 0 14px;justify-content:flex-end}
+.learning-tools .quiet-on{background:#E8F5ED;color:var(--green)}
+.sheet-intro{font-size:14px;line-height:1.65;color:var(--inkSoft);margin:0 0 14px}
+.review-item{display:block;text-align:left;width:100%;margin-top:7px}
+.sheet-review{padding:14px;border:1px solid var(--line);border-radius:12px;margin-bottom:14px;background:#fff}
+.sheet-review summary{cursor:pointer;color:var(--cobalt);font-weight:600;min-height:28px}
+.save-warning{padding:12px;background:#FFF0F0;border:1px solid var(--red);color:var(--red);border-radius:8px;margin-bottom:12px;font-size:14px;line-height:1.5}
+.quiet-mode *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+@keyframes help-in{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:420px){.sheet-row .sr{display:block}.sheet-row .a{display:block;margin-bottom:6px}.sheet-row .b{display:block;max-width:100%;width:100%;text-align:left}.sheet-help{padding:12px}}
 .tip{background:#FDF6E5;border:1px solid #EFD9A0;border-radius:12px;padding:14px;
   font-size:13.5px;line-height:1.55;color:#6B5510}
 textarea{width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--line);
@@ -269,10 +296,10 @@ const BANK = [
   // ===== PENALTIES =====
   { id: "n46", cat: "Licensing", q: "A FIRST conviction for contracting without a license carries:", opts: ["Up to $1,000 fine only", "Up to $5,000 and/or 6 months in jail", "20% of the contract price", "$30,000 civil penalty, mandatory"], ans: 1, why: "First offense: misdemeanor, up to $5,000 and/or 6 months. It gets much worse the second time." },
   { id: "n47", cat: "Licensing", q: "A SECOND conviction for unlicensed contracting carries:", opts: ["The same as the first", "Up to $10,000 only", "20% of the contract price OR $5,000 (whichever is greater) PLUS at least 90 days in jail", "License denial only"], ans: 2, why: "The fine jumps to 20% of the contract price (or payments received) or $5,000, whichever is GREATER — and jail time of at least 90 days is mandatory." },
-  { id: "n48", cat: "Licensing", q: "The maximum CSLB citation — reserved for unlicensed activity and for LICENSED contractors who use unlicensed firms — is:", opts: ["$5,000", "$15,000", "$30,000", "$50,000"], ans: 2, why: "$30,000. It covers contracting unlicensed, aiding an unlicensed operator, or hiring an unlicensed sub. Standard citations run up to $5,000 per violation ($8,000–$30,000 for the serious tier)." },
+  { id: "n48", cat: "Licensing", q: "Under BPC 7099.2, the maximum civil penalty for specified licensed-contractor violations, including aiding unlicensed activity, is:", opts: ["$5,000", "$15,000", "$30,000", "$50,000"], ans: 2, why: "$30,000 for violations of BPC 7110, 7114, or 7118; the ordinary maximum under 7099.2 is $8,000. Do not confuse this with the separate unlicensed-activity citation under BPC 7028.7, capped at $15,000. These are civil citations, not criminal sentences." },
   { id: "n49", cat: "Licensing", q: "Deliberate, fraudulent use of another contractor's license number is punishable by:", opts: ["A warning letter", "Up to $10,000 and/or 1 year in jail", "$500 civil fine", "License probation only"], ans: 1, why: "Up to $10,000 and/or a year in jail. Exam instinct: the word 'FRAUD' in a question almost always signals possible jail time." },
   { id: "n50", cat: "Licensing", q: "Holding only a D-28, you run an ad saying 'We also do electrical panel upgrades.' This is:", opts: ["Fine if you sub it out", "A misdemeanor with a $100–$5,000 fine", "Only a problem if someone hires you", "Legal under $1,000"], ans: 1, why: "Advertising outside your classification is a misdemeanor ($100–$5,000) — the AD itself is the violation, no customer needed. Advertise only what your license covers." },
-  { id: "n51", cat: "Contracts", q: "Using $3,000 a customer paid for their garage door job to cover a personal debt instead is:", opts: ["A civil matter only", "A misdemeanor", "A felony — up to $10,000 and/or 1 year", "Legal if repaid in 30 days"], ans: 2, why: "Diversion of construction funds over $2,350 = FELONY (up to $10,000 and/or a year). Under $2,350 = misdemeanor. $2,350 is the magic number — memorize it." },
+  { id: "n51", cat: "Contracts", q: "A contractor willfully diverts $3,000 of a customer's construction funds to a personal debt and willfully fails to finish the work or pay for supplied labor/materials. Under Penal Code 484b, this creates:", opts: ["A civil matter only", "Only misdemeanor exposure regardless of amount", "Potential felony punishment because the amount exceeds $2,350", "No violation if repaid within 30 days"], ans: 2, why: "Under Penal Code 484b, $2,350 or less is a misdemeanor; above $2,350, felony punishment is possible. The statute requires wrongful diversion and the specified willful failure to complete improvements or pay for construction inputs. A felony is not automatic merely because money moved." },
   { id: "n52", cat: "Safety", q: "A willful safety violation causes an employee's death. The employer faces:", opts: ["$10,000 max", "$25,000 and probation", "$100,000–$250,000 and/or 1–3 years in prison", "Civil liability only"], ans: 2, why: "$100,000–$250,000 and/or 1–3 years for a first offense; corporations/LLCs can be fined up to $1.5 million. The biggest penalties in the book protect human life." },
   { id: "n53", cat: "Licensing", q: "The delinquency fee for renewing a license late is:", opts: ["A flat $50", "25% of the renewal fee", "50% of the renewal fee", "Double the renewal fee"], ans: 2, why: "50% of the renewal fee, on top of the renewal itself. And remember — contracting with an EXPIRED license is unlicensed contracting." },
   { id: "n54", cat: "Safety", q: "Willfully digging WITHOUT notifying 811 first exposes you to a civil penalty of up to:", opts: ["$5,000", "$10,000", "$50,000", "$100,000"], ans: 2, why: "$50,000 for knowing/willful violations; $10,000 for negligent ones — plus repair costs and possible license discipline. Hitting a gas line can also get people killed." },
@@ -290,7 +317,7 @@ const BANK = [
   { id: "n65", cat: "Contracts", q: "In a printed residential contract, an arbitration clause must appear in at least:", opts: ["Regular type anywhere", "10-point bold Roman type (or 8-point red), and both parties initial it", "A separate notarized page", "The first paragraph"], ans: 1, why: "10-pt bold (or contrasting red at 8-pt); typed contracts use CAPITAL LETTERS — and both parties initial the clause. Buried arbitration clauses are unenforceable." },
   { id: "n66", cat: "Contracts", q: "Handwritten changes on a pre-printed contract form conflict with the printed text. Which controls?", opts: ["The printed text", "The handwritten/typed changes", "Neither — the contract is void", "Whichever favors the contractor"], ans: 1, why: "Handwriting and typed insertions beat pre-printed boilerplate — they show what the parties actually negotiated." },
   { id: "n67", cat: "Contracts", q: "CSLB MANDATORY arbitration applies when the alleged financial harm is:", opts: ["$10,000 or less", "$25,000 or less", "$25,000–$50,000", "Any amount"], ans: 1, why: "Mandatory: ≤ $25,000 (contractor must participate; license must be in good standing, no prior discipline). Voluntary: $25,000–$50,000 with BOTH parties agreeing." },
-  { id: "n68", cat: "Contracts", q: "The small claims limit for a sole proprietor suing a customer is currently:", opts: ["$5,000", "$6,500", "$10,000", "$25,000"], ans: 2, why: "$10,000 for individuals/sole proprietors; $5,000 for corporations/LLCs/partnerships; and only two claims over $2,500 per calendar year. Money judgments only, no attorneys arguing for you." },
+  { id: "n68", cat: "Contracts", q: "The ordinary California small claims limit for a sole proprietor suing a customer is:", opts: ["$5,000", "$6,250", "$12,500", "$25,000"], ans: 2, why: "The ordinary limit is $12,500 for individuals, including sole proprietors, and $6,250 for corporations and other business entities. Additional restrictions and exceptions apply, including the usual two-claims-over-$2,500 annual limit. Source: California Code of Civil Procedure 116.220–116.231." },
   { id: "n69", cat: "Contracts", q: "Your garage door LLC gets sued in superior court. The company:", opts: ["May be represented by you personally", "Must appear through a licensed attorney", "Must settle", "Can move it to small claims"], ans: 1, why: "Corporations and LLCs must have an attorney in civil court. Sole owners and partnerships may represent themselves. (In small claims, nobody gets an attorney.)" },
   { id: "n70", cat: "Contracts", q: "A contractor whose license was suspended for part of a job sues the owner for the unpaid balance. The court will:", opts: ["Award the balance", "Dismiss — you must be licensed at ALL times during performance to sue for compensation", "Award half", "Send it to the CSLB"], ans: 1, why: "No license = no lawsuit for pay, and the owner can even claw back money already paid. 'Substantial compliance' is a narrow exception — don't count on it." },
   { id: "n71", cat: "Contracts", q: "A contractor disciplined twice within the last 8 years must, before contracting on a 1–4 unit residence:", opts: ["Post a larger bond", "Disclose those suspensions/revocations to the owner", "Get CSLB pre-approval per job", "Nothing special"], ans: 1, why: "Two disciplinary actions in 8 years triggers a written disclosure duty to residential customers before contracting." },
@@ -432,20 +459,20 @@ const SHEETS = [
     ["License bond", "$25,000"],
     ["LLC worker bond", "$100,000 extra"],
     ["Diversion felony line", "$2,350"],
-    ["Top CSLB citation (unlicensed)", "$30,000"],
-    ["Small claims (individual / biz)", "$10,000 / $5,000"],
+    ["Unlicensed-activity citation maximum", "$15,000"],
+    ["Small claims (individual / biz)", "$12,500 / $6,250"],
     ["Mandatory arbitration", "≤ $25,000"],
-    ["Voluntary arbitration", "$25,000–$50,000"],
+    ["Voluntary arbitration", "over $25,000, under $50,000"],
     ["Public works payment bond", "required over $25,000"],
   ]},
   { title: "The 90-Day Family", rows: [
     ["Pay license fee after pass letter", "90 days"],
     ["Notify Registrar: disassociation / replace QI", "90 days"],
-    ["Notify Registrar: name, address, comp carrier", "90 days"],
+    ["Notify Registrar: name, address, personnel", "90 days"],
     ["Continuance after a death", "90 days"],
-    ["Lien or stop notice, no completion notice filed", "90 days"],
+    ["Private-work lien, no completion notice filed", "90 days after completion"],
     ["Foreclosure suit after recording lien", "90 days"],
-    ["Send civil judgment copy to CSLB", "90 days"],
+    ["Report unsatisfied final judgment to CSLB", "90 days"],
   ]},
   { title: "Lien Law Ladder", rows: [
     ["Preliminary notice", "20 days from first work"],
@@ -463,10 +490,10 @@ const SHEETS = [
     ["I-9 employer section", "3 business days"],
     ["New hire → EDD", "20 days"],
     ["Tailgate safety meetings", "every 10 working days"],
-    ["Supervisor safety meetings", "monthly"],
+    ["Supervisor safety meetings", "periodically"],
     ["Serious injury → Cal/OSHA", "IMMEDIATELY"],
     ["Accident → your insurer", "5 days"],
-    ["Injury records kept", "5 years (asbestos: 30)"],
+    ["Cal/OSHA injury logs kept", "5 years after record year"],
   ]},
   { title: "Timers on the License", rows: [
     ["Pass both exams within", "18 months"],
@@ -476,7 +503,7 @@ const SHEETS = [
     ["Expired license renewable", "within 5 years"],
     ["Project records kept", "5 years"],
     ["Patent defect complaint", "4 years"],
-    ["Latent defect complaint", "10 years"],
+    ["Latent structural defect complaint", "10 years"],
     ["Citation appeal", "15 working days"],
     ["Agreement to Arbitrate returned", "30 days"],
   ]},
@@ -506,6 +533,138 @@ const SHEETS = [
   ]},
 ];
 
+
+/* Cheat-sheet help: authored paraphrases, not quotations or legal advice.
+   Legal sources checked September 2026; arithmetic examples are illustrative. */
+var LAW_BOOK='https://www.cslb.ca.gov/Resources/GuidesAndPublications/2026/2026_CSLB_Law_Book.pdf';
+function lawRef(code,section){return ['California '+code+' § '+section,'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode='+code+'&sectionNum='+section];}
+function dirRef(section){return ['Cal/OSHA § '+section,'https://www.dir.ca.gov/title8/'+section.replace('.','_')+'.html'];}
+var PAY_REF=['California final-pay rules','https://www.dir.ca.gov/dlse/FAQ_Paydays.htm'];
+var SHEET_HELP=[
+ [
+  ['Add labor and materials for the whole project. The minor-work exemption requires a total below $1,000, no required building permit, and no employees. A smaller job can still require a license.','A $700 job needing a permit is not exempt just because it is below $1,000.','Total + permit + employees. Check all three.',lawRef('BPC','7048')],
+  ['A home improvement contract (HIC) over $500 must meet written-contract requirements. This is a different threshold from the license exemption. Special qualifying service-and-repair rules also exist.','A $900 home improvement is above the written-contract threshold.','$500 = writing, not licensing.',lawRef('BPC','7159')],
+  ['This special service-and-repair contract is limited to $750. The customer must initiate the call, work must address that problem, and no payment is due until completion.','A homeowner calls for a $300 repair. It may qualify if all the conditions are met.','Small repair, customer calls, pay after.',lawRef('BPC','7159.10')],
+  ['For the usual home improvement down-payment rule, calculate 10% of the contract and compare it with $1,000. Choose the smaller. Statutory bond exceptions exist.','On an $8,000 contract, 10% is $800, so the cap is $800.','Calculate both. Circle the smaller.',lawRef('BPC','7159')],
+  ['The contractor license bond protects eligible claimants harmed by covered license-law violations. $25,000 is the bond amount, not the premium you pay to buy it.','An active contractor maintains the required $25,000 bond even on small jobs.','Bond amount ≠ purchase price.',lawRef('BPC','7071.6')],
+  ['An actively licensed LLC needs an additional $100,000 worker bond covering specified unpaid wages and benefits. It does not replace the ordinary contractor bond.','An LLC maintains both its contractor bond and its LLC worker bond.','LLC = extra worker protection.',lawRef('BPC','7071.6.5')],
+  ['Willfully diverting construction funds with the statutory failure to finish work or pay can be criminal. At $2,350 or less it is a misdemeanor; above that, felony punishment is possible, not automatic.','Wrongfully diverting $3,000 can cross the higher-penalty threshold.','Above $2,350 = felony exposure.',lawRef('PEN','484b')],
+  ['Under the unlicensed-activity citation section, the civil penalty maximum is $15,000. Do not confuse this with the separate $30,000 tier for specified license-law violations. Criminal penalties are separate.','A citation under §7028.7 is not the same penalty as a criminal conviction.','Read the section, not just the dollar figure.',lawRef('BPC','7028.7')],
+  ['Individuals, including sole proprietors, generally may seek up to $12,500 in small claims. Corporations and other business entities generally have a $6,250 limit. Other restrictions apply.','A sole proprietor with an $11,000 claim is within the ordinary individual limit.','Individual 12,500; entity 6,250.',lawRef('CCP','116.221')],
+  ['CSLB may refer eligible disputes to mandatory arbitration when the contract price or demand is within the contractor-bond amount, currently $25,000. Additional eligibility conditions apply.','A qualifying $20,000 demand may fit; the dollar amount alone does not guarantee admission.','Mandatory: within the bond limit.',lawRef('BPC','7085')],
+  ['For eligible cases with material damages above $25,000 and below $50,000, both parties must agree to CSLB voluntary arbitration. The endpoints are not included in this range.','A qualifying $35,000 dispute needs both parties to agree.','Voluntary = both say yes.',lawRef('BPC','7085')],
+  ['For covered public works contracts over $25,000, the direct contractor provides an approved payment bond before work. State-entity contracts have separate statutory provisions.','A covered $40,000 city project requires the bond before starting.','Payment bond protects payment to others.',lawRef('CIV','9550')]
+ ],
+ [
+  ['After CSLB sends the notice requiring the initial license fee, the applicant generally has 90 days from that notice to pay. Required bond and issuance documents also have a notice-based deadline.','Passing the exam is not the same as already holding an active license.','Pass → notice → complete issuance.',lawRef('BPC','7074')],
+  ['When a qualifying individual leaves, notify CSLB in writing within 90 days and replace the qualifier within 90 days of departure. Failure can suspend the license or remove the classification. Extensions require approval.','Your qualifier leaves June 1: count from departure, not from when you report it.','Two duties, one departure date.',lawRef('BPC','7068.2')],
+  ['Notify CSLB in writing on its form within 90 days when recorded information such as business name, address, or personnel changes. Insurance coverage must separately remain compliant.','Moving the business means updating CSLB, not just forwarding mail.','Changed record? Tell the Registrar.',lawRef('BPC','7083')],
+  ['An immediate family member may request continuance of an individual license after the holder dies. CSLB must receive the written request within 90 days. Approval and conditions are required.','A family member applies to finish existing projects; continuance is not automatic.','90 days to request, not permanent inheritance.',lawRef('BPC','7076')],
+  ['On private work without a valid recorded completion or cessation notice, the ordinary lien-recording deadline is 90 days after project completion. This is not a universal rule for every stop-payment notice.','No completion notice does not mean unlimited time to record a lien.','No notice: completion starts the clock.',lawRef('CIV','8414')],
+  ['Recording a lien and suing to enforce it are separate steps. Generally, file the enforcement action within 90 days after recording, or the lien expires. A statutory credit-extension exception exists.','Recording today starts a new enforcement deadline; it does not file a lawsuit.','Record first. Enforce separately.',lawRef('CIV','8460')],
+  ['Report an unsatisfied final judgment imposed on the licensee to CSLB in writing within 90 days. Failure can trigger suspension. Payment, an accord, or an additional bond may be required.','An unpaid final judgment cannot simply wait until the next license renewal.','Unsatisfied = still unpaid.',lawRef('BPC','7071.17')]
+ ],
+ [
+  ['A preliminary notice tells the required recipients that you are supplying work or materials and may claim payment rights. It is not a lien. Generally, serve within 20 days of first furnishing; a late notice protects only the preceding 20 days and later work.','First delivery starts your notice clock, even before the first invoice.','Preliminary = early heads-up.',lawRef('CIV','8204')],
+  ['An owner may record a valid notice of completion on or within 15 days after completion. It can shorten lien-recording periods, subject to applicable notice requirements.','Finishing work and recording the owner’s completion notice are different events.','15 = owner’s recording window.',lawRef('CIV','8182')],
+  ['Cessation means work has stopped. An owner may record this notice after at least 30 continuous days without labor, with the stoppage continuing through recording.','A weekend shutdown is not a 30-day continuous cessation.','Cessation = stopped continuously.',lawRef('CIV','8188')],
+  ['A claimant other than the direct contractor generally records after it stops furnishing work and before the earlier of 90 days after project completion or 30 days after a valid completion/cessation notice is recorded.','A subcontractor does not get the prime contractor’s 60-day notice window.','Sub: 30 after notice; check earlier limit.',lawRef('CIV','8414')],
+  ['A direct contractor generally records after completing its contract and before the earlier of 90 days after project completion or 60 days after a valid completion/cessation notice is recorded.','The prime contracts directly with the owner, so its notice window differs from a sub’s.','Prime: 60 after notice; check earlier limit.',lawRef('CIV','8412')],
+  ['Without a valid completion or cessation notice, the usual private-work lien deadline is 90 days after project completion. Your own last work date and legal project completion are not necessarily the same.','A sub finishes early, but must distinguish its finish date from completion of the project.','90 from project completion, not the invoice.',lawRef('CIV','8414')],
+  ['An owner who did not contract for the improvement may give a notice of nonresponsibility. To be effective, it must be both posted and recorded within 10 days after learning of the work. It is not a blanket escape from every lien.','A landlord learns of tenant-ordered work and promptly checks whether this protection applies.','Know → post AND record → 10 days.',lawRef('CIV','8444')]
+ ],
+ [
+  ['Generally, a discharged employee must receive earned wages and accrued unused vacation immediately at termination. Narrow industry exceptions exist.','Do not ordinarily wait until Friday payroll for someone fired Tuesday.','Employer ends it → pay now.',PAY_REF],
+  ['An employee without a definite-term written contract who quits with less than 72 hours’ notice generally receives final wages within 72 hours after quitting.','No advance notice means a 72-hour final-pay window, not three business days.','No notice → 72 hours.',PAY_REF],
+  ['For an employee without a definite-term written contract, at least 72 hours’ advance notice generally makes final wages due when the employee quits as announced.','A worker gives sufficient notice and leaves on that date: pay at departure.','Notice already given → pay at exit.',PAY_REF],
+  ['The employer completes Form I-9 Section 2 within three business days after the employee’s first day of paid work. For employment lasting less than three business days, complete it on day one.','For a Monday start, ordinarily finish Section 2 by Thursday.','I-9: employer checks work eligibility.', ['USCIS: completing Section 2','https://www.uscis.gov/i-9-central/completing-form-i-9/completing-section-2-employer-review-and-attestation']],
+  ['Report a newly hired employee to California EDD within 20 calendar days of starting work. Rehires after at least 60 consecutive days of separation also count.','Put new-hire reporting on the checklist when the person starts, not after probation.','New hire → EDD → 20 calendar days.', ['EDD new-hire reporting','https://edd.ca.gov/en/payroll_taxes/new_hire_reporting/']],
+  ['Construction supervisors hold toolbox or tailgate safety meetings with their crews at least every 10 working days. Discuss the hazards of the work.','A short crew discussion about today’s ladder risks is a tailgate meeting.','Crew talks: 10 working days.',dirRef('1509')],
+  ['General construction rules require periodic supervisory safety meetings but do not specify a universal monthly interval. A separate tunnel-safety rule does require monthly supervisory meetings.','Do not apply a tunnel-specific monthly rule to every construction workplace.','General: periodic. Tunnel: monthly.',dirRef('1509')],
+  ['Report qualifying serious work-related injury, illness, or death to Cal/OSHA immediately: as soon as practicable, generally no later than eight hours after the employer knows or should know. Limited exceptional circumstances allow 24 hours.','Notifying your insurer does not replace the immediate Cal/OSHA report.','Two reports; serious injury cannot wait.',dirRef('342')],
+  ['Report a work injury or illness involving lost time beyond the injury date or treatment beyond first aid to the insurer within five days after knowledge. This is separate from immediate serious-incident reporting.','An injury causing a later missed shift may trigger the insurer report.','Insurer: five days; serious incident: immediate.',lawRef('LAB','6409.1')],
+  ['Keep required Cal/OSHA injury logs and incident records for five years after the covered calendar year. Exposure and medical records are different: some require 30 years, or employment plus 30 years.','Do not discard asbestos-related medical records using the five-year injury-log rule.','Logs ≠ exposure/medical files.', ['Cal/OSHA record retention §14300.33','https://www.dir.ca.gov/t8/14300_33.html'],dirRef('3204')]
+ ],
+ [
+  ['Generally, pass the required qualifying examinations within 18 months after CSLB accepts the application, or it becomes void. Do not count from your first test attempt.','An accepted application starts the window even if you schedule the exam later.','18 months starts at acceptance.',lawRef('BPC','7074')],
+  ['A qualifying individual who passed the examination for the same classification within the preceding five years generally need not retake it for a new application. Other licensing requirements still apply.','An expired application and a reusable exam result are different things.','Score validity is not an active license.',lawRef('BPC','7065')],
+  ['An active contractor license ordinarily renews every two years. Renew before expiry and keep the other active-license requirements satisfied.','A valid bond does not by itself renew an expired license.','Active = two.',lawRef('BPC','7140')],
+  ['An inactive license has a four-year renewal period. Inactive status does not authorize contracting; reactivate before doing work requiring a license.','Keeping an inactive number is not permission to bid as an active contractor.','Inactive = four, no contracting.',lawRef('BPC','7076.5')],
+  ['An expired license generally can be renewed within five years if the applicable requirements and fees are met. Do not assume late renewal authorizes work done while expired.','Three years expired may be within the renewal window, but it is not currently active.','Renewable ≠ usable today.',lawRef('BPC','7141')],
+  ['Keep records of contractor transactions for at least five years after the project or operation is completed. Other legal or insurance reasons can require longer retention.','Save the contract, changes, invoices, and payment records together.','Completion starts the five-year minimum.',lawRef('BPC','7111')],
+  ['A patent defect is reasonably apparent, such as visibly faulty work. The ordinary CSLB written-complaint period is four years after the alleged act or omission. This is not every civil lawsuit’s deadline.','An obviously crooked installation illustrates a readily observable problem.','Patent = apparent → four.',lawRef('BPC','7091')],
+  ['A qualifying latent structural defect is hidden and involves specified structural failure or risk. CSLB’s complaint window can be ten years. Not every hidden cosmetic problem gets this period.','Concealed faulty support work is different from a hidden paint blemish.','Hidden + structural → check ten-year rule.',lawRef('BPC','7091')],
+  ['A licensee or applicant generally has 15 working days after service of a citation to contest it. Without timely action, it can become final.','Read the service date immediately; do not wait for renewal paperwork.','Citation → 15 WORKING days.',lawRef('BPC','7099.3')],
+  ['When CSLB sends an agreement to arbitrate under this procedure, return it within 30 calendar days from the date CSLB mails it.','The mailing date, not the day you finally open the envelope, starts this period.','Mailed agreement → 30 calendar days.',lawRef('BPC','7085.3')]
+ ],
+ [
+  ['Markup is the added profit-and-overhead amount expressed as a fraction of cost. Convert the percentage to a decimal before multiplying.','Cost $100 with 20% markup: $100 × 1.20 = $120.','Markup builds UP from cost.'],
+  ['Margin expresses profit as a fraction of the selling price, not cost. For a target margin below 100%, divide cost by one minus the decimal margin.','Cost $100 at 20% margin: $100 ÷ 0.80 = $125.','Margin lives in the selling price.'],
+  ['Gross profit is sales revenue minus direct job costs, before subtracting overhead. It is not all available to spend.','Revenue $1,000 − direct costs $700 = gross profit $300.','Gross comes before overhead.'],
+  ['In this simplified job model, net profit is gross profit minus overhead. A full business income statement may also include interest, taxes, and other items.','Gross $300 − overhead $200 = net $100.','Net is what remains after the next costs.'],
+  ['The current ratio compares short-term assets with short-term obligations. Divide assets by liabilities; a zero denominator cannot produce an ordinary ratio.','Current assets $60,000 ÷ liabilities $30,000 = 2 to 1.','Ratio DIVIDES.'],
+  ['Working capital is the dollar difference between current assets and current liabilities. It indicates a short-term financial cushion, not necessarily cash in the bank.','Assets $60,000 − liabilities $30,000 = $30,000 working capital.','Working capital SUBTRACTS.'],
+  ['In this simplified model, each sales dollar contributes the gross-margin fraction toward fixed overhead. Divide overhead by that decimal fraction to find break-even sales.','Overhead $8,000 ÷ margin 0.25 = $32,000 sales.','Use 0.25, not 25.'],
+  ['Straight-line depreciation spreads an asset’s depreciable cost evenly over its useful life. Salvage is the estimated value left at the end. Tax deductions may use different rules.','($12,000 cost − $2,000 salvage) ÷ 5 years = $2,000 per year.','Subtract what remains, then spread the rest.'],
+  ['Labor burden adds employer costs beyond wages, such as payroll taxes, insurance, and benefits. Use the burden percentage supplied in the problem; it is not one universal legal rate.','$30 wage × 1.25 for 25% burden = $37.50 hourly labor cost.','Wage is only part of worker cost.'],
+  ['For covered nonexempt employees under the ordinary California rule, hours over eight through twelve in a workday earn 1.5 times regular rate; hours over twelve earn double. Weekly and seventh-day rules and exceptions also matter.','A standard 13-hour day: 8 regular + 4 at 1.5× + 1 at 2×.','8 → time-and-a-half; 12 → double.', ['California overtime rules','https://www.dir.ca.gov/dlse/faq_overtime.htm']],
+  ['The usual employee and employer FICA shares are each 6.2% Social Security plus 1.45% Medicare. Social Security has an annual wage cap; Additional Medicare withholding applies to some employee wages and is not employer-matched.','$100 of wages below the cap generally means $7.65 withheld and $7.65 employer share.','6.2 + 1.45 = 7.65.', ['IRS Social Security and Medicare rates','https://www.irs.gov/taxtopics/tc751']],
+  ['Use the usual home improvement cap: compare $1,000 with 10% of the full contract and choose the smaller. Statutory bond exceptions exist.','A $20,000 contract: 10% is $2,000, so use the smaller $1,000.','Smaller wins.',lawRef('BPC','7159')]
+ ],
+ [
+  ['Ordinarily notify 811 at least two working days before excavation, excluding the day of notification. Also wait for required operator responses and any required onsite meeting; a ticket alone is not clearance.','A Monday call does not count Monday as one of the two working days.','Notify, wait, confirm, dig safely.',lawRef('GOV','4216.2')],
+  ['The ordinary advance-notice window is no more than 14 calendar days before starting. This is different from the ticket’s 28-day validity.','Do not use a notice filed months earlier as your start authorization.','14 = advance notice, not ticket life.',lawRef('GOV','4216.2')],
+  ['A ticket is valid for 28 days from issuance. Renew by the end of day 28 if work continues. If it expires, stop excavation and follow the new-ticket requirements.','A long project needs ticket renewal, not just the original ticket number.','28 = ticket life.',lawRef('GOV','4216.2')],
+  ['The approximate-location zone includes the facility width plus 24 inches on each side of its outside edges. Determine its exact location safely with hand tools or an allowed alternative before powered excavation as required.','A wide pipe needs its width plus the allowance on both sides, not 24 inches from its center.','Edges, not centerline.',lawRef('GOV','4216')],
+  ['White markings identify the proposed excavation area. They show where you intend to dig, not where an existing utility has been located.','Outline your planned trench in white before requesting utility marks.','White = where I plan to work.', ['USA North 811 color-code guidance','https://usanorth811.org/']],
+  ['Utility colors identify types of underground lines: red electric, yellow gas/oil/steam, blue potable water, and green sewer/drain. They are location warnings, not safe digging depths.','Blue marks suggest water infrastructure; still confirm the location before digging.','Red power, yellow fuel, blue water, green drain.', ['USA North 811 color-code guidance','https://usanorth811.org/']],
+  ['Ordinary civil penalty ceilings are $10,000 for negligence and $50,000 for knowing/willful violations. Certain willful pipeline damage releasing hazardous contents can reach $100,000. Other liability can apply too.','Do not treat $50,000 as the absolute maximum for every underground-utility incident.','Careless 10; willful 50; special release 100.',lawRef('GOV','4216.6')],
+  ['Stop excavation and disturbance around discovered human remains and notify the county coroner. Do not move the remains yourself. Further requirements apply if they are Native American remains.','Finding suspected remains means stopping, not moving them aside to finish the trench.','Stop. Protect the area. Coroner.',lawRef('HSC','7050.5')]
+ ]
+];
+
+/* Source-linked revisions retain stable IDs and answer positions so old history survives. */
+var EXAM_GUIDE='https://www.cslb.ca.gov/Resources/StudyGuides/LawStudyGuide.pdf';
+var QUESTION_REFS={};
+var SHEET_QUESTIONS={
+ '0-0':['n1'],'0-1':['n59'],'0-2':['n62'],'0-3':['n60','m1','m2'],
+ '0-4':['n8'],'0-5':['n10'],'0-6':['n51'],'0-8':['n68'],'0-9':['n67'],'0-11':['n75'],
+ '1-0':['n6'],'1-1':['n26'],'2-0':['n30','n72'],'2-1':['n31'],'2-2':['n32'],
+ '2-3':['n33'],'2-4':['n34'],'1-5':['n35'],'2-6':['n36'],
+ '3-0':['n37'],'3-3':['n39'],'3-4':['n38'],'3-5':['n40'],'3-7':['n41','s10'],'3-8':['n42'],
+ '4-0':['n5'],'4-1':['n7'],'4-2':['n11'],'4-4':['n12'],'4-5':['n29'],'4-7':['n28'],'4-8':['n25'],'4-9':['n27'],
+ '5-9':['n80','m5','m6'],'5-10':['n79','m7'],'6-0':['n43'],'6-2':['n44'],'6-3':['n86'],'6-5':['n87'],'6-6':['n54'],'6-7':['n88']
+};
+Object.keys(SHEET_QUESTIONS).forEach(function(key){var p=key.split('-'),d=SHEET_HELP[+p[0]][+p[1]];SHEET_QUESTIONS[key].forEach(function(id){QUESTION_REFS[id]=d.slice(3);});});
+function reviseQuestion(id,fields,refs){var q=BANK.find(function(x){return x.id===id;});Object.keys(fields).forEach(function(k){q[k]=fields[k];});if(refs)QUESTION_REFS[id]=refs;}
+reviseQuestion('n13',{q:'CSLB’s reciprocity program may help an eligible out-of-state contractor obtain:',opts:['An automatic California license','A trade-examination waiver for an eligible classification','Permission to skip all California licensing rules','A license with no application'],why:'Reciprocity is a possible trade-exam waiver, not automatic licensure. The current CSLB page lists Arizona, Louisiana, Mississippi, Nevada, and North Carolina, with classification and experience requirements. Check CSLB’s current list rather than memorizing an old three-state list.'},[['CSLB reciprocity requirements','https://www.cslb.ca.gov/Contractors/Applicants/Reciprocity/Reciprocity_Requirements.aspx']]);
+reviseQuestion('n15',{why:'No more than three firms in a one-year period. Additional firms must meet one of the statutory connections: common ownership of at least 20%, a qualifying subsidiary/joint venture relationship, or specified overlapping management. Personal 20% ownership is not the only route.'},[lawRef('BPC','7068.1')]);
+reviseQuestion('n19',{opts:['They never collect a deposit','The project is below $1,000, needs no permit or employees, and the ad states they are unlicensed','The work is residential','They subcontract everything'],why:'The minor-work exemption now uses less than $1,000 for the entire project, requires no building permit and no employees, and cannot be used to split a larger job. Advertising must disclose unlicensed status; being below the dollar amount alone is not enough.'},[lawRef('BPC','7048')]);
+reviseQuestion('n40',{why:'Crew toolbox/tailgate meetings must occur at least every 10 working days. General construction supervisory safety meetings are periodic, not universally monthly; monthly is a separate tunnel-safety requirement.'});
+reviseQuestion('n41',{why:SHEET_HELP[3][7][0]});
+reviseQuestion('n42',{q:'After learning of a work injury requiring treatment beyond first aid or lost time beyond the injury date, the employer must report it to the insurer within:',why:SHEET_HELP[3][8][0]});
+reviseQuestion('n43',{why:'Ordinarily give at least two working days’ notice, excluding the notification date, and no more than 14 calendar days in advance. Required operator responses and onsite meetings must also be complete. Do not assume a Thursday call alone clears a Monday start.'});
+reviseQuestion('n45',{q:'Under the asbestos standard, employee exposure-monitoring records generally must be retained for at least:',why:'Exposure-monitoring records generally remain for at least 30 years. Employee medical records generally remain for employment duration plus 30 years. Ordinary injury logs use a different five-year rule.'},[dirRef('1529'),dirRef('3204')]);
+reviseQuestion('n48',{},[lawRef('BPC','7099.2'),lawRef('BPC','7028.7')]);
+reviseQuestion('n50',{opts:['Fine if you sub it out','A misdemeanor advertising violation, with a $700–$1,000 statutory fine','Only a problem if someone hires you','Legal under $1,000'],why:'BPC 7027.1 prohibits advertising work outside the classification held, subject to its general-contractor provision. It specifies a $700–$1,000 fine in addition to other applicable punishment. The ad itself can violate the rule.'},[lawRef('BPC','7027.1')]);
+reviseQuestion('n54',{q:'A knowing and willful 811-law violation, without the special hazardous-pipeline-release circumstances, carries a civil penalty ceiling of:',why:SHEET_HELP[6][6][0]});
+reviseQuestion('n67',{q:'For an otherwise eligible CSLB mandatory-arbitration case, the relevant contract-price or demand threshold is:',why:SHEET_HELP[0][9][0]});
+reviseQuestion('n79',{q:'For wages subject to both ordinary Social Security and Medicare taxes, before additional Medicare withholding, the usual employer FICA rate is:',why:SHEET_HELP[5][10][0]});
+reviseQuestion('m7',{q:'An employee earns $2,000 of wages below the Social Security wage cap, with no Additional Medicare Tax due. Ordinary employee FICA withholding is:',why:'$2,000 × (6.2% Social Security + 1.45% Medicare) = $153. The employer generally matches this $153. Wage-cap and Additional Medicare rules can change other cases.'});
+reviseQuestion('n80',{q:'A covered nonexempt installer works 13 hours under the ordinary California daily-overtime rule. The 13th hour is paid at:',why:'Hours over 12 in a workday are double time under the ordinary rule. Hours over eight through twelve are time-and-a-half. Alternative schedules and exemptions can change the analysis.'});
+reviseQuestion('n81',{q:'In 2026, which statement about a no-employee contractor’s workers’ compensation requirement is correct?',opts:['Every active licensee is already required to have coverage with no exceptions','No licensed contractor needs coverage','A qualifying no-employee licensee may file an exemption, but specified classifications still require coverage','Only corporations need coverage'],why:'In 2026 a qualifying no-employee contractor may claim the statutory exemption, except C-8, C-20, C-22, C-39, and D-49 classifications. The broader coverage change is scheduled for January 1, 2028. A D-28 holder with employees needs coverage; do not confuse a future effective date with today’s rule.'},[lawRef('BPC','7125')]);
+reviseQuestion('n86',{why:SHEET_HELP[6][3][0]});
+reviseQuestion('l1',{q:'Which list includes CSLB’s general and specialty license categories, including residential remodeling?',opts:['Residential, commercial, industrial','A, B, B-2 Residential Remodeling, and C specialty classifications','Master, journeyman, apprentice','Prime, sub, supplier'],why:'A is General Engineering; B is General Building; B-2 is Residential Remodeling; C covers specialties, including C-61 Limited Specialty and D-28. B-2 is distinct and has its own scope limits.'},[lawRef('BPC','7055'),lawRef('BPC','7057.5')]);
+reviseQuestion('l2',{q:'For the usual multi-trade B General Building route, excluding its framing/carpentry and other statutory exceptions, the project requires:',opts:['Any single trade','At least two unrelated trades other than framing or carpentry','Only painting','A permit over $50,000'],why:'BPC 7057 has important exceptions: B contractors may take framing/carpentry projects; qualifying prime contracts can also use an appropriate specialty classification or properly licensed subcontractor. A blanket statement that a B contractor can never take a single-trade prime contract is incorrect.'},[lawRef('BPC','7057')]);
+reviseQuestion('e5',{opts:['15 minutes after 3 hours','At least 30 minutes beginning no later than the end of the fifth hour','60 minutes after 6 hours','No meal period is required'],why:'Under the ordinary rule, an eight-hour employee receives a duty-free meal period of at least 30 minutes beginning no later than the end of hour five. A second meal is ordinarily due by the end of hour ten when working more than ten hours; statutory exceptions and waivers can apply.'},[['California meal-period rules','https://www.dir.ca.gov/dlse/FAQ_MealPeriods.htm']]);
+reviseQuestion('s6',{q:'For residential-type framing work on top plates, joists, rafters, or similar members covered by Cal/OSHA §1716.2, fall protection is required at:',opts:['4 feet','7.5 feet','6 feet or more','15 feet'],why:'The current residential-type framing rule uses 6 feet or more. Fall-protection requirements depend on the task and equipment; do not apply one blanket height to every ladder, roof, scaffold, or lift.'},[dirRef('1716.2')]);
+['m1','m2','n60'].forEach(function(id){var q=BANK.find(function(x){return x.id===id;});q.q='Assume the ordinary home improvement down-payment rule and no statutory bond exception. '+q.q;q.why=q.why.replace('The rule applies to EVERY home improvement contract:','Under the ordinary home improvement rule:');});
+['m5','m6'].forEach(function(id){var q=BANK.find(function(x){return x.id===id;});q.q='Assume a covered nonexempt employee under the ordinary daily-overtime rule. '+q.q;});
+reviseQuestion('m10',{why:'$90,000 ÷ $60,000 = 1.5:1. This compares current assets with current liabilities; the ratio alone does not prove solvency or that cash will arrive before each bill is due.'});
+reviseQuestion('n95',{why:'$50,000 ÷ $25,000 = 2:1. The ratio compares current assets and current liabilities, not immediate cash on hand; it is not a guarantee of business health.'});
+QUESTION_REFS.f1=[['CSLB Law and Business study guide (March 2026)',EXAM_GUIDE]];
+QUESTION_REFS.f2=QUESTION_REFS.f1;
+function questionReferences(item){var refs=QUESTION_REFS[item.id]||[];return '<details style="margin-top:12px;font-size:13px"><summary style="cursor:pointer;color:var(--cobalt);min-height:32px">Reference / source</summary>'+(refs.length?refs.map(function(r){return '<a class="help-source" target="_blank" rel="noopener noreferrer" href="'+esc(r[1])+'">'+esc(r[0])+' ↗</a>';}).join(''):'<p style="line-height:1.6">This practice item has not yet had an individual 2026 source check. Use it as practice, not as verified legal guidance.</p>')+'<a class="help-source" target="_blank" rel="noopener noreferrer" href="'+LAW_BOOK+'">2026 CSLB Law &amp; Reference Book ↗</a></details>';}
 
 /* Plain-English definitions. Written to be understood cold, with no other
    legal knowledge assumed. Longer terms are listed first so "mechanics lien"
@@ -548,7 +707,7 @@ const GLOSSARY = [
   {t:"RME", d:"Responsible Managing Employee — an employee (not an owner) who qualifies the license. Must actually work there at least 32 hours a week or 80% of business hours."},
   {t:"disassociation", d:"When the qualifying individual leaves the business. You have 90 days to notify the CSLB and name a replacement, or the license gets suspended."},
   {t:"joint venture", d:"Two or more licensed companies teaming up to bid one project together, under a shared license."},
-  {t:"reciprocity", d:"An agreement between states to accept each other's licensing. California has this with Arizona, Nevada, and Utah — but only for the TRADE exam, never the Law and Business exam."},
+  {t:"reciprocity", d:"A licensing arrangement that may allow a trade-examination waiver for an eligible contractor and classification. It does not automatically grant a California license. Check CSLB’s current program and requirements; an old list of states may be outdated."},
   {t:"citation", d:"An official written violation from the CSLB with a fine attached. Not a criminal charge, but you must pay it or appeal within 15 working days."},
   {t:"delinquency fee", d:"The late penalty for renewing your license after it expired — 50% of the renewal fee on top of the renewal itself."},
   {t:"diversion of funds", d:"Taking money a customer paid for THEIR job and spending it on something else. Over $2,350 this is a felony."},
@@ -878,14 +1037,16 @@ const QDIA = {
 
 /* ==== STORAGE: localStorage, survives updates and reloads ==== */
 var KEY = 'cslb_lb_trainer_v1';
-var S = { weak:{}, mastered:{}, scores:[], notes:[], history:{}, study:null, activeQuiz:null, lastTab:'home' };
+var S = { weak:{}, mastered:{}, scores:[], notes:[], history:{}, study:null, activeQuiz:null, lastTab:'home', sheet:{open:0,detail:''}, sheetReview:{}, learning:{quiet:false,paused:false} };
+var storageFailed=false;
 function load(){
   try{ var r = localStorage.getItem(KEY); if(r){ var d = JSON.parse(r);
     S.weak=d.weak||{}; S.mastered=d.mastered||{}; S.scores=d.scores||[]; S.notes=d.notes||[];
-    S.history=d.history||{}; S.study=d.study||null; S.activeQuiz=d.activeQuiz||null; S.lastTab=d.lastTab||'home'; } }
+    S.history=d.history||{}; S.study=d.study||null; S.activeQuiz=d.activeQuiz||null; S.lastTab=d.lastTab||'home';
+    S.sheet=d.sheet||S.sheet; S.sheetReview=d.sheetReview||{}; S.learning=d.learning||S.learning; } }
   catch(e){}
 }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); storageFailed=false; }catch(e){storageFailed=true;} }
 
 var CATS = ["All","Contracts","Employment","Finances","Safety","Licensing","Ins & Liens","Public Works"];
 var WEIGHTS = {"Contracts":21,"Employment":20,"Finances":15,"Safety":14,"Licensing":13,"Ins & Liens":12,"Public Works":5};
@@ -984,11 +1145,16 @@ function setGloss(v){ glossQuery=v; render();
 /* ==== RENDER ==== */
 function render(){
   var m=document.getElementById('main');
-  if(tab==='home') m.innerHTML=viewHome();
+  document.body.classList.toggle('quiet-mode',!!S.learning.quiet);
+  var learningTab=['study','quiz','sheet'].indexOf(tab)>-1;
+  if(learningTab&&S.learning.paused) m.innerHTML='<div class="card"><h2>Take a quiet break</h2><p style="line-height:1.7">Your place is kept. Look away from the screen and return whenever you are ready. No countdown, no penalty.</p><button class="btn" onclick="togglePause()">RESUME WHERE I LEFT OFF</button></div>';
+  else if(tab==='home') m.innerHTML=viewHome();
   else if(tab==='study') m.innerHTML=viewStudy();
   else if(tab==='quiz') m.innerHTML=viewQuiz();
   else if(tab==='sheet') m.innerHTML=viewSheet();
   else m.innerHTML=viewNotes();
+  if(learningTab&&!S.learning.paused) m.innerHTML='<div class="learning-tools"><button onclick="togglePause()">Ⅱ Take a break</button><button class="'+(S.learning.quiet?'quiet-on':'')+'" aria-pressed="'+!!S.learning.quiet+'" onclick="toggleQuiet()">'+(S.learning.quiet?'✓ Quiet motion':'Quiet motion')+'</button></div>'+m.innerHTML;
+  if(storageFailed) m.innerHTML='<div class="save-warning" role="alert">This browser could not save your latest changes. Keep this tab open and copy your backup from Notes before closing it.</div>'+m.innerHTML;
   var tabs=[['home','HOME'],['study','STUDY'],['quiz','QUIZ'],['sheet','SHEET'],['notes','NOTES']];
   document.getElementById('nav').innerHTML=tabs.map(function(t){
     return '<button class="'+(tab===t[0]?'on':'')+'" onclick="go(\''+t[0]+'\')">'+t[1]+'</button>';
@@ -997,6 +1163,8 @@ function render(){
   keepPagePosition=false;
 }
 function go(t){ tab=t; S.lastTab=t; save(); render(); }
+function toggleQuiet(){S.learning.quiet=!S.learning.quiet;save();keepPagePosition=true;render();}
+function togglePause(){S.learning.paused=!S.learning.paused;save();render();if(!S.learning.paused){if(tab==='sheet')scrollToSheetHelp();else if(tab==='study')scrollToStudyQuestion();}}
 
 
 /* ---- WEAKNESS TRACKING ----
@@ -1118,7 +1286,7 @@ function setMode(m){ st.mode=m; reorder(); saveStudyState(); render(); scrollToS
 function scrollToStudyQuestion(){
   requestAnimationFrame(function(){
     var el=document.getElementById('study-question');
-    if(el) el.scrollIntoView({behavior:window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+    if(el) el.scrollIntoView({behavior:S.learning.quiet||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)?'auto':'smooth',block:'start'});
   });
 }
 function viewStudy(){
@@ -1150,7 +1318,7 @@ function qCard(item,picked,fn){
   }
   if(picked!==null){
     var ok=picked===item.ans;
-    h+='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Correct \u2014 here\u2019s the why:':'Not quite \u2014 the answer is '+'ABCD'[item.ans]+'.')+'</b>'+mark(item.why,item)+'</div>';
+    h+='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Correct \u2014 here\u2019s the why:':'Not quite \u2014 the answer is '+'ABCD'[item.ans]+'.')+'</b>'+mark(item.why,item)+questionReferences(item)+'</div>';
     h+=diaBlock(item);
   }
   h+=defPanel();
@@ -1238,7 +1406,8 @@ function viewQuiz(){
     }
     return '<h2 class="section-label">QUIZ CATEGORIES</h2><div class="category-grid">'+pills+'</div>'
       + '<div class="card"><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:24px;font-weight:700">Exam Simulator</div>'
-      + '<p style="font-size:14.5px;color:var(--inkSoft);line-height:1.55">Questions are drawn in the same proportions as the real exam, so your score here predicts test day. Target 90% or better.</p>'
+      + '<p style="font-size:14.5px;color:var(--inkSoft);line-height:1.55">All-category quizzes approximate the topic weights in CSLB’s March 2026 study guide. These are practice questions, not the official exam; this score does not predict or guarantee a pass.</p>'
+      + '<details style="font-size:13px;line-height:1.6;margin-bottom:14px"><summary>2026 reference foundation</summary><p>The 2026 CSLB Law &amp; Reference Book is our legal reference, supplemented by current agency rules. Individual source checking of the older question bank is still in progress. Checked items have specific links in their answer explanations; your previous results are preserved, not retroactively regraded.</p><a class="help-source" href="'+LAW_BOOK+'" target="_blank" rel="noopener noreferrer">Read the 2026 law book ↗</a><a class="help-source" href="'+EXAM_GUIDE+'" target="_blank" rel="noopener noreferrer">Official exam topics and weights ↗</a></details>'
       + '<div class="row" style="padding-bottom:12px"><button class="pill '+(qz.len===10?'on':'')+'" onclick="setQLen(10)">Quick 10</button>'
       + '<button class="pill '+(qz.len===25?'on':'')+'" onclick="setQLen(25)">Exam Sim 25</button></div>'
       + '<button class="btn" style="margin-top:0" onclick="startQuiz()">START QUIZ</button>'+recent+'</div>';
@@ -1246,7 +1415,7 @@ function viewQuiz(){
   if(qz.done){
     var pct=Math.round(qz.right/qz.qs.length*100);
     var col=pct>=90?'var(--green)':(pct>=70?'var(--amber)':'var(--red)');
-    var msg=pct>=90?'Exam-ready territory. Keep the streak going.':(pct>=70?'Solid \u2014 hit Study \u2192 Needs Work to close the gaps.':'Hit the cheat sheet, then run it again. Repetition wins.');
+    var msg=pct>=90?'Strong result on this practice set. Take a break or revisit saved reviews.':(pct>=70?'Review missed questions whenever you feel ready.':'Your missed questions are saved. Try one explanation at a time.');
     return '<div class="card" style="text-align:center">'
       + '<div style="font-family:\'IBM Plex Mono\',monospace;font-size:13px;color:var(--steel)">FINAL SCORE</div>'
       + '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:64px;font-weight:700;line-height:1;color:'+col+'">'+pct+'%</div>'
@@ -1262,16 +1431,39 @@ function viewQuiz(){
 }
 
 /* ---- CHEAT SHEET ---- */
-function toggleSheet(k){ openSheet = (openSheet===k?-1:k); render(); }
+function sheetKey(k,r){return k+'-'+r;}
+function validSheetKey(key){var parts=String(key).split('-');return parts.length===2&&/^\d+$/.test(parts[0])&&/^\d+$/.test(parts[1])&&!!(SHEET_HELP[+parts[0]]&&SHEET_HELP[+parts[0]][+parts[1]]);}
+function saveSheet(){S.sheet.open=openSheet;save();}
+function toggleSheet(k){openSheet=(openSheet===k?-1:k);S.sheet.detail='';saveSheet();keepPagePosition=true;render();}
+function toggleSheetHelp(k,r){var key=sheetKey(k,r);S.sheet.detail=S.sheet.detail===key?'':key;saveSheet();keepPagePosition=true;render();if(S.sheet.detail)scrollToSheetHelp();else focusSheetButton(key);}
+function focusSheetButton(key){var el=document.getElementById('term-'+key);if(el)el.focus({preventScroll:true});}
+function scrollToSheetHelp(){requestAnimationFrame(function(){var el=document.getElementById('row-'+S.sheet.detail);if(el){el.scrollIntoView({behavior:'auto',block:'start'});focusSheetButton(S.sheet.detail);}});}
+function reviewSheetItem(k,r){var key=sheetKey(k,r);if(S.sheetReview[key])delete S.sheetReview[key];else S.sheetReview[key]={savedAt:Date.now()};save();keepPagePosition=true;render();var el=document.getElementById('review-'+key);if(el)el.focus({preventScroll:true});}
+function openSavedSheet(key){if(!validSheetKey(key))return;openSheet=+key.split('-')[0];S.sheet.detail=key;S.learning.paused=false;saveSheet();keepPagePosition=true;render();scrollToSheetHelp();}
+function sheetExplanation(k,r){
+  var key=sheetKey(k,r),d=SHEET_HELP[k][r],marked=!!S.sheetReview[key];
+  var sources=d.slice(3).map(function(s){return '<a class="help-source" href="'+esc(s[1])+'" target="_blank" rel="noopener noreferrer">Read the source: '+esc(s[0])+' ↗</a>';}).join('');
+  return '<section class="sheet-help" id="help-'+key+'" aria-label="Explanation: '+esc(SHEETS[k].rows[r][0])+'">'
+    +'<h3>What it means</h3><p>'+esc(d[0])+'</p><h3>Simple example</h3><p>'+esc(d[1])+'</p>'
+    +'<p class="cue"><b>Memory cue:</b> '+esc(d[2])+'</p>'
+    +(sources||'<p style="font-size:12px">Business-math explanation, not a legal rule. Example values are for practice.</p>')
+    +'<div class="help-actions"><button id="review-'+key+'" aria-pressed="'+marked+'" onclick="reviewSheetItem('+k+','+r+')">'+(marked?'✓ Saved · remove from review':'☆ Review again')+'</button>'
+    +'<button onclick="toggleSheetHelp('+k+','+r+')">Close explanation</button></div></section>';
+}
 function viewSheet(){
-  var h=SHEETS.map(function(s,k){
+  var reviewKeys=Object.keys(S.sheetReview).filter(validSheetKey);
+  var h='<p class="sheet-intro">Tap any blue answer for its meaning, an example, and a memory cue. Open one idea at a time. Your place and review list save on this browser.</p>';
+  h+='<details class="sheet-review"><summary>☆ Review again ('+reviewKeys.length+')</summary>'
+    +(reviewKeys.length?reviewKeys.map(function(key){var p=key.split('-');return '<button class="review-item" onclick="openSavedSheet(\''+key+'\')">'+esc(SHEETS[+p[0]].rows[+p[1]][0])+' →</button>';}).join(''):'<p class="sheet-intro" style="margin-top:10px">Save anything you want to reread using “Review again” inside an explanation. This list is separate from your missed quiz questions.</p>')+'</details>';
+  h+=SHEETS.map(function(s,k){
     var body='';
     if(openSheet===k){
-      body='<div class="body">'+s.rows.map(function(r){
-        return '<div class="sr"><span class="a">'+esc(r[0])+'</span><span class="b">'+esc(r[1])+'</span></div>';
+      body='<div class="body" id="sheet-body-'+k+'">'+s.rows.map(function(r,i){
+        var key=sheetKey(k,i),expanded=S.sheet.detail===key;
+        return '<div class="sheet-row" id="row-'+key+'"><div class="sr"><span class="a">'+esc(r[0])+'</span><button class="b" id="term-'+key+'" aria-label="Explain '+esc(r[0])+'" aria-expanded="'+expanded+'" '+(expanded?'aria-controls="help-'+key+'" ':'')+'onclick="toggleSheetHelp('+k+','+i+')">'+esc(r[1])+' <span aria-hidden="true">ⓘ</span></button></div>'+(expanded?sheetExplanation(k,i):'')+'</div>';
       }).join('')+'</div>';
     }
-    return '<div class="acc"><button onclick="toggleSheet('+k+')"><span class="h">'+esc(s.title)+'</span><span class="pm">'+(openSheet===k?'\u2212':'+')+'</span></button>'+body+'</div>';
+    return '<div class="acc"><button aria-expanded="'+(openSheet===k)+'" onclick="toggleSheet('+k+')"><span class="h">'+esc(s.title)+'</span><span class="pm">'+(openSheet===k?'\u2212':'+')+'</span></button>'+body+'</div>';
   }).join('');
   var gq=(glossQuery||'').toLowerCase();
   var gl=GLOSSARY.filter(function(g){ return !gq || g.t.toLowerCase().indexOf(gq)>-1 || g.d.toLowerCase().indexOf(gq)>-1; });
@@ -1286,9 +1478,8 @@ function viewSheet(){
       +'style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);font-size:15px;font-family:inherit;margin-bottom:4px">'
       + '<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;color:var(--steel);margin:8px 0 2px">'+gl.length+' OF '+GLOSSARY.length+' WORDS</div>'
       + glist + '</div>' : '') + '</div>';
-  return h + '<div class="tip"><b>Exam instincts:</b> the word \u201Cfraud\u201D usually signals possible jail. '
-    + 'The biggest fines protect life (safety deaths: $100k\u2013$250k) and punish unlicensed activity ($30k). '
-    + 'When two answers both look right, pick the one that protects the public \u2014 that\u2019s the CSLB\u2019s top priority.</div>';
+  return h+'<details class="sheet-review"><summary>Study gently · helpful options</summary><p class="sheet-intro" style="margin-top:12px">Try one explanation, pause, then say its meaning in your own words. Save it if you want another look later. Reduce distractions and stop for a quiet break when needed; no need to finish a set.</p><p class="sheet-intro">These are optional study aids, not treatment or a promise of better memory. Choose what feels manageable.</p><a class="help-source" target="_blank" rel="noopener noreferrer" href="https://www.uclh.nhs.uk/patients-and-visitors/patient-information-pages/cognition-and-brain-fog-post-covid-service">UCLH/NHS: cognitive-fatigue support ↗</a></details>'
+    +'<p class="sheet-intro" style="font-size:12px">Plain-English study summaries, not verbatim quotations or legal advice. Sources checked September 2026; exceptions and later changes may apply. <a href="'+LAW_BOOK+'" target="_blank" rel="noopener noreferrer">Open the 2026 CSLB Law &amp; Reference Book ↗</a></p>';
 }
 
 /* ---- NOTES + BACKUP ---- */
@@ -1305,7 +1496,7 @@ function doRestore(){
     if(d.weak)S.weak=d.weak; if(d.mastered)S.mastered=d.mastered;
     if(d.scores)S.scores=d.scores; if(d.notes)S.notes=d.notes;
     if(d.history)S.history=d.history; if(d.study)S.study=d.study; if(Object.prototype.hasOwnProperty.call(d,'activeQuiz'))S.activeQuiz=d.activeQuiz;
-    if(d.lastTab)S.lastTab=d.lastTab; restoreAppState(); save(); restoreMsg='Restored \u2713';
+    if(d.lastTab)S.lastTab=d.lastTab;if(d.sheet)S.sheet=d.sheet;if(d.sheetReview)S.sheetReview=d.sheetReview;if(d.learning)S.learning=d.learning; restoreAppState(); save(); restoreMsg='Restored \u2713';
   }catch(e){ restoreMsg='That code didn\u2019t parse \u2014 paste the whole thing.'; }
   render(); setTimeout(function(){ restoreMsg=''; },3000);
 }
@@ -1319,12 +1510,12 @@ function viewNotes(){
       +'</div></div>';
   }).join(''):'<div style="text-align:center;color:var(--steel);font-size:14px;padding:20px">Saved notes stay on this device.</div>';
 
-  var code=JSON.stringify({weak:S.weak,mastered:S.mastered,scores:S.scores,notes:S.notes,history:S.history,study:S.study,activeQuiz:S.activeQuiz,lastTab:S.lastTab});
+  var code=JSON.stringify(S);
   var backup='';
   if(showBackup){
     backup='<div class="body">'
       +'<div style="font-size:13.5px;color:var(--inkSoft);line-height:1.55;margin-bottom:10px">'
-      +'Your progress already saves on this device. Use this to move it to another phone or browser: copy the code, then paste it there and tap Restore.</div>'
+      +'Progress, notes, and saved sheet reviews normally survive refreshes in this browser. Clearing site data, private browsing, or changing devices can lose local saves. Copy this code somewhere safe, then paste it in another browser and tap Restore. There is no cloud account sync.</div>'
       +'<textarea class="mono" readonly onclick="this.select()" style="height:70px">'+esc(code)+'</textarea>'
       +'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;color:var(--steel);margin:10px 0 6px">PASTE A SAVED CODE TO RESTORE</div>'
       +'<textarea class="mono" id="restore" placeholder="Paste your backup code here" style="height:60px"></textarea>'
@@ -1340,6 +1531,8 @@ function viewNotes(){
 }
 
 function restoreAppState(){
+  var savedOpen=Number(S.sheet.open);openSheet=(savedOpen===-1||savedOpen===999||(savedOpen>=0&&savedOpen<SHEETS.length&&Number.isInteger(savedOpen)))?savedOpen:0;
+  if(!validSheetKey(S.sheet.detail)||+String(S.sheet.detail).split('-')[0]!==openSheet)S.sheet.detail='';
   var tabs=['home','study','quiz','sheet','notes'];
   if(tabs.indexOf(S.lastTab)>-1) tab=S.lastTab;
   if(S.study){
@@ -1362,7 +1555,7 @@ function restoreAppState(){
   }
 }
 
-load(); restoreAppState(); render();
+load(); restoreAppState(); render();if(tab==='sheet'&&S.sheet.detail&&!S.learning.paused)scrollToSheetHelp();
 </script>
 </body>
 </html>
