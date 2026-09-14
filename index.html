@@ -142,7 +142,12 @@ nav button{flex:1;background:none;border:none;padding:8px 0;cursor:pointer;
   font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;
   letter-spacing:.8px;color:var(--steel);border-top:3px solid transparent;margin-top:-9px}
 nav button.on{color:var(--cobalt);border-top-color:var(--cobalt)}
-.gt{border-bottom:2px dotted var(--cobalt);color:var(--cobalt);cursor:pointer;font-weight:600}
+.gt{border:0;border-bottom:2px dotted var(--cobalt);padding:0;background:none;font:inherit;color:var(--cobalt);cursor:pointer;font-weight:600;text-align:inherit}
+.meaning-body{font-size:16px;line-height:1.65;color:var(--inkSoft)}
+.meaning-body p{margin:7px 0 12px}.meaning-body .word-example{padding-left:10px;border-left:3px solid #C9D9FA}
+.meaning-body summary,.source-detail summary{color:var(--cobalt);cursor:pointer;padding:8px 0;min-height:36px}
+.memory-cue{padding:10px 12px;border-radius:8px;background:rgba(255,255,255,.7);margin:12px 0 0;font-size:16px;line-height:1.6}
+.source-detail{margin-top:12px;font-size:14px;line-height:1.65}.plain-answer{margin:8px 0}
 .gt:active{background:#E6F1FB}
 .badge{display:inline-block;margin-left:6px;background:var(--red);color:#fff;
   font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
@@ -836,7 +841,7 @@ reviseQuestion('m17',{why:'The supplied burden is 30% of wages: $25 × 1.30 = $3
 /* Math items cite their exact checked calculation, not an invented legal rule. */
 var CHECKED_CALCULATIONS={n100:'8000 / (1 - 0.20) = 10000',m8:'12000 * 1.25 = 15000',m9:'12000 / 0.75 = 16000',m12:'80000 - 50000 = 30000',m13:'80000 - 50000 - 20000 = 10000',m14:'(35000 - 5000) / 5 = 6000',m15:'20000 * 1.15 * 1.10 = 25300',m16:'8000 / 0.25 = 32000',m17:'25 * 1.30 = 32.50',m18:'(60000 - 52000) / 60000 * 100 = 13.3% (rounded)'};
 Object.keys(CHECKED_CALCULATIONS).forEach(function(id){QUESTION_REFS[id]=[['Calculation: '+CHECKED_CALCULATIONS[id],'#checked-calculations']];});
-function questionReferences(item){var refs=QUESTION_REFS[item.id]||[];return '<details style="margin-top:12px;font-size:13px"><summary style="cursor:pointer;color:var(--cobalt);min-height:32px">Reference / source</summary><p style="color:var(--dim);line-height:1.5">Reviewed '+CONTENT_REVIEW_DATE+'. '+(CHECKED_CALCULATIONS[item.id]?'Calculation checked using the assumptions in this question.':'Current rule or reference for this practice question:')+'</p>'+refs.map(function(r){return r[1]==='#checked-calculations'?'<p style="line-height:1.6">'+esc(r[0])+'</p>':'<a class="help-source" target="_blank" rel="noopener noreferrer" href="'+esc(r[1])+'">'+esc(r[0])+' ↗</a>';}).join('')+'<a class="help-source" target="_blank" rel="noopener noreferrer" href="'+LAW_BOOK+'">Official 2026 CSLB Law &amp; Reference Book ↗</a></details>';}
+function questionReferences(item){var refs=QUESTION_REFS[item.id]||[];return '<details class="source-detail"><summary>More detail &amp; source</summary>'+(item.legalWhy?'<p>'+esc(item.legalWhy)+'</p>':'')+'<p style="color:var(--dim)">Reviewed '+CONTENT_REVIEW_DATE+'. '+(CHECKED_CALCULATIONS[item.id]?'Calculation checked using the assumptions in this question.':'Current rule or reference for this practice question:')+'</p>'+refs.map(function(r){return r[1]==='#checked-calculations'?'<p>'+esc(r[0])+'</p>':'<a class="help-source" target="_blank" rel="noopener noreferrer" href="'+esc(r[1])+'">'+esc(r[0])+' ↗</a>';}).join('')+'<a class="help-source" target="_blank" rel="noopener noreferrer" href="'+LAW_BOOK+'">Official 2026 CSLB Law &amp; Reference Book ↗</a></details>';}
 
 /* Plain-English definitions. Written to be understood cold, with no other
    legal knowledge assumed. Longer terms are listed first so "mechanics lien"
@@ -1027,6 +1032,403 @@ REVIEWED_MEANINGS['tolerance zone']=SHEET_HELP[6][3][0];
 REVIEWED_MEANINGS['lockout tagout']='The required procedure for isolating hazardous energy and preventing unexpected startup during covered servicing. Control stored energy as well as electricity and verify isolation; switching off a garage-door motor does not remove spring tension or gravity hazards.';
 REVIEWED_MEANINGS['I-9']=SHEET_HELP[3][3][0];
 GLOSSARY.forEach(function(g){if(REVIEWED_MEANINGS[g.t])g.d=REVIEWED_MEANINGS[g.t];});
+
+/* One meaning and one small example; exam vocabulary stays visible. */
+var SIMPLE_WORDS={
+'mechanics lien':['A legal claim against a private property when eligible construction work has not been paid for. Filing and deadline rules apply.','An unpaid subcontractor may record a claim against the home they improved.'],
+'stop payment notice':['A notice that can make the person holding construction money keep some of it back for an unpaid claim.','An unpaid sub on a city job may use it to hold project money.'],
+'preliminary notice':['An early notice saying you are supplying work or materials and may have payment rights. It is not a lien or a complaint.','A supplier sends it after starting deliveries so the owner knows who is involved.'],
+'notice of completion':['A document the owner records saying the project is finished. A valid notice can shorten lien deadlines.','The project ends, and the owner records the completion notice.'],
+'notice of cessation':['A document about work that has stopped for at least 30 continuous days and is still stopped. It can shorten lien deadlines.','A project sits unfinished with no work for 30 straight days.'],
+'notice of non-responsibility':['An eligible owner’s notice saying someone else ordered the work. It must meet the rules to help protect the owner’s property.','A tenant orders work, and the landlord checks whether this notice is allowed.'],
+'foreclose':['Ask a court to enforce a property claim, which can lead to a sale to pay the debt.','Recording a lien is one step; filing a foreclosure lawsuit is another.'],
+'lis pendens':['A recorded notice that a lawsuit involves the property.','Someone checking the property records can see there is a court dispute.'],
+'lien waiver':['A form giving up specified lien rights. Read whether it depends on getting paid first.','A conditional release says the stated rights are released only when payment happens.'],
+'real property':['Land and things permanently attached to it, such as a house or garage.','A garage building is real property; a loose tool in your truck is not.'],
+'mutual assent':['Both sides agree to the same deal.','You offer to install a door for a stated price, and the customer agrees to those terms.'],
+'consideration':['Something of value exchanged as part of an agreement. A promise to do something can count.','You promise installation work; the customer promises payment.'],
+'capacity':['The legal ability to make a contract. Age and mental ability can affect it.','A contract made by a minor can have different rules from one made by an adult.'],
+'void':['Having no binding legal effect. Do not assume every license problem makes the entire contract void for both sides.','An agreement to do something illegal can be void.'],
+'voidable':['Able to be canceled by the person the law allows to cancel it. It is not automatically gone.','A person tricked into a contract may be allowed to undo it.'],
+'duress':['Pressure or threats serious enough to affect someone’s free choice to agree.','A person signs because of an unlawful threat.'],
+'integration clause':['Words saying the written contract is the final agreement. Earlier spoken promises usually cannot contradict it, but exceptions exist.','Put a promised extra service into the written contract.'],
+'complete agreement':['The final agreement between the parties, usually written in the contract.','The contract lists the price, door model, work and schedule the parties agreed on.'],
+'change order':['A written change to the agreed work, price or schedule.','The customer adds a side gate, so you write and sign the change before starting it.'],
+'liquidated damages':['An amount agreed in advance for a stated contract failure. The amount still has to meet the legal rules.','A commercial contract sets an amount per day for an unexcused delay.'],
+'home solicitation':['A sale made away from the seller’s usual business location, such as at a customer’s home. Special cancellation rules may apply.','You agree on a garage-door job at the homeowner’s kitchen table.'],
+'service and repair contract':['A special kind of small repair agreement: $750 or less, with the customer contacting you and other required conditions met.','A customer calls about a small repair. You check the special rules before using this contract.'],
+'progress payment':['A payment made as parts of a job are completed.','The customer pays an agreed amount after a listed stage of work is done.'],
+'retention':['Money held back from a payment until the required release conditions are met. The allowed amount depends on the job and law.','On a covered $100,000 private contract with a 5% cap, total retention cannot exceed $5,000.'],
+'statute of limitations':['The legal deadline for starting a lawsuit. Different claims can have different clocks.','A normal written-contract claim usually has a four-year period, subject to other rules.'],
+'substantial compliance':['A narrow exception that may help a previously licensed contractor with certain license problems. It is not permission to work unlicensed.','A court checks whether the contractor meets every condition of this exception.'],
+'Registrar':['The official who runs CSLB’s day-to-day licensing and enforcement work.','The Registrar handles the agency’s daily operations.'],
+'qualifying individual':['The person who qualifies the business’s active license and provides the required supervision.','A qualified owner or employee may fill this role, depending on the business type.'],
+'RMO':['Responsible Managing Officer: a company officer who serves as the license qualifier.','An officer of a corporation is its qualifying person.'],
+'RME':['Responsible Managing Employee: a real employee who qualifies the license and does the required work and supervision.','The RME must actually work there—not just lend the business a name.'],
+'disassociation':['When a person leaves their role with the licensed business. For a qualifier, that starts important notice and replacement deadlines.','Your qualifying employee quits, so you need to notify CSLB and arrange a replacement.'],
+'joint venture':['Businesses teaming up under a joint venture arrangement. Contractor joint ventures need the required license.','Two licensed companies team up to bid a project together.'],
+'reciprocity':['An agreement that may let an eligible out-of-state contractor skip California’s trade exam. It does not grant a license automatically.','A contractor applies for the available exam waiver and still meets California’s other rules.'],
+'citation':['An official notice of a violation. It can include a fine and an order to fix the problem.','CSLB issues a citation, and you must respond within the applicable deadline.'],
+'delinquency fee':['An extra charge for paying or renewing late.','The CSLB late-renewal fee is half of the renewal fee.'],
+'diversion of funds':['Wrongfully using construction money for another purpose, with the other failures required by the law.','A contractor spends job money on a personal debt and deliberately fails to finish or pay for the job.'],
+'patent defect':['A defect that is reasonably obvious, rather than hidden.','A visibly crooked installation is an example of an apparent problem.'],
+'latent defect':['A hidden defect that was not reasonably obvious. The longer CSLB period applies to qualifying structural defects.','Bad structural support hidden inside a wall may not be visible at first.'],
+'surety':['The company or person backing someone else’s promise or debt.','A bonding company backs a contractor’s stated obligations.'],
+'principal':['On a bond, the party whose promise or duty is being backed.','For a contractor’s bond, the contractor is the principal.'],
+'obligee':['On a bond, the party protected by the promise.','An owner can be the protected party on a contractor’s performance bond.'],
+'bid bond':['A bond backing the bidder’s promise to follow through if awarded the job.','The winning bidder must sign the contract and provide required bonds.'],
+'performance bond':['A bond backing the contractor’s promise to perform the contract.','If the contractor fails, the bond’s terms describe what the surety must do.'],
+'payment bond':['A bond protecting payment to eligible subcontractors, workers or suppliers.','A supplier may have a claim when covered project materials are not paid for.'],
+'disciplinary bond':['An extra bond required because of a contractor’s license discipline.','CSLB requires additional protection before allowing the contractor to operate again.'],
+'additional insured':['Another person or company given some protection under your insurance policy. The policy or added coverage must actually include them.','A general contractor asks for coverage for certain claims arising from your work.'],
+'exclusive remedy':['Usually the required way to seek recovery for a particular harm, instead of using another route. Exceptions can apply.','For a covered work injury, an employee usually uses workers’ comp instead of suing the employer.'],
+'experience modification rate':['A factor that adjusts workers’ comp pricing based on claims experience compared with similar businesses.','A factor of 1.25 increases the amount it applies to by 25%; other pricing factors still matter.'],
+'general liability':['Insurance for certain injuries to other people or damage to their property. What is covered depends on the policy.','Damage to a customer’s property may involve general liability coverage.'],
+'assets':['Things the business has that carry value.','Cash, equipment and money customers owe the business are assets.'],
+'liabilities':['Debts or other amounts the business owes.','An unpaid supplier bill is a liability.'],
+"owner's equity":['The owner’s share after subtracting the business’s debts from its assets.','Assets of $100 minus debts of $60 leave $40 of equity.'],
+'current assets':['Cash and other assets expected to turn into cash or be used up in the short term, usually within a year.','Cash and customer invoices due soon are common examples.'],
+'current liabilities':['Bills and debts expected to be paid in the short term, usually within a year.','A supplier bill due next month is a current liability.'],
+'working capital':['Current assets minus current liabilities. It is a measure of the short-term cushion, not just bank cash.','$90,000 − $60,000 = $30,000 working capital.'],
+'current ratio':['Current assets divided by current liabilities. It compares short-term resources with short-term debts.','$90,000 ÷ $60,000 = 1.5 to 1.'],
+'direct costs':['Costs you can connect to one specific job.','The door, track and installer hours for that installation are direct costs.'],
+'overhead':['Costs of running the business that are not tied to just one job.','Office rent and bookkeeping are overhead.'],
+'gross profit':['Sales money minus direct job costs, before overhead and other expenses.','A $3,000 sale minus $1,800 direct costs leaves $1,200 gross profit.'],
+'net profit':['What remains after the expenses included in the calculation. A full business calculation includes more than just job costs.','In a simple example: $1,200 gross profit − $800 overhead = $400 net profit.'],
+'markup':['An amount added as a percentage of cost.','$100 cost plus 25% markup gives a $125 price.'],
+'margin':['Profit shown as a percentage of the selling price.','$25 profit on a $125 price is a 20% margin.'],
+'labor burden':['Employer costs added on top of the worker’s wage.','Payroll taxes, workers’ comp and benefits add to the true labor cost.'],
+'break-even':['The point where income covers the costs, with no profit or loss in the calculation.','You make enough from sales to cover the job costs and overhead.'],
+'job costing':['Tracking what each job actually costs.','Compare the installer hours and materials used with your original estimate.'],
+'depreciation':['Spreading an asset’s cost over time as it is used. Book and tax methods can differ.','Instead of treating a work truck as one year’s cost, a calculation spreads its cost over several years.'],
+'salvage value':['The estimated value left at the end of an asset’s useful life.','You expect a truck to be worth $5,000 when you finish using it.'],
+'accrual':['Accounting that normally records income when earned and costs when incurred, even before cash changes hands.','You finish the work and record income before the customer pays the invoice.'],
+'cash basis':['Accounting that normally follows when money is received or paid.','You record the customer payment when you receive it.'],
+'double taxation':['The same business profit facing tax at two levels.','A C corporation pays tax, then shareholders generally pay tax on dividends from that profit.'],
+'FICA':['The payroll taxes for Social Security and Medicare. The usual combined rate is 7.65% per side, with wage-limit and extra-Medicare rules.','Below the limits, the employee pays 7.65% and the employer pays its share too.'],
+'FUTA':['Federal unemployment tax, normally paid by the employer.','It helps fund unemployment benefits; it does not normally come out of the employee’s check.'],
+'SUI':['State unemployment insurance, funded through employer contributions in California.','The business pays California unemployment contributions.'],
+'SDI':['California State Disability Insurance, normally paid through employee wage deductions.','An SDI amount is withheld from the worker’s paycheck.'],
+'PIT':['California personal income tax withheld from an employee’s wages.','The employer holds back the required amount and sends it to the state.'],
+'I-9':['The form used to check a new employee’s identity and permission to work in the United States.','The employer checks the required documents and completes its section on time.'],
+'W-4':['The employee’s form that helps set federal income-tax withholding.','The employer uses the completed W-4 when calculating payroll.'],
+'ABC test':['A three-part test used in many worker-classification cases. All three parts must be met when this test applies.','Check control, whether the work is outside the hiring business, and the worker’s own independent trade.'],
+'waiting time penalty':['Extra wages that may be owed for willfully paying final wages late, up to 30 days.','An employer deliberately holds back final pay and may owe more than the unpaid check.'],
+'prevailing wage':['The required pay rate for the relevant trade and location on covered public jobs, including required benefits.','A city project uses the applicable DIR pay determination.'],
+'certified payroll':['Pay records formally confirmed as accurate and reported as required.','Records show who worked, their trade, hours and pay on a public job.'],
+'IIPP':['Injury and Illness Prevention Program: the employer’s plan and system for keeping work safe.','It explains who handles safety, how hazards are fixed and how workers are trained.'],
+'Code of Safe Practices':['Written safety rules for the employer’s kind of work.','The rules explain safe practices the crew should follow on the job.'],
+'tailgate meeting':['A short crew safety talk, also called a toolbox meeting.','Before work, the supervisor discusses ladder or trench hazards with the crew.'],
+'competent person':['Someone who can identify hazards and has authority to get them corrected promptly.','The person can spot an unsafe condition and order the needed correction.'],
+'lockout tagout':['The required steps to isolate dangerous energy and prevent unexpected machine startup during covered work.','Turning off an opener does not remove door weight or spring tension; stored energy must be controlled too.'],
+'tolerance zone':['The utility’s width plus 24 inches on each side of its outside edges. Special digging precautions apply.','Measure from the pipe’s edges, not just a thin paint line at its center.'],
+'SDS':['Safety Data Sheet: information about a chemical’s hazards, handling and emergency response.','The crew can check the SDS for a solvent being used at work.'],
+'Cal/OSHA':['California’s workplace-safety program. It sets and enforces workplace safety requirements.','A serious work injury needs a report directly to Cal/OSHA.'],
+'misdemeanor':['A category of crime that can carry a fine or county-jail time.','A first unlicensed-contracting conviction can be a misdemeanor.'],
+'felony':['A more serious category of crime that can carry substantial punishment, including imprisonment.','Certain deliberate construction-fund misuse can create felony risk.'],
+'civil penalty':['A fine under civil or administrative rules, rather than a criminal sentence.','A citation may require a civil payment even without a criminal conviction.'],
+'arbitration':['Having a neutral person decide a dispute outside a normal court trial.','An arbitrator hears both sides of a construction-payment dispute.'],
+'prime contractor':['The contractor with the direct contract with the owner. Often called the direct contractor.','The homeowner hires your company, and your company hires a concrete subcontractor.'],
+'direct contractor':['The contractor hired directly by the property owner.','Your company signs the garage-door contract with the homeowner.'],
+'public works':['Construction and related work covered by public-project laws, often paid with government funds.','Work on a city building can come with public-works pay and reporting rules.'],
+'DIR':['California Department of Industrial Relations. It handles areas including workplace rules and public-works requirements.','DIR publishes prevailing-wage rates and handles required public-works registration.'],
+'Notice of Cancellation':['The form telling the customer how to cancel the contract when a cancellation right applies.','For the separate-form rule in this question, give TWO copies with the contract, easy to remove.'],
+'Mechanics Lien Warning':['A notice explaining that unpaid eligible workers, subs or suppliers may claim against the home.','The owner could face a lien even after paying the main contractor.'],
+'Agreement to Arbitrate':['A form agreeing to use arbitration to decide the dispute.','Return CSLB’s mailed form within its 30-calendar-day deadline.'],
+'CSLB':['Contractors State License Board: California’s contractor-licensing agency.','It issues licenses and handles contractor complaints and enforcement.'],
+'the Board':['The Contractors State License Board, with 15 members and public protection as its main priority.','The Registrar runs the Board’s day-to-day work.'],
+'EDD':['Employment Development Department: California’s agency for unemployment and several payroll-tax programs.','Report a new hire to EDD within 20 calendar days.'],
+'HIC':['Home Improvement Contract: the agreement for work improving a home.','A normal home-improvement job over $500 needs a written contract under the applicable rules.'],
+'LLC':['Limited Liability Company: a business legally separate from its owners. Personal-liability protection has exceptions.','A contractor LLC needs its special worker bond and liability insurance as well as other license requirements.'],
+'IRS':['Internal Revenue Service: the federal tax agency.','Employers send required federal payroll-tax deposits to the IRS.'],
+'Labor Commissioner':['The California official whose office enforces wage and labor requirements.','The office handles wage claims and required public-works payroll reports.'],
+'Limited Specialty':['The C-61 license group for specified specialty work. It is divided into D categories.','D-28 covers doors, gates and their operating devices.'],
+'General Building':['The B license classification. Its usual multiple-trade route needs two unrelated trades, with other allowed routes and exceptions.','Do not assume every one-trade job is automatically allowed or automatically forbidden for a B contractor.'],
+'General Engineering':['The A license classification for certain large fixed works needing engineering knowledge.','Roads, bridges and pipelines are common examples.'],
+'Underground Service Alert':['The 811 notification service used before digging so underground utilities can be identified.','Contact 811 before digging gate-post holes, then meet the required waiting and response rules.'],
+'fraud':['Intentional deception that meets the applicable legal requirements.','A contractor knowingly lies to persuade a customer to sign.'],
+'sole proprietorship':['A business owned by one person without a separate legal entity between owner and business.','Business debts can be the owner’s personal responsibility.'],
+'subcontractor':['A contractor hired by another contractor to do part of the job. Proper licensing and worker-classification rules still apply.','Your company hires a licensed concrete contractor for the gate footing.'],
+'journeyman':['A worker trained and experienced enough to perform the trade’s work competently.','Apprentice-hour rules compare apprentice hours with journeyman hours in the craft.'],
+'apprentice':['A worker registered in an approved program to learn a trade while working.','A registered apprentice works under the program’s training and supervision rules.'],
+'Social Security':['A federal benefit program funded in part by payroll taxes.','The normal Social Security payroll-tax rate is 6.2% per side up to the annual wage limit.'],
+'ETT':['California Employment Training Tax, paid by the employer.','It is an employer cost, not an employee wage deduction.'],
+'good faith':['Acting honestly rather than inventing a reason to avoid a duty.','A real disagreement about the amount owed is different from simply refusing to pay.'],
+'willful':['Done on purpose, as defined by the particular rule. It is different from a simple accident.','An employer deliberately refuses to pay wages known to be due.'],
+'negligent':['Failing to use the care that the situation reasonably requires.','A person overlooks a hazard they should reasonably have checked.']
+};
+GLOSSARY.forEach(function(g){var p=SIMPLE_WORDS[g.t];if(!p)throw new Error('Missing simple definition: '+g.t);g.detail=REVIEWED_MEANINGS[g.t]||'';g.d=p[0];g.example=p[1];});
+[['duplicate','Two copies of the same document.'],['detachable','Easy to separate or remove.'],['nonexempt','Covered by the usual wage-and-hour protections, including overtime rules.'],['statutory','Required or defined by a written law.'],['exemption','A rule that lets a qualifying person or situation be treated differently.'],['compliance','Following the rules that apply.'],['incurred','A cost has become your responsibility, even if you have not paid it yet.'],['revenue','Money earned from sales before subtracting costs.'],['gross pay','Pay before taxes and other deductions are taken out.'],['withholding','Money an employer keeps back from pay to send to the tax agency or another required recipient.']].forEach(function(p){GLOSSARY.push({t:p[0],d:p[1],example:'',detail:''});});
+
+/* Everyday wording. Keep reviewed legal wording separately for optional detail.
+   Every entry is [question, explanation, short memory cue]. */
+var PLAIN_QUESTIONS={
+n1:['A spring-repair job costs $1,150 for parts and labor. What license do you need?','The total is over $1,000, so you need an active license that covers this work. A small job can also need a license if a permit or employees are involved.','Count parts AND labor.'],
+n2:['How many people serve on the Contractors State License Board?','The Board has 15 members.','Board = 15 people.'],
+n3:['If protecting contractors conflicts with protecting the public, which comes first for CSLB?','CSLB must put public protection first. That is its main duty under the law.','Public protection comes first.'],
+n4:['Who runs CSLB’s day-to-day licensing and enforcement work?','The Registrar is CSLB’s executive officer—the person who runs its daily work.','Registrar = runs the office.'],
+n5:['After CSLB accepts your application, how long do you normally have to pass the required exam or exams?','You normally have 18 months from acceptance. C-61/D-28 has no separate trade exam; you are studying for Law & Business.','18 months starts at acceptance.'],
+n6:['CSLB sends a notice asking for your first license fee and final paperwork. How long do you normally have to complete them?','The normal deadline is 90 days from the notice. Passing the test alone does not make your license active.','Pass → notice → finish within 90 days.'],
+n7:['You passed the exam for the same license classification before. How far back can that passing result normally count on a new application?','A passing result from the previous five years can normally avoid another exam for that classification. You still must meet the other application rules.','Passing result: five years.'],
+n8:['What is the usual contractor license bond amount for an active license?','The usual bond amount is $25,000. That is the protection amount, not what you pay to buy the bond.','Bond amount ≠ bond price.'],
+n9:['CSLB requires an extra disciplinary bond after license trouble. How high can that bond be?','It can be up to ten times the normal license bond. It is extra protection required because of the license problem.','Disciplinary bond: up to 10 times.'],
+n10:['An LLC has its regular $25,000 license bond. What extra worker-protection bond does it need?','A contractor LLC also needs a $100,000 bond for certain unpaid employee wages and benefits.','LLC: an extra $100,000 worker bond.'],
+n11:['How often do you renew an ACTIVE license and an INACTIVE license?','An active license normally renews every two years. An inactive license renews every four years and does not let you do licensed contracting work.','Active 2; inactive 4.'],
+n12:['After a license expires, how long is the normal window to renew it late?','The normal late-renewal window is five years. Being able to renew does not mean you can work while it is expired.','Five years to renew—not to keep working.'],
+n13:['How can CSLB’s reciprocity program help a contractor licensed in another state?','An eligible contractor may be allowed to skip the trade exam. Reciprocity does not automatically give someone a California license.','Reciprocity may remove a trade test.'],
+n14:['An RME is the employee who qualifies the company’s license. What is the minimum time that employee must actually work there?','Compare 32 hours a week with 80% of the business’s weekly hours. Use whichever amount is smaller. The RME must really work for and supervise the business.','32 hours OR 80%—the smaller amount.'],
+n15:['What is the most businesses one qualifying individual can qualify in one year?','The limit is three businesses. There must also be a qualifying ownership or management connection; three is not automatic permission.','At most three, with required connections.'],
+n16:['On a D-28 contractor’s commercially registered work truck, how tall and wide must the business-name and license-number letters normally be?','They must be at least 3/4 inch in height and width and easy to see. Some other license classifications have a larger lettering rule.','D-28 truck lettering: at least 3/4 inch.'],
+n17:['What work does a D-28 license cover?','D-28 covers doors, gates and the devices that open or operate them. Garage doors and their openers fit this category.','D-28 = doors, gates and their operators.'],
+n18:['Two licensed companies get a joint venture license to work together. How long does the active license last before renewal?','The normal renewal period is two years. Each member company must keep its own license active too.','Joint venture: two years, renewable.'],
+n19:['When may an unlicensed person advertise a small construction job under the minor-work exception?','All the conditions matter: the whole job is below $1,000, needs no permit and uses no employees. The ad must say the person is unlicensed.','Below $1,000 + no permit + no employees + disclosure.'],
+n20:['During which overnight hours does an inspector need the owner’s or occupant’s permission to enter a home under the rule in this question?','The protected overnight period is 6 p.m. to 8 a.m. Daytime entry still has other rules; this does not give unlimited permission to enter.','Nighttime: 6 p.m. to 8 a.m.'],
+n21:['A licensed sole owner forms a corporation and keeps 60% ownership. What can happen to the old license number?','The owner may apply to move the number to the corporation. At least 51% ownership and the required paperwork are needed. Once moved, the number cannot go back to a sole-owner license.','Moving the number to a corporation is one-way.'],
+n22:['A 68-year-old customer signs a normal, nonemergency home-sale contract with the senior cancellation right. After getting the required notice, how long can she cancel?','Customers age 65 or older normally get five business days in this situation. Other contract types, such as certain disaster repairs, have different rules.','Age 65 or older: five business days.'],
+n23:['A customer properly cancels a home-sale contract. After you receive the cancellation, when must you return the down payment?','Return the payment within ten days after receiving the cancellation. The separate rule for picking up goods uses a different deadline.','Refund: ten days after receiving cancellation.'],
+n24:['You receive a progress payment on the 1st. There is no payment dispute or different written agreement. By which date must you pay the subcontractor’s share?','Pay within seven days after receiving the money. Seven days after the 1st is the 8th.','Receive money → seven days to pay the sub.'],
+n25:['CSLB gives you a citation. How long do you have to challenge it?','You normally have 15 working days after the citation is officially delivered. Working days are not the same as calendar days.','CSLB citation: 15 working days.'],
+n26:['The person who qualifies your company’s license leaves. How long do you normally have to tell CSLB and replace that person?','Both duties normally have a 90-day deadline from the person’s departure. Missing it can suspend the license or remove that classification.','Qualifier leaves → 90-day clock.'],
+n27:['CSLB mails you an Agreement to Arbitrate form. How soon must you send it back?','Return it within 30 calendar days from the date CSLB mailed it. Count from mailing, not from when you open the envelope.','Mailed form: return within 30 days.'],
+n28:['A hidden structural defect qualifies for CSLB’s longer complaint period. How long is that period?','The period can be ten years for a qualifying hidden structural defect. Not every hidden cosmetic problem gets ten years.','Hidden STRUCTURAL defect: up to ten years.'],
+n29:['After finishing a project, how long must you keep the contractor’s project records?','Keep them for at least five years after completion. Some records may need to be kept longer for other reasons.','Finished project → keep records five years.'],
+n30:['A subcontractor or supplier needs a preliminary notice to protect payment rights. For full coverage, how soon after starting work or deliveries should it be served?','Serve it within 20 days of first supplying work or materials. A late notice may still help, but usually only covers the previous 20 days and later work.','Start supplying → 20 days.'],
+n31:['After a project is completed, how long does the owner have to record a Notice of Completion?','The owner may record it on completion or within the next 15 days. A valid notice can shorten the time available to record a lien.','Completion notice: owner gets 15 days.'],
+n32:['Work has completely stopped. After how many continuous days may the owner record a Notice of Cessation?','Work must have stopped for at least 30 straight days and still be stopped when the notice is recorded. A weekend pause does not count.','Cessation = stopped for 30 straight days.'],
+n33:['On a private job, the owner records a valid Notice of Completion. What shorter lien deadline normally applies to a subcontractor after that recording?','The notice normally gives the subcontractor 30 days from recording. An earlier legal deadline can still apply, so use whichever deadline comes first.','Sub: 30 days after the notice.'],
+n34:['On a private job, the owner records a valid Notice of Completion. What shorter lien deadline normally applies to the direct contractor after that recording?','The direct contractor normally has 60 days from recording the notice. An earlier legal deadline can still apply.','Direct contractor: 60 days after the notice.'],
+n35:['You record a mechanics lien. With no allowed extension, how soon must you start the lawsuit to enforce it?','Normally, start the lawsuit within 90 days after recording the lien. Recording a lien and filing a lawsuit are two separate steps.','Record the lien → 90 days to sue.'],
+n36:['An owner is allowed to use a Notice of Nonresponsibility for work someone else ordered. How soon after learning about the work must the owner post AND record it?','Do both within ten days after learning of the work. Posting alone or recording alone is not enough.','Know about work → post AND record within ten days.'],
+n37:['You fire an installer at noon on Tuesday. Under the normal final-pay rule, when are the final wages due?','Pay the final wages immediately when you fire the employee. Do not wait for the next regular payday.','Fired = pay now.'],
+n38:['You hire a new employee. How soon must you report the hire to California EDD?','Report the employee within 20 calendar days of starting work. This is separate from the federal I-9 paperwork.','New hire → EDD within 20 days.'],
+n39:['A new employee will work at least three business days. When must you complete the employer’s part of Form I-9?','Finish Section 2 within three business days after the first day of paid work. Very short jobs have a first-day rule.','I-9 employer section: three business days.'],
+n40:['How often must construction supervisors hold toolbox or tailgate safety talks with their crews?','Hold them at least every ten working days. Talk about the hazards the crew faces on the job.','Crew safety talk: every ten working days.'],
+n41:['A worker suffers a serious job-related injury. When must you report it to Cal/OSHA?','Report it as soon as possible—normally no later than eight hours after you know or should know. “Immediately” does not mean waiting until the next shift.','Serious injury: report immediately.'],
+n42:['You learn of a job injury needing more than first aid or time off after the injury day. How soon must you report it to your insurer?','The insurer report is due within five days after you learn about it. A serious injury also needs a separate immediate Cal/OSHA report.','Insurer: five days. Serious injury: OSHA immediately.'],
+n43:['Before digging holes for a gate, how far ahead must you normally contact 811?','Give at least two working days’ notice, not counting the day you call. Also wait for required utility responses and meetings before digging.','Call, wait, check responses, then dig safely.'],
+n44:['How long does an 811 digging ticket stay valid?','It is valid for 28 days from issue. Renew it before it expires if you still need to dig.','811 ticket: 28 days.'],
+n45:['How long must asbestos exposure-measurement records normally be kept?','Keep exposure-measurement records at least 30 years. Medical records can need an even longer period: employment time plus 30 years.','Exposure records: at least 30 years.'],
+n46:['What penalty can a first conviction for unlicensed contracting bring?','A first conviction can bring a fine up to $5,000, up to six months in county jail, or both. Those are possible maximums, not an automatic sentence.','First conviction: up to $5,000 and/or six months.'],
+n47:['What is the normal penalty for a second unlicensed-contracting conviction, unless the judge allows the special unusual-case exception?','The normal fine is 20% of the contract price or payments received, or $5,000—whichever is greater—plus at least 90 days in jail. The law allows a special court exception.','Second conviction: bigger fine plus a jail minimum.'],
+n48:['For the serious license-law violations listed in BPC 7099.2, such as helping unlicensed activity, what is the maximum civil fine?','The listed violations can reach $30,000. This is a different fine from the separate $15,000 unlicensed-activity citation limit.','Read which violation: these listed ones reach $30,000.'],
+n49:['Someone uses another contractor’s license number on purpose to deceive customers. What punishment is possible?','The law allows a fine up to $10,000, county jail or state prison, or a fine plus imprisonment.','Using a false license number to deceive can be criminal.'],
+n50:['You only hold D-28 but advertise electrical-panel upgrades. What is wrong with that?','Your ad offers work outside your license classification. The ad itself can be a misdemeanor, with the stated $700–$1,000 fine, even before someone hires you.','Advertise work your license covers.'],
+n51:['A contractor deliberately spends $3,000 of job money on a personal debt, then deliberately fails to finish the job or pay for its labor and materials. What can this lead to?','This can bring felony punishment because the amount is over $2,350 and the question includes the other required wrongdoing. Moving money alone does not automatically make a felony.','Over $2,350 plus the required wrongdoing: felony risk.'],
+n52:['An employer deliberately breaks a safety rule and causes a worker’s death or serious lasting impairment. What can happen?','Criminal fines and jail or prison are possible. The amount and sentence depend on the case; companies can face higher fine limits.','Willful safety violation + grave harm = criminal risk.'],
+n53:['How much is the extra fee for renewing a contractor license late?','The late fee is 50% of the renewal fee, added to the renewal payment.','Late fee = half the renewal fee.'],
+n54:['Someone knowingly breaks the 811 digging law. Leaving out the special hazardous-pipeline-release case, how high can the civil fine be?','The usual ceiling for a knowing, willful violation is $50,000. The special hazardous-release case has a different, higher limit.','Willful 811 violation: up to $50,000 in this case.'],
+n55:['A serious child-labor violation is classified as Class A. What is the civil fine range for each violation?','Class A child-labor violations carry $5,000–$10,000 for each violation. The less serious Class B category has a different range.','Class A: $5,000 to $10,000 each.'],
+n56:['A contractor knowingly lies to get a homeowner to sign a home-improvement contract. What may the homeowner sue to recover?','The homeowner may seek $500, reasonable lawyer fees, and money for harm caused by the lie. The lie must have helped cause the customer to sign.','$500 + lawyer fees + actual harm.'],
+n57:['Which choice is NOT one of the four basic things a valid contract needs?','The four basics are people able to contract, agreement, a legal purpose, and something of value exchanged. Notarization is not one of those four.','A notary is not one of the four basics.'],
+n58:['Someone signs a contract because of threats or fraud. What does “voidable” mean for that person?','The wronged person can ask to cancel the contract under the applicable rules. It does not mean the agreement automatically never existed.','Voidable = the affected person can undo it.'],
+n59:['A normal home-improvement contract must be written when its price is MORE than what amount?','The written-contract threshold is over $500. Do not confuse it with the $1,000 licensing threshold or the special $750 service-and-repair rules.','Over $500: put the home-improvement contract in writing.'],
+n60:['A home-improvement contract is $12,000. Under the usual down-payment rule, with no special bond exception, what is the most you can collect upfront?','Ten percent is $1,200. Compare that with $1,000 and take the smaller amount: $1,000.','Down payment: the smaller of $1,000 or 10%.'],
+n61:['For a normal home-improvement job, how far ahead of completed work and delivered materials may progress payments go? Leave out the allowed deposit and special bond exceptions.','Progress payments must not get ahead of the value of work already done and materials already delivered. A payment schedule cannot change that basic rule.','Progress payment follows progress on the job.'],
+n62:['For the special service-and-repair contract rules, which condition is required?','The customer must contact you, and the price must be $750 or less. Other conditions also apply, including payment after completion.','Customer calls + $750 or less.'],
+n63:['You hire someone to sell and negotiate home-improvement contracts. The person does not qualify for an exception. What must they do?','They must register with CSLB as a Home Improvement Salesperson. Being on your payroll is not enough by itself.','Selling home improvements: check HIS registration.'],
+n64:['A final written contract says it is the complete agreement. Usually, can an earlier spoken promise be used to contradict it? Assume no exception applies.','Usually no. Put the agreed promises in writing. Claims involving fraud, mistakes or other exceptions can follow different rules.','Write the promises into the agreement.'],
+n65:['For a printed arbitration notice in a covered residential contract of four units or fewer, which type and agreement requirements apply?','Use at least 10-point bold Roman type or 8-point bold red type, plus the required indication that the parties agree. The notice cannot simply be buried in ordinary fine print.','10 bold Roman OR 8 bold red; show agreement.'],
+n66:['Agreed handwritten changes conflict with the standard printed words on a contract. Which normally controls?','The specially written changes normally control over the preprinted form because they show the deal the parties actually made.','Specific agreed changes beat standard form wording.'],
+n67:['A dispute meets CSLB’s other mandatory-arbitration requirements. What contract-price or claim limit applies?','The amount must be within the contractor-bond limit, currently $25,000. The dollar amount alone does not guarantee the case qualifies.','Mandatory arbitration: up to $25,000 if eligible.'],
+n68:['You operate as a sole proprietor and sue a customer in California small claims. What is the normal dollar limit?','A sole proprietor uses the individual limit: $12,500. Corporations and other business entities normally have a $6,250 limit.','Sole proprietor = individual limit, $12,500.'],
+n69:['Your garage-door corporation is sued in a regular civil case, not small claims. Can you represent the company if you are not a lawyer?','No. The corporation normally needs a licensed lawyer. Representing a separate corporation is different from representing yourself.','Corporation in regular civil court: lawyer.'],
+n70:['A contractor’s license was not active for part of a job that required it. No legal exception applies. Can the contractor sue to collect the unpaid contract balance?','Normally no. To collect through that lawsuit, the contractor must have been properly licensed throughout the work. The question rules out the narrow exceptions.','Stay licensed for the whole job.'],
+n71:['A contractor’s license was suspended or revoked at least twice in eight years. What must the contractor tell a customer before signing for work on a one-to-four-unit residence?','Tell the customer about those suspensions or revocations in writing before contracting. The trigger is not simply two complaints.','Two suspensions/revocations in eight years: disclose.'],
+n72:['Why does a subcontractor or supplier send a preliminary notice?','It helps protect later payment rights, such as a lien, when the law requires this notice. It is an early heads-up—not a lawsuit or demand for immediate payment.','Preliminary = protect rights early.'],
+n73:['What does a mechanics lien place a claim against?','It places a claim against the improved private property, such as the home or land. A stop payment notice targets construction money instead.','Lien = property. Stop payment notice = money.'],
+n74:['A subcontractor has not been paid on a government job. Which notice can hold back construction money held by the public agency?','A stop payment notice can require the agency to hold construction funds. You do not put a mechanics lien on the public building.','Public-job funds: stop payment notice.'],
+n75:['For the public works payment-bond rule in this question, a bond is required when the contract is over what amount?','The usual threshold for these covered public contracts is over $25,000. The payment bond helps protect eligible unpaid subs and suppliers.','Over $25,000: payment bond for covered public work.'],
+n76:['Where does the mechanics-lien warning go in a normal written home-improvement contract?','It goes in the contract given to the homeowner. It warns that unpaid subs or suppliers may have lien rights even if the homeowner paid the main contractor.','Give the owner the warning in the contract.'],
+n77:['Which court handles a lawsuit to foreclose a mechanics lien?','Superior court handles the foreclosure lawsuit. Small claims can award money but cannot order this lien foreclosure.','Foreclosure: superior court.'],
+n78:['Which listed payroll tax normally comes only from the employee’s pay?','SDI is normally withheld from the employee’s wages. FUTA and California unemployment contributions are paid by the employer.','SDI: employee pays.'],
+n79:['Wages are below the Social Security tax limit, and no extra Medicare tax applies. What is the usual employer FICA rate?','Add 6.2% Social Security and 1.45% Medicare. The result is 7.65%.','6.2 + 1.45 = 7.65%.'],
+n80:['An installer is covered by the normal daily-overtime rule and works 13 hours. What pay rate applies to hour 13?','Hours over 12 in the workday earn double time under this rule. Hours over eight through twelve earn time-and-a-half.','After 12 hours: double time.'],
+n81:['In 2026, can a contractor with no employees ever be exempt from workers’ compensation insurance?','Yes, an eligible no-employee contractor can still claim an exemption. Certain classifications must carry coverage anyway. The broader change is scheduled for 2028, not 2026.','No employees: check the exemption AND classification.'],
+n82:['At the end of a quarter, add this quarter’s FUTA tax to any unpaid amount carried from earlier quarters. Above what total must you make a deposit?','If the combined total is over $500, deposit it under the IRS schedule. At $500 or less, you can normally carry it to the next quarter; year-end has its own payment option.','FUTA: add carried amounts, then compare with $500.'],
+n83:['Under California’s normal rule for workers covered by regular wage protections, how often must regular wages be paid?','Normally at least twice each calendar month, on set paydays. Some kinds of workers and payment schedules have different rules.','Regular pay: normally twice a month.'],
+n84:['You hire a 17-year-old helper who is still in school. What is normally required?','A work permit is normally needed. There are also limits on working hours and dangerous tasks; a parent’s permission alone is not enough.','Minor worker: permit, hours and safe duties.'],
+n85:['An employee makes a believable serious-safety complaint to Cal/OSHA. How soon must the investigation normally begin at the latest?','As soon as possible, and no later than three working days for this type of complaint. Serious complaints from law enforcement have a separate 24-hour rule.','Employee’s serious complaint: three working days.'],
+n86:['You are digging in the 24-inch area beside a marked gas line. What is the safe method listed here for finding the exact line?','Use hand tools to find the exact location before using powered equipment as required. Measure the 24 inches from each outside edge of the utility, not just its center mark.','Utility width + 24 inches on each side.'],
+n87:['What does YELLOW underground-utility paint usually mark?','Yellow marks gas, oil or similar fuel lines. It is a warning about what is buried—not how deep it is.','Yellow = fuel.'],
+n88:['Your crew finds what look like human remains while digging. What must you do?','Stop work around the remains and notify the county coroner. Do not move them aside or continue digging there.','Stop. Leave in place. Call the coroner.'],
+n89:['What person must a business have to operate under an active contractor license?','It needs a qualifying individual: the person who qualifies the license and provides the required supervision. The person’s allowed role depends on the business type.','Active license needs a qualifier.'],
+n90:['What is a main legal risk of running a sole proprietorship?','You and the business are not separate legal entities. Business debts can become your personal responsibility.','Sole owner: personal liability for business debts.'],
+n91:['The president of a licensed corporation dies. What normally happens to the corporation’s license?','The corporation is separate from its president, so the death alone does not cancel the license. Report changes and replace the qualifier if necessary.','The corporation continues; update its people.'],
+n92:['Which business normally pays tax on its profit, with shareholders then paying tax on dividends from that profit?','A C corporation can have these two tax levels. This is called double taxation.','C corporation: company tax, then dividend tax.'],
+n93:['Which equation shows how assets, debts and the owner’s share fit together?','What the business has equals what it owes plus the owner’s remaining share. In accounting: assets = liabilities + owner’s equity.','Have = owe + own.'],
+n94:['With accrual accounting, when do you normally record income?','Record it when it is earned, even if the customer has not paid yet. Cash-basis accounting instead follows when money is received.','Accrual = earned. Cash basis = received.'],
+n95:['Current assets are $50,000. Current liabilities are $25,000. What is the current ratio?','Divide $50,000 by $25,000. The result is 2 to 1. This ratio does not guarantee enough cash is in the bank today.','Current ratio DIVIDES.'],
+n96:['How do you calculate gross profit on a job?','Subtract the job’s direct costs from its sales revenue. You still need to subtract overhead and other expenses to find the final profit.','Gross profit = sales minus direct job costs.'],
+n97:['What are the three parties named in a surety bond?','The principal is the contractor whose promise is backed. The obligee is the protected party. The surety is the company backing the promise.','Contractor, protected party, bonding company.'],
+n98:['Which bond protects payment to subcontractors and suppliers?','A payment bond backs payment to eligible subs and suppliers. A performance bond instead backs completion of the job.','Payment bond = people get paid.'],
+n99:['Which cost is business overhead, rather than a cost of one specific installation?','Office rent and bookkeeping support the whole business. Springs or installer hours for one job are direct job costs.','One job = direct. Whole business = overhead.'],
+n100:['A job costs $8,000. You want profit to be 20% of the selling price—a 20% margin. What price should you bid?','Divide $8,000 by 0.80 to get $10,000. That leaves $2,000 profit, which is 20% of the $10,000 price.','Margin is measured against the selling price.'],
+n101:['Why track the actual cost of each job, called job costing?','Compare what the job really cost with your estimate. You can spot problems and make better bids next time.','Estimate, track, compare, improve.'],
+f1:['What mainly determines how often an employer must deposit payroll taxes with the IRS?','The amount of payroll tax owed determines the schedule, using IRS rules and the required past period. Employee count alone does not set it.','Tax amount, not headcount.'],
+f2:['The company buys a car shared by its sales staff. Is its depreciation a direct job cost or business overhead?','It is overhead because the car supports sales for the whole business, not one installation. Depreciation spreads its cost over time.','Shared sales car = overhead.'],
+f3:['How do you calculate working capital?','Subtract current liabilities from current assets. This shows a short-term financial cushion, not necessarily cash in the bank.','Working capital SUBTRACTS.'],
+f4:['What does retention, also called retainage, mean on a construction job?','It is part of a payment held back until the release conditions are met. Covered new private contracts have a 5% cap, but some projects have exceptions.','Retention = money held back.'],
+f5:['Which report shows the business’s income and expenses during a month, quarter or year?','The income statement, also called profit and loss, covers a period of time. A balance sheet shows a single date.','Income statement = a period. Balance sheet = a date.'],
+f6:['The business shows a profit, but you cannot pay Friday’s payroll. What could explain that?','Customers may owe you money that has not arrived yet, while wages are due now. Profit on paper and available cash are different.','Money owed to you is not cash you can spend yet.'],
+e1:['An unlicensed installer works under your direction on work requiring a contractor license. Does calling the person a subcontractor avoid employee rules?','No. The label does not make the person independent. In this situation you have employee duties, including the applicable pay and insurance rules.','Calling someone a “sub” does not make it true.'],
+e2:['At what employer size does California require the harassment-prevention training described here?','Five or more employees triggers the rule: two hours for supervisors and one hour for other workers, repeated every two years. New workers also have training deadlines.','Five workers; 2 supervisor hours; 1 other hour.'],
+e3:['What must normally come with an hourly employee’s paycheck?','An itemized wage statement—a pay stub showing the required pay details, such as hours, rates, deductions and pay dates.','Paycheck + detailed pay stub.'],
+e4:['Where should required labor-law posters and notices be placed?','Post them where employees can see and read them. A copy hidden in an office file does not serve that purpose.','Workers need to see the notices.'],
+i1:['Which business type has CSLB’s special liability-insurance requirement of at least $1 million?','A contractor LLC has this requirement. Its required amount can grow with the number of people listed on the license record.','LLC: special liability-insurance requirement.'],
+i2:['Why is workers’ compensation usually called the employee’s “exclusive remedy” against the employer?','For a covered work injury, the worker usually gets workers’ comp benefits instead of suing the employer. The worker generally does not need to prove employer fault; exceptions exist.','Usually workers’ comp instead of an employer lawsuit.'],
+i3:['How is a conditional lien waiver different from an unconditional one?','Conditional means the release depends on payment. An unconditional release can give up the stated rights even if you have not been paid. Read the form before signing.','Conditional = only if paid.'],
+c1:['Halfway through a job, the homeowner asks you to add a side gate. How should you agree on the extra work?','Write down the added work, price and any schedule changes. Have the change order signed before you start the extra work.','Extra work → signed change order first.'],
+c2:['On a private job, retention is ready to be released and no exception or payment dispute applies. What are the normal owner-to-prime and prime-to-sub deadlines?','The owner normally has 45 days after completion. Once the prime receives retention, it normally has ten days to pass the sub’s share along.','Owner 45; prime to sub 10.'],
+c3:['A prime contractor wrongfully holds a sub’s progress payment past its due date. What penalty applies under the rule in this question?','The penalty is 2% of the amount due per month. The winning party in a collection lawsuit can also recover lawyer fees and costs.','Wrongfully late: 2% each month.'],
+p1:['On a government job covered by prevailing-wage rules, what pay rate must workers receive at least?','Use the applicable DIR prevailing-wage rate for that trade and location, including required benefits and overtime. Union membership does not decide whether the rule applies.','Use the DIR rate for that work.'],
+p2:['A public job is large enough to require DIR contractor registration. What must the contractor normally do before bidding or working?','Register with DIR. That is separate from having a CSLB license; smaller jobs can have registration exceptions.','CSLB license and DIR registration are different.'],
+p3:['A government job requires online certified-payroll reporting. What must the contractor submit?','Send the required worker hours and pay records electronically to the Labor Commissioner. For these jobs, report at least every 30 days and after the last workday as required.','Certified payroll = report hours and pay.'],
+p4:['A public-work contract is at least $30,000 and uses a trade with apprentices. If no exception applies, what apprentice-hour rule is required?','The normal minimum is one apprentice hour for every five journeyman hours in that trade. Follow the apprentice-request and recordkeeping rules too.','Apprentice hours: at least 1 for every 5.'],
+p5:['Prevailing-wage rules normally apply to covered public jobs costing MORE than what amount?','The normal threshold is over $1,000. Do not confuse it with the different limits for registration or payment bonds.','Prevailing wage: over $1,000.'],
+s1:['What safety program must a California construction employer normally put in place and keep using?','An Injury and Illness Prevention Program, or IIPP. It explains how the employer finds hazards, fixes them and trains workers.','IIPP = the workplace safety plan.'],
+s2:['What written safety rules must a construction employer post at the jobsite office or have supervisors keep available?','The Code of Safe Practices lists safe ways to do that employer’s work. Supervisors and workers need access to it.','Code of Safe Practices = the job’s safety rules.'],
+s3:['A worker must enter a trench. With no permit exception, at what depth is a Cal/OSHA permit required?','The threshold is five feet or deeper when a person must enter. You must also follow trench-protection rules; a permit alone does not make it safe.','Person enters + five feet = permit rule.'],
+s4:['For outdoor work, above what temperature must shade already be available?','Above 80°F, shade must be available. At 80°F or below, workers still must get timely access to shade when they request it.','Above 80°F: shade ready.'],
+s5:['Where must employees be able to get the required Safety Data Sheets, or SDSs?','They must be easy to reach during the work shift. These sheets explain a chemical’s hazards and safe handling.','SDS: available while people are working.'],
+m1:['An $8,000 home-improvement contract follows the usual deposit rule, with no special bond exception. What is the largest down payment?','Ten percent of $8,000 is $800. That is less than $1,000, so the limit is $800.','Choose the smaller amount.'],
+m2:['A $20,000 home-improvement contract follows the usual deposit rule, with no special bond exception. What is the largest down payment?','Ten percent is $2,000. The smaller of $2,000 and $1,000 is $1,000.','A bigger job does not automatically allow a bigger deposit.'],
+m3:['On a $40,000 home-improvement job, work done and materials delivered are worth 60% of the price. Leaving out the allowed deposit and special bond exceptions, what value supports progress payments?','Multiply $40,000 by 0.60. The work and delivered materials support $24,000 of progress-payment value.','60% of $40,000 = $24,000.'],
+m4:['A private commercial contract signed in 2026 is $100,000 and falls under the 5% retention cap. What is the most total retention?','Five percent of $100,000 is $5,000. This question assumes the project falls under the cap and no exception applies.','$100,000 × 0.05 = $5,000.'],
+m5:['An installer earns $28 an hour and works ten hours in one day. The normal daily-overtime rule applies. What is the pay before deductions?','Eight regular hours: 8 × $28 = $224. Two overtime hours: 2 × $42 = $84. Add them: $308.','Regular pay + overtime pay.'],
+m6:['A worker earns $30 an hour and works 13 hours in one day. The normal daily-overtime rule applies. What is the pay before deductions?','Eight regular hours = $240. Four time-and-a-half hours = $180. One double-time hour = $60. Total: $480.','8 regular + 4 at 1.5× + 1 at 2×.'],
+m7:['An employee earns $2,000. All wages are below the Social Security limit and no extra Medicare tax applies. How much ordinary FICA comes out of the check?','Multiply $2,000 by 7.65%, or 0.0765. The employee’s FICA withholding is $153.','FICA here: $2,000 × 0.0765.'],
+m8:['Your job costs are $12,000. You add a 25% markup on cost. What is the selling price?','Twenty-five percent of $12,000 is $3,000. Add it to the cost: $15,000.','Markup adds a percentage of COST.'],
+m9:['Your job costs are $12,000. You want a 25% profit margin, measured against the selling price. What price do you need?','Cost must be 75% of the price. Divide $12,000 by 0.75 to get $16,000.','Margin uses the final PRICE.'],
+m10:['Current assets are $90,000 and current liabilities are $60,000. What is the current ratio?','Divide $90,000 by $60,000. The result is 1.5 to 1.','Ratio divides.'],
+m11:['Current assets are $90,000 and current liabilities are $60,000. What is working capital?','Subtract $60,000 from $90,000. Working capital is $30,000; it is not necessarily all cash in the bank.','Working capital subtracts.'],
+m12:['Sales are $80,000 and direct job costs are $50,000. Overhead is $20,000. What is GROSS profit, before subtracting overhead?','Subtract only direct costs: $80,000 − $50,000 = $30,000. Overhead is the next subtraction, not part of this step.','Gross stops before overhead.'],
+m13:['Sales are $80,000, direct costs $50,000 and overhead $20,000. There are no other expenses or taxes in this example. What is NET profit?','Subtract both costs: $80,000 − $50,000 − $20,000 = $10,000.','Net in this example: subtract direct costs AND overhead.'],
+m14:['A truck costs $35,000 and should be worth $5,000 after five years. If you spread the lost value evenly, what is yearly straight-line depreciation?','First subtract its ending value: $35,000 − $5,000 = $30,000. Then divide by five years: $6,000 per year. Tax depreciation can follow different rules.','Subtract ending value, then divide by years.'],
+m15:['Job costs are $20,000. Add 15% of cost for overhead. Then add a 10% markup to that new total. What is the bid?','Add $3,000 overhead to get $23,000. Then add 10% of $23,000, which is $2,300. Final bid: $25,300.','Do the two additions in order.'],
+m16:['Monthly overhead is $8,000. Each sales dollar leaves 25 cents after direct costs. How much monthly sales revenue covers the overhead?','Divide $8,000 by 0.25. You need $32,000 in sales to break even in this example.','Overhead ÷ margin = break-even sales.'],
+m17:['An installer earns $25 an hour. Extra employer costs add 30% to that wage. What is the full hourly cost?','Thirty percent of $25 is $7.50. Add it to the wage: $32.50 an hour.','Wage + extra employer costs.'],
+m18:['You charge $60,000 and direct costs are $52,000. What percentage of the selling price is gross profit?','Gross profit is $8,000. Divide by the $60,000 selling price and multiply by 100: about 13.3%.','Profit ÷ selling price × 100.'],
+c4:['A normal written home-improvement contract must give approximate dates for what?','It must say approximately when the work will start and finish. Put agreed schedule changes in writing too.','Start date + finish date.'],
+c5:['You are signing a home-sale contract that requires a separate Notice of Cancellation form. How must you give that form to the customer?','Give the customer TWO copies, attached to the contract and easy to remove. The form tells the customer how to cancel. Some other contract types follow different form rules.','Duplicate = two copies. Attached = with the contract.'],
+c6:['Normally, how long do you have to sue over a written contract in California? Assume no special deadline or pause applies.','The usual deadline is four years for a written-contract claim. Oral-contract claims normally have a two-year deadline.','Written 4; spoken 2.'],
+c7:['You make a complete offer. The owner accepts it exactly as offered, before it expires or is withdrawn. All other contract requirements are met. What normally happens?','A contract is formed. Acceptance must match the offer; changing the terms is normally a counteroffer.','Complete offer + matching acceptance.'],
+c8:['A commercial contract has a liquidated-damages clause for unexcused late completion. What does that clause do?','It sets an amount ahead of time for the stated delay—for example, an amount per late day. Whether it can be enforced depends on the law and whether it is reasonable.','Liquidated damages = an amount agreed in advance.'],
+c9:['Which choice gives you the weakest protection when agreeing to extra work?','A spoken agreement is harder to prove. For home-improvement changes, get the work, price and other changes signed in writing before starting.','Do not rely only on a jobsite conversation.'],
+e5:['A worker is covered by the normal meal-break rule and works eight hours. What meal break is required?','At least 30 minutes, starting no later than the end of hour five. A normal unpaid meal break must be free from work duties.','30 minutes; start by the end of hour five.'],
+e6:['What is the normal paid rest-break rate?','Ten paid minutes for every four hours worked, or a major part of four hours. A workday under 3.5 hours normally needs no rest break.','Rest: ten paid minutes per four hours or major part.'],
+e7:['An employer deliberately fails to pay final wages when due. How large can the waiting-time penalty be?','It can add up to 30 days of that worker’s daily wages. The rule has conditions, including whether there is a good-faith dispute.','Willfully late final pay: up to 30 days of wages.'],
+e8:['When the ABC worker test applies, which three things must a business prove to treat a worker as independent?','The worker is free from its control, does work outside its usual business, and runs an independent trade or business. All three are needed under this test.','Independent control, different business work, own trade.'],
+e9:['What does an employee’s Form W-4 help you figure out?','It helps determine how much federal income tax to hold back from the employee’s pay. It is not the work-authorization form.','W-4 = withholding instructions.'],
+l1:['Which list names CSLB’s general license groups and includes residential remodeling?','A is general engineering; B is general building; B-2 is residential remodeling; C covers specialty classifications. Your C-61/D-28 is a limited specialty.','Know where D-28 fits: C-61 limited specialty.'],
+l2:['A B General Building contractor takes a job under the usual multiple-trade rule. Leaving out framing/carpentry and other exceptions, what must the job involve?','At least two unrelated trades other than framing or carpentry. B contractors have other allowed routes too, so this question is about the usual multiple-trade rule.','Usual B route: two unrelated trades.'],
+l3:['Where must your contractor license number appear?','Show it in your advertising and on contracts, bids and proposals. Vehicle lettering also has its own display rules.','Put the number where you advertise or offer work.'],
+l4:['Is paying the renewal fee all you need to keep operating under an active CSLB license?','No. Keep the required bond, insurance status and other license conditions in place too. Paying a fee does not fix a missing bond.','Renewal fee + required license conditions.'],
+l5:['How does CSLB check an applicant’s criminal history?','It uses fingerprints and the related background check for the people covered by the rule. A past conviction does not automatically reject every applicant.','Fingerprints connect to the background check.'],
+l6:['A job involves 100 square feet or more of regulated asbestos work, and no exception applies. What extra requirements apply?','The contractor needs C-22 or the required asbestos certification, plus required Cal/OSHA registration. Exactly 100 square feet counts; smaller work can still need safety controls.','100 square feet counts too.'],
+i4:['The four California lien-release forms come from which two pairs?','One pair is conditional or unconditional. The other pair is progress payment or final payment. Two choices times two choices makes four forms.','Payment condition × payment stage.'],
+i5:['What does general liability insurance mainly protect against?','It commonly covers certain injuries to other people or damage to their property. Employee work injuries and your own vehicles use different coverage; policy limits and exclusions matter.','General liability: covered harm to others.'],
+i6:['Your workers’ comp experience factor is 1.25. What does that do to the base amount affected by that factor?','Multiplying by 1.25 adds 25% to that amount. Other factors can still change the final insurance bill.','1.25 = 125% = a 25% increase.'],
+i7:['A general contractor asks to be an additional insured on your policy. What does that mean?','Your policy may also protect that contractor for the liability described in the coverage. The actual policy or added coverage document must provide it; a certificate alone does not.','Additional insured = another covered person or company.'],
+p6:['What promise does a bid bond normally back if you win the job?','It backs your promise to sign the contract and provide required bonds. It is different from a bond promising payment to suppliers.','Bid bond: follow through after winning.'],
+p7:['The contract requires a performance bond for the entire contract price. What percentage is that?','The entire price is 100%. This question tells you the required amount; it is not saying every contract always requires the same percentage.','Full amount = 100%.'],
+p8:['Under the normal public-works rule, overtime starts after how many hours in a day?','Normally after eight hours in a day. Weekly rules and the applicable prevailing-wage schedule matter too.','Daily public-work overtime: after eight hours.'],
+s6:['For the residential framing work covered by this question—such as working on top plates, joists or rafters—at what height is fall protection required?','For this specific framing rule, the threshold is six feet or more. Ladders, roofs, lifts and other work can follow different rules.','This framing task: six feet or more.'],
+s7:['Before servicing an opener where it could unexpectedly start and hurt someone, what safety step is required?','Follow the required lockout/tagout and energy-control steps, then check that the equipment is safely isolated. Electricity is not the only danger: door weight and spring tension still matter.','Control power AND stored energy.'],
+s8:['What is Cal/OSHA Form 300 used for?','It is the log of work-related injuries and illnesses for employers required to keep it. Form 300A is the separate yearly summary that gets posted.','300 = log; 300A = annual summary.'],
+s9:['What makes someone a competent person on a jobsite?','They can recognize the hazards AND have authority to get them corrected promptly. Experience alone is not enough.','Spot the danger + authority to fix it.'],
+s10:['How must an employer make the immediate serious-injury report to Cal/OSHA?','Use the phone or Cal/OSHA’s online reporting system. Telling your insurance carrier alone does not make the Cal/OSHA report.','Report directly to Cal/OSHA.']
+};
+BANK.forEach(function(q){var p=PLAIN_QUESTIONS[q.id];if(!p)throw new Error('Missing plain wording: '+q.id);q.legalQuestion=q.q;q.legalWhy=q.why;q.q=p[0];q.why=p[1];q.cue=p[2];});
+
+/* Keep each answer in its original position so saved answers still match. */
+var SIMPLE_CHOICES={c5:{1:'Two copies, attached to the contract'},n13:{1:'Permission to skip the trade exam, if eligible'},n58:{1:'The wronged person may be allowed to cancel it (voidable)'},n65:{1:'10-point bold Roman or 8-point bold red, with the required agreement shown'},n70:{1:'The claim is normally barred because the license was not active throughout'},n71:{1:'Tell the owner in writing about those suspensions or revocations'},n81:{2:'Some contractors with no employees can claim an exemption; certain license types cannot'},f1:{1:'How much payroll tax is owed'},f2:{1:'Overhead — general business costs'},f6:{1:'Bills are due before customer payments arrive'},e3:{1:'A detailed pay stub showing required hours, pay and deductions'},p3:{1:'Worker hours and pay records, sent online to the Labor Commissioner'},i6:{1:'A 25% increase to the base amount this factor adjusts'},s7:{1:'Isolate dangerous energy and follow the required lockout/tagout steps'}};
+BANK.forEach(function(q){q.legalOpts=q.opts.slice();var changes=SIMPLE_CHOICES[q.id]||{};Object.keys(changes).forEach(function(n){q.opts[+n]=changes[n];});});
+BANK.find(function(q){return q.id==='n58';}).q='Someone signs a contract because of threats or fraud. How can that affect the contract?';
+BANK.find(function(q){return q.id==='n61';}).q='On a usual home improvement contract, what is the limit on progress payments? Leave out the allowed deposit and special bond exceptions.';
+BANK.find(function(q){return q.id==='n65';}).opts[1]='At least 10-point bold Roman or 8-point bold red, with the required agreement shown';
+BANK.find(function(q){return q.id==='p3';}).opts=['Keep the records privately for one year only','Send worker hours and pay records online to the Labor Commissioner','Give the records only to the bond company','Skip reporting if the job is under $100,000'];
+BANK.find(function(q){return q.id==='p3';}).q='On public work covered by DIR’s online payroll-reporting rule, what must the contractor do?';
+BANK.find(function(q){return q.id==='c5';}).q='You are signing a home-sale contract (home solicitation) that requires a separate Notice of Cancellation form. How must you give that form to the customer?';
+
+var SHEET_DETAILS=SHEET_HELP.map(function(section){return section.map(function(d){return d[0];});});
+var PLAIN_SHEET=[
+[
+'Count all labor and materials for the whole job. To use the small-job license exception, the total must be UNDER $1,000, no permit can be required, and you cannot use employees. All three conditions must be met.',
+'A home improvement contract over $500 must be in writing and include the required information. The $500 writing rule is different from the $1,000 license rule. Certain small repairs have their own rules.',
+'This special repair contract cannot exceed $750. The customer must call you first, the job must address that problem, and payment is due only after completion. All required conditions must be met.',
+'Usually, your first payment cannot exceed $1,000 or 10% of the full home improvement contract, whichever is LESS. Certain bond arrangements allow an exception.',
+'The required license bond is $25,000. It helps protect people with valid claims for covered wrongdoing. You pay a smaller fee to buy the bond; $25,000 is the protection amount.',
+'An actively licensed LLC needs an EXTRA $100,000 bond to help cover certain unpaid worker wages and benefits. It also needs its regular contractor bond.',
+'Wrongfully using construction money elsewhere, together with the failure to finish or pay required by this law, can be a crime. Over $2,350 can lead to a felony charge. It is not automatically a felony.',
+'For this unlicensed-work citation, the civil fine can be up to $15,000. Other violations and criminal cases have different penalties.',
+'The usual small-claims limit is $12,500 for a person, including a sole proprietor. For a corporation or similar business, it is $6,250. Other filing rules still apply.',
+'CSLB can send qualifying disputes to mandatory arbitration when the contract price or amount demanded is within the $25,000 bond limit. Other conditions must also be met.',
+'For qualifying disputes with damages OVER $25,000 but UNDER $50,000, both sides must agree to voluntary arbitration. Exactly $25,000 and $50,000 are outside this range.',
+'For covered public jobs over $25,000, the main contractor must provide an approved payment bond before starting. It helps protect payment to workers and suppliers. State-agency contracts have separate rules.',
+'For covered private construction contracts signed January 1, 2026 or later, no more than 5% can be held back from a payment or the total price. Some projects are excluded, including residential-only buildings up to four stories. Certain subcontractor bond exceptions also apply.',
+'At 100 square feet or more of covered asbestos work, the contractor needs the proper asbestos license or certification AND required Cal/OSHA registration. Exceptions exist. Smaller jobs can still have safety requirements.'
+],[
+'After CSLB sends its notice asking for the first license fee, you generally have 90 days to pay and finish the required license paperwork. Passing the test alone does not activate your license.',
+'If your qualifying person leaves, tell CSLB in writing AND replace that person within 90 days of departure. Missing these steps can stop your license or that classification. An extension needs approval.',
+'Tell CSLB in writing within 90 days when listed business details change, such as your name, address or personnel. Use its form. Keep insurance requirements up to date too.',
+'After an individual license holder dies, an immediate family member can ask CSLB to let the business continue under that license. CSLB must receive the written request within 90 days. Approval is required.',
+'For private work, if no valid notice of completion or stopped work is recorded, the usual deadline to record a lien is 90 days after the PROJECT is complete.',
+'Recording a lien does not start a lawsuit. You usually must file the lawsuit to enforce it within 90 days AFTER recording the lien. A special extension-of-credit rule can change this.',
+'Tell CSLB in writing within 90 days about a final court judgment against your license that remains unpaid. Ignoring it can lead to license suspension.'
+],[
+'This early notice says you are providing work or materials and may claim payment rights. It is NOT a lien. Usually, send it within 20 days of your first work or delivery. A late notice only reaches back 20 days, plus later work.',
+'The owner can record this notice on the completion date or within the next 15 days. A valid notice can shorten the time contractors have to record liens. Required notices still matter.',
+'Cessation means STOPPED. The owner can record this notice after at least 30 days in a row with no labor. Work must still be stopped when the notice is recorded.',
+'A subcontractor usually records its lien after finishing its work. The deadline is the EARLIER of 30 days after a valid completion/stoppage notice is recorded or 90 days after project completion.',
+'The contractor hired directly by the owner usually records after finishing its contract. The deadline is the EARLIER of 60 days after a valid completion/stoppage notice is recorded or 90 days after project completion.',
+'Without a valid recorded completion or stoppage notice, the usual private-job lien deadline is 90 days after the whole project is complete. Your own last day on the job may be earlier.',
+'An owner who did not order the work may be able to protect against a lien with this notice. The owner must BOTH post it and record it within 10 days of learning about the work. It does not protect every situation.'
+],[
+'Usually, when you fire a worker, pay all earned wages and unused earned vacation immediately. A few industries have special exceptions.',
+'If a worker quits with less than 72 hours of notice, final pay is usually due within 72 hours after quitting. This rule covers workers without a written contract for a fixed employment term.',
+'If a worker gives at least 72 hours of notice, final pay is usually due when the worker leaves as planned. This rule covers workers without a written contract for a fixed employment term.',
+'Complete the employer part of Form I-9 within three business days after the first paid workday. If the job lasts less than three business days, finish it on day one. The form checks permission to work.',
+'Tell California EDD about a new employee within 20 calendar days of starting work. This also covers someone rehired after at least 60 days away.',
+'Construction supervisors must hold a short crew safety talk at least every 10 WORKING days. Talk about hazards the crew faces.',
+'Construction supervisors must meet regularly about safety. The general rule does not say every month. A separate rule for tunnel work does require monthly meetings.',
+'Report a qualifying serious work injury, illness or death to Cal/OSHA as soon as possible—usually no later than eight hours after you know or should know. Limited unusual cases allow 24 hours. Do not wait to tell your insurer first.',
+'Tell your insurer within five days after learning of a work injury needing more than first aid or causing lost time after the injury day. Serious incidents also need the separate immediate Cal/OSHA report.',
+'Keep required injury logs for five years after the year they cover. Medical and harmful-exposure records have different rules; some must be kept for 30 years or employment plus 30 years.'
+],[
+'You generally have 18 months after CSLB ACCEPTS your application to pass the required exams. The clock does not start on your first test day. An application can become invalid if time runs out.',
+'If the qualifying person passed the same classification exam within the last five years, that person generally does not have to take it again for a new application. The other license requirements still apply.',
+'An active contractor license usually needs renewal every two years. Renew before it expires and keep its other requirements current.',
+'An inactive license renews every four years. You cannot do work requiring an active license until you reactivate it.',
+'You generally have up to five years to renew an expired license by meeting the rules and paying the fees. Being able to renew does not mean you can work while it is expired.',
+'Keep your job records for at least five years after the project is complete. Other rules or insurance needs may mean keeping them longer.',
+'A patent defect is a problem that can reasonably be seen. The usual deadline for a written CSLB complaint is four years after the act or failure that caused it. Court lawsuit deadlines can differ.',
+'A latent structural defect is a hidden problem affecting a building’s structure. Certain serious hidden structural problems can have a ten-year CSLB complaint window. A hidden cosmetic flaw does not automatically qualify.',
+'You generally have 15 WORKING days after a citation is officially delivered to challenge it. If you miss the deadline, it can become final.',
+'Return CSLB’s Agreement to Arbitrate within 30 CALENDAR days from the date CSLB mails it. Count from mailing, not from when you open it.'
+],[
+'Markup is an amount added to your COST. For a 20% markup, add 20% of cost to the cost. This extra amount helps cover overhead and profit.',
+'Margin is the profit share of your SELLING PRICE. For a 20% margin, cost is the other 80% of the price, so divide cost by 0.80.',
+'Gross profit is sales money minus direct job costs. You still have overhead to pay from it.',
+'In these practice problems, net profit is what remains after you subtract overhead from gross profit. Full business accounts may include other costs too.',
+'Current ratio compares what you can use or collect soon with what you owe soon. DIVIDE current assets by current liabilities. It is a comparison, not a dollar amount.',
+'Working capital is current assets MINUS current liabilities: what you can use or collect soon, less what you owe soon. It is not necessarily cash in your bank.',
+'Break-even sales cover your costs with no profit left over. In these problems, divide overhead by the gross-margin decimal. A 25% margin means use 0.25.',
+'Straight-line depreciation spreads an item’s cost evenly across its useful years. First subtract its expected value at the end, then divide by the years. Tax rules can differ.',
+'Labor burden is the extra employer cost on top of wages, such as payroll taxes, insurance and benefits. Use the percentage the question gives you.',
+'Under the usual California rule for workers who get overtime, hours over eight through twelve in one workday pay 1.5 times the regular rate. Hours over twelve pay double. Weekly, seventh-day and exception rules also matter.',
+'Usually, the worker and employer EACH pay 7.65%: 6.2% Social Security plus 1.45% Medicare. Social Security stops at an annual wage limit. Some workers owe extra Medicare tax that the employer does not match.',
+'For the usual home improvement first-payment limit, compare $1,000 with 10% of the full contract. Choose the SMALLER amount. Certain bond arrangements allow an exception.'
+],[
+'Usually, tell 811 at least two WORKING days before digging. Do not count the day you call. Also wait for required utility responses and any required site meeting. A ticket alone does not mean you can start.',
+'Give the usual 811 advance notice no more than 14 CALENDAR days before you plan to start. This is different from how long the ticket lasts.',
+'An 811 ticket lasts 28 days from issue. Renew by the end of day 28 if you need to keep working. If it expires, stop digging and follow the new-ticket rules.',
+'Allow the width of the underground line PLUS 24 inches on EACH side of its outer edges. Locate the line safely using hand tools or another allowed method before using power equipment as required.',
+'WHITE marks show where YOU plan to dig. They do not mark an existing utility line.',
+'RED means electricity. YELLOW means gas, oil or steam. BLUE means drinking water. GREEN means sewer or drain. These colors do not tell you a safe digging depth.',
+'The usual civil fine limits are $10,000 for careless violations and $50,000 for knowing, deliberate violations. Certain deliberate pipeline damage releasing hazardous material can reach $100,000. Other costs or penalties may also apply.',
+'Stop digging and disturbing the area if you find human remains. Tell the county coroner. Do not move them yourself. Native American remains have additional requirements.'
+]];
+SHEET_HELP.forEach(function(section,k){if(section.length!==PLAIN_SHEET[k].length)throw new Error('Missing plain sheet section '+k);section.forEach(function(d,r){d[0]=PLAIN_SHEET[k][r];});});
 
 /* Diagrams for concepts that are easier to see than to read.
    Colors match the app. Text avoids apostrophes so it stays safe in JS strings. */
@@ -1290,14 +1692,14 @@ function termsIn(item){
     var t=GSORT[i].t.toLowerCase();
     var re=new RegExp('(^|[^a-z])'+t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^a-z]|$)');
     if(re.test(hay) && used.indexOf('|'+t+'|')===-1){ found.push(GSORT[i]); used+=t+'|'; }
-    if(found.length>=5) break;
   }
   gCache[item.id]=found;
   return found;
 }
 var wordHelpOpen = {}, activeDef = null, diaOpen = {};
-function toggleWords(id){ wordHelpOpen[id]=!wordHelpOpen[id]; render(); }
-function showDef(t){ activeDef = (activeDef===t?null:t); render(); }
+function toggleWords(id){ wordHelpOpen[id]=!wordHelpOpen[id]; keepPagePosition=true; render(); }
+function showDef(t){ activeDef = (activeDef===t?null:t); keepPagePosition=true; render(); }
+function showDefIndex(i){showDef(GLOSSARY[i].t);}
 function toggleDia(id){ diaOpen[id]=!diaOpen[id]; render(); }
 function defByName(t){ for(var i=0;i<GLOSSARY.length;i++) if(GLOSSARY[i].t.toLowerCase()===t.toLowerCase()) return GLOSSARY[i]; return null; }
 
@@ -1309,11 +1711,12 @@ function mark(text, item){
   var pat = ts.map(function(g){ return g.t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }).join('|');
   var re = new RegExp('\\b('+pat+')\\b','gi');
   return out.replace(re, function(m){
-    return '<span class="gt" onclick="showDef(\''+m.toLowerCase().replace(/'/g,"")+'\')">'+m+'</span>';
+    var g=defByName(m);return g?'<button type="button" class="gt" onclick="showDefIndex('+GLOSSARY.indexOf(g)+')">'+m+'</button>':m;
   });
 }
 
 /* the definition panel that opens when a word is tapped */
+function meaningBody(g){return '<div class="meaning-body"><p>'+esc(g.d)+'</p>'+(g.example?'<p class="word-example"><strong>Example:</strong> '+esc(g.example)+'</p>':'')+(g.detail?'<details><summary>More detail</summary><p>'+esc(g.detail)+'</p></details>':'')+'</div>';}
 function defPanel(){
   if(!activeDef) return '';
   var g = defByName(activeDef);
@@ -1322,7 +1725,7 @@ function defPanel(){
     +'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">'
     +'<div style="font-weight:700;font-size:15px;color:var(--cobalt)">'+esc(g.t)+'</div>'
     +'<button onclick="showDef(null)" style="background:none;border:none;color:var(--steel);font-size:18px;line-height:1;cursor:pointer;padding:0 2px">\u00D7</button></div>'
-    +'<div style="font-size:14.5px;line-height:1.6;color:var(--inkSoft);margin-top:5px">'+esc(g.d)+'</div></div>';
+    +meaningBody(g)+'</div>';
 }
 
 /* fallback list, catches hard words that sit in the answer choices */
@@ -1335,7 +1738,7 @@ function wordHelp(item){
     body='<div style="padding:2px 14px 12px">'+ts.map(function(g){
       return '<div style="padding:9px 0;border-top:1px solid #C9D9FA">'
         +'<div style="font-weight:700;font-size:14.5px;color:var(--ink)">'+esc(g.t)+'</div>'
-        +'<div style="font-size:14px;line-height:1.55;color:var(--inkSoft);margin-top:3px">'+esc(g.d)+'</div></div>';
+        +meaningBody(g)+'</div>';
     }).join('')+'</div>';
   }
   return '<div style="background:#F2F6FF;border:1px solid #C9D9FA;border-radius:10px;margin-top:10px;overflow:hidden">'
@@ -1485,7 +1888,7 @@ function viewHome(){
     + weakPanel()
     + '<div class="note-box"><span class="k">YOUR NEXT TEST · FRIDAY, SEPTEMBER 25, 2026</span><br>Try a short practice set, reread the explanations, and pause when you need to. '
     + 'The simulator approximates CSLB’s topic weights. Missed questions stay in Needs Work until you answer them correctly. '
-    + '<br><small>All 174 questions reviewed September 14, 2026. Open Reference / source under an answer to check its rule or calculation.</small></div>';
+    + '<br><small>All 174 questions reviewed September 14, 2026. Questions and meanings use everyday words. Open More detail &amp; source under an answer to read the full explanation and check its rule or calculation.</small></div>';
 }
 
 /* ---- STUDY ---- */
@@ -1542,11 +1945,11 @@ function qCard(item,picked,fn){
   }
   if(picked!==null){
     var ok=picked===item.ans;
-    h+='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Correct \u2014 here\u2019s the why:':'Not quite \u2014 the answer is '+'ABCD'[item.ans]+'.')+'</b>'+mark(item.why,item)+questionReferences(item)+'</div>';
+    h+='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Correct — ':'Answer: ')+'ABCD'[item.ans]+'. '+esc(item.opts[item.ans])+'</b><p class="plain-answer">'+mark(item.why,item)+'</p><p class="memory-cue"><strong>Remember:</strong> '+esc(item.cue)+'</p>'+questionReferences(item)+'</div>';
     h+=diaBlock(item);
   }
   h+=defPanel();
-  if(picked!==null) h+=wordHelp(item);
+  if(fn==='pickStudy'||picked!==null) h+=wordHelp(item);
   return h+'</div>';
 }
 function pickStudy(n){
@@ -1669,8 +2072,8 @@ function sheetExplanation(k,r){
   var sources=d.slice(3).map(function(s){return '<a class="help-source" href="'+esc(s[1])+'" target="_blank" rel="noopener noreferrer">Read the source: '+esc(s[0])+' ↗</a>';}).join('');
   return '<section class="sheet-help" id="help-'+key+'" aria-label="Explanation: '+esc(SHEETS[k].rows[r][0])+'">'
     +'<h3>What it means</h3><p>'+esc(d[0])+'</p><h3>Simple example</h3><p>'+esc(d[1])+'</p>'
-    +'<p class="cue"><b>Memory cue:</b> '+esc(d[2])+'</p>'
-    +(sources||'<p style="font-size:12px">Business-math explanation, not a legal rule. Example values are for practice.</p>')
+    +'<p class="cue"><b>Remember:</b> '+esc(d[2])+'</p>'
+    +'<details class="source-detail"><summary>More detail &amp; source</summary><p>'+esc(SHEET_DETAILS[k][r])+'</p>'+(sources||'<p>Business-math example for practice.</p>')+'</details>'
     +'<div class="help-actions"><button id="review-'+key+'" aria-pressed="'+marked+'" onclick="reviewSheetItem('+k+','+r+')">'+(marked?'✓ Saved · remove from review':'☆ Review again')+'</button>'
     +'<button onclick="toggleSheetHelp('+k+','+r+')">Close explanation</button></div></section>';
 }
@@ -1694,7 +2097,7 @@ function viewSheet(){
   var glist=gl.slice(0,gq?40:GLOSSARY.length).map(function(g){
     return '<div style="padding:10px 0;border-top:1px solid var(--line)">'
       +'<div style="font-weight:700;font-size:15px;color:var(--ink)">'+esc(g.t)+'</div>'
-      +'<div style="font-size:14px;line-height:1.55;color:var(--inkSoft);margin-top:3px">'+esc(g.d)+'</div></div>';
+      +meaningBody(g)+'</div>';
   }).join('') || '<div style="padding:14px 0;color:var(--steel);font-size:14px">No word matches that. Try a shorter piece of it.</div>';
   var gopen = openSheet===999;
   h += '<div class="acc"><button onclick="toggleSheet(999)"><span class="h">PLAIN-ENGLISH DICTIONARY</span><span class="pm">'+(gopen?'\u2212':'+')+'</span></button>'
