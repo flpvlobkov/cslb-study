@@ -120,6 +120,14 @@ button.tile:hover,button.tile:active{border-color:var(--red);background:#FFF8F8}
 .sheet-review{padding:14px;border:1px solid var(--line);border-radius:12px;margin-bottom:14px;background:#fff}
 .sheet-review summary{cursor:pointer;color:var(--cobalt);font-weight:600;min-height:28px}
 .save-warning{padding:12px;background:#FFF0F0;border:1px solid var(--red);color:var(--red);border-radius:8px;margin-bottom:12px;font-size:14px;line-height:1.5}
+.cloud-card{padding:16px;border:1px solid #B9D5C4;border-radius:12px;background:#F5FBF7;margin:0 0 14px}
+.cloud-card.off{border-color:#C9D9FA;background:#F5F8FF}
+.cloud-title{font-weight:700;font-size:16px;color:var(--ink);margin-bottom:5px}
+.cloud-copy{font-size:13.5px;line-height:1.6;color:var(--inkSoft);margin:0 0 11px}
+.cloud-code{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.5px;padding:11px 10px;border:1px dashed var(--cobalt);border-radius:8px;background:#fff;text-align:center;overflow-wrap:anywhere}
+.cloud-status{font-size:12px;font-weight:700;color:var(--green);margin-top:8px;min-height:17px}
+.danger-zone{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.danger-btn{width:100%;padding:12px;border:1px solid #E3A0A8;border-radius:9px;background:#FFF8F8;color:var(--red);font:600 14px 'Inter',sans-serif;cursor:pointer}
 .quiet-mode *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
 @keyframes help-in{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
@@ -1748,18 +1756,85 @@ const QDIA = {
   n86:"dig", n43:"dig", n87:"dig", n44:"dig",
 };
 
-/* ==== STORAGE: localStorage, survives updates and reloads ==== */
+/* ==== STORAGE: local copy plus optional server backup ==== */
 var KEY = 'cslb_lb_trainer_v1';
-var S = { weak:{}, mastered:{}, scores:[], notes:[], history:{}, study:null, activeQuiz:null, lastTab:'home', sheet:{open:0,detail:''}, sheetReview:{}, learning:{quiet:false,paused:false} };
+var SYNC_KEY_NAME = 'cslb_lb_cloud_key_v1';
+function freshState(){return { weak:{}, mastered:{}, scores:[], notes:[], history:{}, study:null, activeQuiz:null, lastTab:'home', sheet:{open:0,detail:''}, sheetReview:{}, learning:{quiet:false,paused:false}, updatedAt:0 };}
+var S = freshState();
 var storageFailed=false;
+var syncKey='', syncStatus='off', syncMessage='', syncTimer=null;
+function applySavedState(d){
+  if(!d||typeof d!=='object')return;
+  S.weak=d.weak||{}; S.mastered=d.mastered||{}; S.scores=d.scores||[]; S.notes=d.notes||[];
+  S.history=d.history||{}; S.study=d.study||null; S.activeQuiz=d.activeQuiz||null; S.lastTab=d.lastTab||'home';
+  S.sheet=d.sheet||S.sheet; S.sheetReview=d.sheetReview||{}; S.learning=d.learning||S.learning;
+  S.updatedAt=Number(d.updatedAt)||0;
+}
 function load(){
-  try{ var r = localStorage.getItem(KEY); if(r){ var d = JSON.parse(r);
-    S.weak=d.weak||{}; S.mastered=d.mastered||{}; S.scores=d.scores||[]; S.notes=d.notes||[];
-    S.history=d.history||{}; S.study=d.study||null; S.activeQuiz=d.activeQuiz||null; S.lastTab=d.lastTab||'home';
-    S.sheet=d.sheet||S.sheet; S.sheetReview=d.sheetReview||{}; S.learning=d.learning||S.learning; } }
+  try{ var r = localStorage.getItem(KEY); if(r)applySavedState(JSON.parse(r)); }
   catch(e){}
 }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); storageFailed=false; }catch(e){storageFailed=true;} }
+function persistLocal(){try{localStorage.setItem(KEY,JSON.stringify(S));storageFailed=false;}catch(e){storageFailed=true;}}
+function save(){S.updatedAt=Date.now();persistLocal();queueCloudSave();}
+
+function normalizeSyncKey(v){
+  var key=String(v||'').trim().toUpperCase();
+  return /^CSLB-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(key)?key:'';
+}
+function readSyncKey(){
+  var fromHash='';
+  try{var match=location.hash.match(/(?:^#|[&#])backup=(CSLB-[A-Z0-9-]+)/i);if(match)fromHash=normalizeSyncKey(match[1]);}catch(e){}
+  try{syncKey=fromHash||normalizeSyncKey(localStorage.getItem(SYNC_KEY_NAME));if(syncKey)localStorage.setItem(SYNC_KEY_NAME,syncKey);}catch(e){syncKey=fromHash;}
+  if(syncKey)syncStatus='checking';
+}
+function putKeyInAddress(){
+  if(!syncKey)return;
+  try{history.replaceState(null,'',location.pathname+location.search+'#backup='+encodeURIComponent(syncKey));}catch(e){}
+}
+function generateSyncKey(){
+  var alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',bytes=new Uint8Array(12);crypto.getRandomValues(bytes);
+  var out='';for(var i=0;i<bytes.length;i++)out+=alphabet[bytes[i]%alphabet.length];
+  return 'CSLB-'+out.slice(0,4)+'-'+out.slice(4,8)+'-'+out.slice(8,12);
+}
+function setCloudStatus(status,message){
+  syncStatus=status;syncMessage=message||'';
+  var el=document.getElementById('cloud-status');if(el)el.textContent=cloudStatusText();
+}
+function cloudStatusText(){
+  if(syncMessage)return syncMessage;
+  if(syncStatus==='saving')return 'Saving backup…';
+  if(syncStatus==='saved')return '✓ Backed up automatically';
+  if(syncStatus==='checking')return 'Checking cloud backup…';
+  if(syncStatus==='error')return 'Could not reach cloud backup. Your browser copy is still saved.';
+  return '';
+}
+async function cloudRequest(method,key,state){
+  var options={method:method,headers:{'Accept':'application/json'}};
+  if(state){options.headers['Content-Type']='application/json';options.body=JSON.stringify({state:state,updatedAt:Number(state.updatedAt)||Date.now()});}
+  var response=await fetch('/api/progress/'+encodeURIComponent(key),options);
+  var data=null;try{data=await response.json();}catch(e){}
+  if(!response.ok){var err=new Error(data&&data.error?data.error:'Cloud backup failed.');err.status=response.status;throw err;}
+  return data;
+}
+function queueCloudSave(){
+  if(!syncKey)return;
+  clearTimeout(syncTimer);setCloudStatus('saving');
+  syncTimer=setTimeout(function(){cloudRequest('PUT',syncKey,S).then(function(){setCloudStatus('saved');}).catch(function(){setCloudStatus('error');});},450);
+}
+async function syncFromCloudOnStart(){
+  if(!syncKey)return;
+  putKeyInAddress();
+  try{
+    var cloud=await cloudRequest('GET',syncKey);
+    var cloudTime=Number(cloud.updatedAt)||Number(cloud.state&&cloud.state.updatedAt)||0;
+    if(cloud.state&&(cloudTime>S.updatedAt||!S.updatedAt)){applySavedState(cloud.state);persistLocal();}
+    else if(S.updatedAt>cloudTime){await cloudRequest('PUT',syncKey,S);}
+    setCloudStatus('saved');
+  }catch(e){
+    if(e.status===404&&S.updatedAt){try{await cloudRequest('PUT',syncKey,S);setCloudStatus('saved');}catch(x){setCloudStatus('error');}}
+    else setCloudStatus('error');
+  }
+}
 
 var CATS = ["All","Contracts","Employment","Finances","Safety","Licensing","Ins & Liens","Public Works"];
 var WEIGHTS = {"Contracts":21,"Employment":20,"Finances":15,"Safety":14,"Licensing":13,"Ins & Liens":12,"Public Works":5};
@@ -1958,6 +2033,10 @@ function jumpCat(c){
 }
 
 /* ---- HOME ---- */
+function cloudHomeNotice(){
+  if(syncKey)return '';
+  return '<button class="nav-btn" style="border-left:5px solid var(--cobalt);background:#F5F8FF" onclick="go(\'notes\')"><div class="t">PROTECT MY PROGRESS</div><div class="d">Turn on automatic backup so clearing cookies does not erase your studying.</div></button>';
+}
 function viewHome(){
   var mCount=Object.keys(S.mastered).length, wCount=Object.keys(S.weak).length;
   var best=S.scores.length?Math.max.apply(null,S.scores.map(function(s){return s.pct;})):null;
@@ -1968,6 +2047,7 @@ function viewHome(){
     + tile(wCount,'needs work','Practice all →',wCount?'var(--red)':'var(--steel)','practiceAllMissed')
     + tile(best!==null?best+'%':'—','best quiz','',best>=90?'var(--green)':'var(--cobalt)')
     + '</div>'
+    + cloudHomeNotice()
     + nb('STUDY','Multiple choice with instant answers and the why.','study','var(--cobalt)')
     + nb('EXAM SIMULATOR','Weighted like the real exam, scored at the end.','quiz','var(--amber)')
     + nb('CHEAT SHEET','Every number that matters, grouped so it sticks.','sheet','var(--green)')
@@ -2206,6 +2286,52 @@ function addNote(){
 }
 function delNote(k){ S.notes.splice(k,1); save(); render(); }
 function toggleBackup(){ showBackup=!showBackup; render(); }
+async function enableCloudBackup(){
+  syncKey=generateSyncKey();syncStatus='saving';syncMessage='';S.updatedAt=Date.now();persistLocal();
+  try{localStorage.setItem(SYNC_KEY_NAME,syncKey);}catch(e){}
+  putKeyInAddress();render();
+  try{await cloudRequest('PUT',syncKey,S);setCloudStatus('saved');render();}
+  catch(e){setCloudStatus('error');render();}
+}
+async function copyRecoveryCode(){
+  if(!syncKey)return;
+  try{await navigator.clipboard.writeText(syncKey);setCloudStatus('saved','Recovery code copied ✓');}
+  catch(e){setCloudStatus('saved','Press and hold the code to copy it.');}
+  setTimeout(function(){syncMessage='';setCloudStatus(syncStatus);},2200);
+}
+async function restoreCloudBackup(){
+  var input=document.getElementById('cloud-restore-code');var key=normalizeSyncKey(input&&input.value);
+  if(!key){setCloudStatus('error','Enter the full code in this format: CSLB-XXXX-XXXX-XXXX');return;}
+  setCloudStatus('checking','Looking for your backup…');
+  try{
+    await cloudRequest('GET',key);syncKey=key;
+    try{localStorage.setItem(SYNC_KEY_NAME,syncKey);}catch(e){}
+    putKeyInAddress();location.reload();
+  }catch(e){setCloudStatus('error',e.status===404?'No backup was found for that code. Check every letter and number.':'Could not reach the backup right now. Try again.');}
+}
+async function resetAllProgress(){
+  if(!confirm('Reset ALL study progress, missed questions, quiz scores, notes, and saved reviews? This cannot be undone.'))return;
+  if(!confirm('Are you sure? Tap OK only if you want to start over at 0.'))return;
+  clearTimeout(syncTimer);S=freshState();S.updatedAt=Date.now();persistLocal();
+  if(syncKey){try{await cloudRequest('PUT',syncKey,S);}catch(e){}}
+  location.reload();
+}
+function cloudBackupPanel(){
+  if(syncKey){
+    return '<div class="cloud-card"><div class="cloud-title">Automatic progress backup is ON</div>'
+      +'<p class="cloud-copy">Your answers, Needs Work list, quiz scores, notes, and study place save here and in the cloud. If browser data is cleared, use this recovery code to bring everything back.</p>'
+      +'<div class="cloud-code" onclick="copyRecoveryCode()">'+esc(syncKey)+'</div>'
+      +'<button class="btn ghost" style="margin-top:9px" onclick="copyRecoveryCode()">COPY RECOVERY CODE</button>'
+      +'<div class="cloud-status" id="cloud-status">'+esc(cloudStatusText())+'</div></div>';
+  }
+  return '<div class="cloud-card off"><div class="cloud-title">Keep progress even if cookies are cleared</div>'
+    +'<p class="cloud-copy">Turn this on once. The app will back up every answer automatically and give you a private recovery code. Save a screenshot of that code.</p>'
+    +'<button class="btn" style="margin-top:0" onclick="enableCloudBackup()">TURN ON AUTOMATIC BACKUP</button>'
+    +'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;color:var(--steel);margin:15px 0 6px">ALREADY HAVE A RECOVERY CODE?</div>'
+    +'<input id="cloud-restore-code" autocomplete="off" autocapitalize="characters" placeholder="CSLB-XXXX-XXXX-XXXX" style="width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);font:14px \"IBM Plex Mono\",monospace;text-transform:uppercase">'
+    +'<button class="btn ghost" onclick="restoreCloudBackup()">RESTORE MY PROGRESS</button>'
+    +'<div class="cloud-status" id="cloud-status">'+esc(cloudStatusText())+'</div></div>';
+}
 function doRestore(){
   var v=document.getElementById('restore').value.trim();
   try{
@@ -2232,7 +2358,7 @@ function viewNotes(){
   if(showBackup){
     backup='<div class="body">'
       +'<div style="font-size:13.5px;color:var(--inkSoft);line-height:1.55;margin-bottom:10px">'
-      +'Progress, notes, and saved sheet reviews normally survive refreshes in this browser. Clearing site data, private browsing, or changing devices can lose local saves. Copy this code somewhere safe, then paste it in another browser and tap Restore. There is no cloud account sync.</div>'
+      +'This is a second, manual copy of your progress. Copy it somewhere safe, then paste it here and tap Restore if you ever need it. Automatic backup is '+(syncKey?'currently on.':'currently off.')+'</div>'
       +'<textarea class="mono" readonly onclick="this.select()" style="height:70px">'+esc(code)+'</textarea>'
       +'<div style="font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;color:var(--steel);margin:10px 0 6px">PASTE A SAVED CODE TO RESTORE</div>'
       +'<textarea class="mono" id="restore" placeholder="Paste your backup code here" style="height:60px"></textarea>'
@@ -2240,11 +2366,13 @@ function viewNotes(){
       +(restoreMsg?'<div style="margin-top:8px;text-align:center;font-weight:600;font-size:13.5px;color:'+(restoreMsg.indexOf('\u2713')>-1?'var(--green)':'var(--red)')+'">'+esc(restoreMsg)+'</div>':'')
       +'</div>';
   }
-  return '<textarea id="draft" placeholder="Jot a memory hook, a number you keep missing, a question to look up" style="min-height:90px"></textarea>'
+  return cloudBackupPanel()
+    + '<textarea id="draft" placeholder="Jot a memory hook, a number you keep missing, a question to look up" style="min-height:90px"></textarea>'
     + '<button class="btn" style="padding:13px 0;font-size:17px" onclick="addNote()">SAVE NOTE</button>'
     + '<div style="margin-top:16px">'+list+'</div>'
     + '<div class="acc" style="margin-top:18px"><button onclick="toggleBackup()">'
-    + '<span class="h">MOVE PROGRESS TO ANOTHER DEVICE</span><span class="pm">'+(showBackup?'\u2212':'+')+'</span></button>'+backup+'</div>';
+    + '<span class="h">MANUAL BACKUP CODE</span><span class="pm">'+(showBackup?'\u2212':'+')+'</span></button>'+backup+'</div>'
+    + '<div class="danger-zone"><button class="danger-btn" onclick="resetAllProgress()">RESET ALL STUDY PROGRESS</button></div>';
 }
 
 function restoreAppState(){
@@ -2272,7 +2400,11 @@ function restoreAppState(){
   }
 }
 
-load(); restoreAppState(); render();if(tab==='sheet'&&S.sheet.detail&&!S.learning.paused)scrollToSheetHelp();
+async function startApp(){
+  load();readSyncKey();await syncFromCloudOnStart();restoreAppState();render();
+  if(tab==='sheet'&&S.sheet.detail&&!S.learning.paused)scrollToSheetHelp();
+}
+startApp();
 </script>
 </body>
 </html>
