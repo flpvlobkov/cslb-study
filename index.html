@@ -1436,6 +1436,22 @@ s6:'For residential framing work on top plates, joists or rafters covered by Cal
 s7:'Before servicing a garage-door opener that could start unexpectedly and cause injury, which procedure must the worker follow?'
 };
 BANK.forEach(function(q){q.plainQuestion=q.q;q.q=EXAM_STYLE_QUESTIONS[q.id]||q.legalQuestion;q.opts=q.legalOpts.slice();});
+/* Practice the same rules as decisions on a job. Keep IDs, answer positions,
+   references and saved progress stable when revising existing questions. */
+var APPLIED_QUESTIONS={
+ n8:'A contractor renews an active license and must keep the ordinary contractor bond on file. What is the required bond amount?',
+ n11:'One contractor keeps a license active; another places a license on inactive status. What are their ordinary renewal intervals, respectively?',
+ n30:'A supplier first delivers materials to a private construction job. To protect the full value of its potential lien claim, within how many days should it serve a required preliminary notice?',
+ n72:'A supplier has not yet been paid on a private job and sends a required preliminary notice shortly after its first delivery. What does serving that notice help preserve?',
+ n73:'A subcontractor is unpaid for work improving a homeowner’s property and records a valid mechanics lien. What does that lien attach to?',
+ n78:'A contractor reviews payroll costs and wants to identify the tax withheld from the worker that the employer does not also pay as its own tax. Which item is it?',
+ n99:'A contractor estimates a gate installation. Which listed expense should be spread across jobs as overhead instead of charged as a direct cost of this job?',
+ e2:'A California contractor grows from four employees to six. Which sexual harassment prevention training requirement now applies?',
+ p5:'A city awards a covered $8,000 repair contract. Which listed project-value threshold ordinarily triggers California prevailing-wage requirements?',
+ s4:'A crew installs a gate outdoors and the temperature rises to 84°F. At what temperature threshold did the employer need to have shade available under the outdoor heat rule?',
+ c9:'A homeowner asks for extra work halfway through a signed home improvement contract. Which proposed way of approving the extra work offers the least reliable protection?'
+};
+Object.keys(APPLIED_QUESTIONS).forEach(function(id){var q=BANK.find(function(x){return x.id===id;});if(!q)throw new Error('Missing applied question: '+id);q.q=APPLIED_QUESTIONS[id];q.reviewed='September 24, 2026';});
 /* Repair grammar in the existing payroll choices without moving any answer. */
 BANK.find(function(q){return q.id==='p3';}).opts=['Keep the records privately for one year only','Submit certified payroll showing each worker’s hours and wages electronically to the Labor Commissioner','Give the records only to the surety','Skip reporting on contracts under $100,000'];
 /* Source-checked, independently worded scenarios. Existing IDs and saved answers stay intact. */
