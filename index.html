@@ -2432,6 +2432,7 @@ function viewNotes(){
 }
 
 function restoreAppState(){
+  var studyOrderExpanded=false;
   var savedOpen=Number(S.sheet.open);openSheet=(savedOpen===-1||savedOpen===999||(savedOpen>=0&&savedOpen<SHEETS.length&&Number.isInteger(savedOpen)))?savedOpen:0;
   if(!validSheetKey(S.sheet.detail)||+String(S.sheet.detail).split('-')[0]!==openSheet)S.sheet.detail='';
   var tabs=['home','study','quiz','sheet','notes'];
@@ -2439,7 +2440,14 @@ function restoreAppState(){
   if(S.study){
     if(CATS.indexOf(S.study.cat)>-1) st.cat=S.study.cat;
     if(S.study.mode==='all'||S.study.mode==='weak') st.mode=S.study.mode;
-    if(Array.isArray(S.study.order)) st.order=S.study.order.filter(function(id){return !!byId(id);});
+    if(Array.isArray(S.study.order)){
+      st.order=S.study.order.filter(function(id){return !!byId(id);});
+      var inOrder=Object.create(null);
+      st.order.forEach(function(id){inOrder[id]=true;});
+      studyPool().forEach(function(q){
+        if(!inOrder[q.id]){st.order.push(q.id);inOrder[q.id]=true;studyOrderExpanded=true;}
+      });
+    }
     st.idx=Math.max(0,Math.min(Number(S.study.idx)||0,Math.max(0,st.order.length-1)));
     st.picked=typeof S.study.picked==='number'?S.study.picked:null;
     st.streak=Number(S.study.streak)||0;
@@ -2454,6 +2462,7 @@ function restoreAppState(){
       qz.right=Number(S.activeQuiz.right)||0; qz.done=!!S.activeQuiz.done;
     }
   }
+  if(studyOrderExpanded)saveStudyState();
 }
 
 async function startApp(){
