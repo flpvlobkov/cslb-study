@@ -2205,7 +2205,7 @@ function saveQuizState(){
   S.activeQuiz=qz.qs?{cat:qz.cat,len:qz.len,ids:qz.qs.map(function(q){return q.id;}),i:qz.i,picked:qz.picked,right:qz.right,done:qz.done}:null;
   save();
 }
-function setQCat(c){ qz.cat=c; if(c!=='All'&&qz.len===115)qz.len=25; saveQuizState(); render(); }
+function setQCat(c){ qz.cat=c; if(c!=='All'&&(qz.len===50||qz.len===115))qz.len=25; saveQuizState(); render(); }
 function setQLen(n){ qz.len=n; saveQuizState(); render(); }
 function startQuiz(){
   var picked=[];
@@ -2260,8 +2260,9 @@ function viewQuiz(){
       + '<details style="font-size:13px;line-height:1.6;margin-bottom:14px"><summary>✓ Sources reviewed · September 14, 2026</summary><p>All 174 practice questions have been reviewed. The supplied 2025 Television Education textbook was compared with the official 2026 CSLB reference book and current California and federal agency sources. Each answer includes its specific reference or checked calculation.</p><p><b>For C-61/D-28:</b> Law &amp; Business is the relevant qualifying exam; C-61 has no separate trade exam. These are independent practice questions, not CSLB’s live test.</p><p><b>Corrections to remember:</b> the ordinary small-claims limits are $12,500 for individuals and $6,250 for entities; the broad no-employee workers’ compensation change is scheduled for 2028; covered new private contracts have a 5% retention cap; the regulated asbestos threshold includes exactly 100 square feet. Read each explanation for scope and exceptions.</p><p>Your saved results remain as earned. Updates do not retroactively regrade earlier work.</p><a class="help-source" href="'+LAW_BOOK+'" target="_blank" rel="noopener noreferrer">Official 2026 CSLB law book ↗</a><a class="help-source" href="'+EXAM_GUIDE+'" target="_blank" rel="noopener noreferrer">Official exam topics and weights ↗</a></details>'
       + '<div class="row" style="padding-bottom:12px"><button class="pill '+(qz.len===10?'on':'')+'" onclick="setQLen(10)">Quick 10</button>'
       + '<button class="pill '+(qz.len===25?'on':'')+'" onclick="setQLen(25)">Exam Sim 25</button>'
+      + (qz.cat==='All'?'<button class="pill '+(qz.len===50?'on':'')+'" onclick="setQLen(50)">Practice 50</button>':'')
       + (qz.cat==='All'?'<button class="pill '+(qz.len===115?'on':'')+'" onclick="setQLen(115)">Full practice 115</button>':'')+'</div>'
-      + (qz.cat==='All'?'<p style="font-size:12px;color:var(--steel);line-height:1.5;margin:0 0 14px">Full practice draws 115 questions from the 203-question bank using CSLB’s published topic weights. CSLB’s study guide does not specify an official total question count; 115 is an unofficial practice length.</p>':'')
+      + (qz.cat==='All'?'<p style="font-size:12px;color:var(--steel);line-height:1.5;margin:0 0 14px">Practice 50 and Full practice 115 draw from the 203-question bank using CSLB’s published topic weights. CSLB’s study guide does not specify an official total question count; 115 is an unofficial practice length.</p>':'')
       + '<button class="btn" style="margin-top:0" onclick="startQuiz()">START QUIZ</button>'+recent+'</div>';
   }
   if(qz.done){
